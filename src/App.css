@@ -1,3 +1,4 @@
+@import "~react-image-gallery/styles/css/image-gallery.css";
 .App {
   text-align: center;
 }
@@ -36,3 +37,29 @@
     transform: rotate(360deg);
   }
 }
+
+.store-plus:hover {
+  background-color: black !important;
+  color: white !important;
+}
+
+.store-minus:hover {
+  background-color: black !important;
+  color: white !important;
+}
+
+/* #customer_login .u-column1.col-1.visible {
+  padding: 9%;
+  background: #c4c851;
+  box-shadow: 0 5px 8px 0 rgb(0 0 0 / 20%), 0 9px 26px 0 rgb(0 0 0 / 19%);
+  margin: 0 !important;
+  color: 'white' !important;
+}
+
+#customer_login .u-column2.col-2 {
+  padding: 9%;
+  background: #35465a;
+  box-shadow: 0 5px 8px 0 rgb(0 0 0 / 20%), 0 9px 26px 0 rgb(0 0 0 / 19%);
+  margin: 0 !important;
+  color: 'white' !important;
+} */
