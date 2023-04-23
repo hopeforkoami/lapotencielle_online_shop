@@ -198,14 +198,14 @@ const Home: FC<{  }> = (  ) => {
 
 
 
-<div id="service_inner_sec" data-midnight="" data-column-margin="default" className="wpb_row vc_row-fluid vc_row inner_row   right_padding_80px left_padding_80px "   ><div className="row-bg-wrap"> <div className="row-bg" ></div> </div><div className="row_col_wrap_12_inner col span_12  center">
+{ comingSoonProducts.length > 0 ? <div id="service_inner_sec" data-midnight="" data-column-margin="default" className="wpb_row vc_row-fluid vc_row inner_row   right_padding_80px left_padding_80px "   ><div className="row-bg-wrap"> <div className="row-bg" ></div> </div><div className="row_col_wrap_12_inner col span_12  center">
 	
 	{
-		comingSoonProducts.map((product, id) => <ProductBox key={id} productListLength={ comingSoonProducts.length > 0 ? comingSoonProducts.length : 1  } product={product}  /> )
+		comingSoonProducts.map((product, id) => <ProductBox key={id} productListLength={ 4 } product={product}  /> )
 	}
 	
 
-</div></div>
+</div></div> : <></> }
 			</div> 
 		</div>
 	</div> 
