@@ -1,0 +1,232 @@
+.modal-open .modal {
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.country_btn a.show-btn.borderfree__link {
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    margin-right: 30px;
+}
+
+.country_btn a.show-btn.borderfree__link img {
+    margin-bottom: 0 !important;
+    margin-right: 10px;
+	width:20px !important;
+}
+
+.countries-modal .fade.show {
+    opacity: 1;
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1050;
+    display: none;
+    overflow: hidden;
+    outline: 0;
+}
+
+.countries-modal .fade {
+    opacity: 0;
+    transition: opacity .15s linear;
+}
+
+/*.show {
+    display: block !important;
+}*/
+
+.modal.fade .modal-dialog {
+    -webkit-transform: translate(0,0);
+    transform: translate(0,0);
+}
+
+.modal.show .modal-dialog {
+    transition: -webkit-transform .3s ease-out;
+    transition: transform .3s ease-out;
+    transition: transform .3s ease-out,-webkit-transform .3s ease-out;
+    -webkit-transform: translate(0,-25%);
+    transform: translate(0,25%);
+}
+
+.modal-dialog {
+    position: relative;
+    width: auto;
+    margin: 0.5rem;
+    pointer-events: none;
+}
+
+@media screen and (min-width: 576px) {
+.modal-dialog {
+    max-width: 400px;
+    margin: 1.75rem auto;
+}
+}
+
+.modal-dialog {
+    max-width: 500px;
+    margin: 1.75rem auto;
+}
+
+.modal-content {
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    width: 100%;
+    pointer-events: auto;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.2);
+    border-radius: 0.3rem;
+    outline: 0;
+}
+
+@media screen and (min-width: 1px) {
+.modal-header {
+    position: relative;
+}
+}
+
+.modal-header {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: start;
+    -ms-flex-align: start;
+    align-items: flex-start;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    padding: 1rem;
+    border-bottom: 1px solid #e9ecef;
+    border-top-left-radius: 0.3rem;
+    border-top-right-radius: 0.3rem;
+}
+
+.modal-body {
+    position: relative;
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    padding: 1rem;
+    padding-top:0px !important;
+}
+
+.borderfree__dropdown {
+    display: contents !important;
+}
+
+@media screen and (min-width: 1px) {
+.borderfree__dropdown {
+    position: absolute;
+    top: 0;
+    right: -62px;
+    width: 310px;
+    background: #fff;
+    padding: 10px 20px;
+    z-index: 10;
+    display: none;
+    border: 1px solid #d6d6d6 !important;
+    text-align: left;
+}
+}
+
+label {
+    display: inline-block;
+    margin-bottom: 0.5rem;
+}
+
+div#exampleModal .button-small.button-default {
+    padding: 4px 20px !important;
+    background-color: #43b02a !important;
+    border-color: transparent;
+    color: #fff;
+    border-radius: 0px !important;
+    margin-top: 15px !important;
+}
+
+html body.home h5#exampleModalLabel {
+    font-family: 'Segoe_UI' !important;
+    color: #000 !important;
+}
+
+div#exampleModal label {
+    font-family: 'MalloryBook';
+    color: #000 !important;
+    line-height: 45px;
+}
+
+@media screen and (min-width: 1px) {
+select#con {
+        border-radius: 0;
+    border: 1px solid #979797;
+    background-color: #fff;
+    box-sizing: border-box;
+    font-size: 14px;
+    height: 48px;
+    line-height: 26px;
+    padding: 10px 18px;
+    text-indent: 0.01em;
+    vertical-align: baseline;
+    width: 100%;
+    background: url(https://trylink.xyz/dev1/lapOtencielle/wp-content/uploads/2022/02/Aarrow.jpg) no-repeat 98% 50%
+    -webkit-appearance: none;
+}
+}
+
+.modal-title {
+    margin-bottom: 0;
+    line-height: 1.5;
+font-size: 1.25rem;
+}
+
+input#curr {
+    border-radius: 0;
+    border: 1px solid #979797;
+    background-color: #fff;
+    box-sizing: border-box;
+    font-size: 14px;
+    height: 48px;
+    line-height: 26px;
+    padding: 10px 18px;
+    text-indent: 0.01em;
+    vertical-align: baseline;
+    width: 100%;
+    -webkit-appearance: none;
+}
+
+.close:not(:disabled):not(.disabled) {
+    cursor: pointer;
+}
+
+.modal-header .close {
+    padding: 1rem;
+    margin: -1rem -1rem -1rem auto;
+}
+
+button.close {
+    padding: 0;
+    background-color: transparent;
+    border: 0;
+    -webkit-appearance: none;
+}
+
+.close {
+    float: right;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
+    opacity: .5;
+}
