@@ -22,4 +22,8 @@ export default class AllService {
         return axiosInstance.get('/product/list/comingsoon');
     }
 
+    public getNewsExclusiveProducts = () => {
+        return axiosInstance.get('/product/list/newsexclusive');
+    }
+
 }

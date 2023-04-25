@@ -16,11 +16,13 @@ import * as yup from 'yup';
 import { useAppDispatch, useAppSelector } from '../../Hooks/customSelector';
 import { addProduct, removeProduct, updateProductQty, updateProducts } from '../../Redux/Reducers/storeReducer';
 import Footer from '../../Layouts/Footer';
+import { setUser } from '../../Redux/Reducers/userReducer';
+import { RootState } from '../../Redux/store';
 
 const Myaccount: FC = () => {   
     
-    let location = useLocation();
-    const store = useAppSelector((state) => state.store)
+    let location = useLocation(); 
+    const user = useAppSelector((state: RootState) => state.users.user );
     const dispatch = useAppDispatch();
     const myaccountService = new MyaccountService();
 
@@ -75,6 +77,19 @@ const Myaccount: FC = () => {
                                         setLoading(true);
                                         myaccountService.login(values).then(async function (response: any) {
                                             console.log(response); 
+                                            if (response.data.statut === 200) {
+                                                console.log('Logged user');
+                                                dispatch( setUser( response.data.data[0] ) );
+
+                                                window.localStorage.setItem(
+                                                    '__user',
+                                                    JSON.stringify(response.data.data[0])
+                                                );
+                
+                                                setLoading(false); 
+                
+                                                window.location.href = "/";
+                                            }
                                         })
                                           .catch(function (error: any) {
                                             console.log(error); 

@@ -1,14 +1,17 @@
 import { FC } from 'react' 
 import { useEffect } from 'react';
 import { Link, useNavigate } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from '../Hooks/customSelector';
+import { useAppDispatch, useAppSelector } from '../Hooks/customSelector'; 
+import { setUser } from '../Redux/Reducers/userReducer';
+import { RootState } from '../Redux/store';
  
 import { Formik, Field, Form, FormikProps } from 'formik'
 import * as yup from 'yup';
 
 const Header: FC<{  }> = (  ) => { 
 
-    const store = useAppSelector((state) => state.store)
+    const store = useAppSelector((state) => state.store);
+    const user = useAppSelector((state: RootState) => state.users.user );
     const dispatch = useAppDispatch();
 
     let navigate = useNavigate();
@@ -23,7 +26,10 @@ const Header: FC<{  }> = (  ) => {
                 event.preventDefault();
               // navigate( '/products/' + 'SEARCH-'+ event?.target?.value.toUpperCase() + '/' + values.searchStr.toLowerCase() );
             }
-          });
+        });
+
+        console.log(user);
+
         }, []);
 
       
@@ -608,7 +614,13 @@ const Header: FC<{  }> = (  ) => {
   </li></ul>						<ul className="buttons" data-user-set-ocm="off">
   <li id="search-btn">
   <div><a href="#searchbox"><span className="icon-salient-search" aria-hidden="true"></span><span className="screen-reader-text">search</span></a></div> </li>			 <li id="nectar-user-account" className="">
-  <div><Link className="user-account-btn" to="/myaccount"><span className="icon-salient-m-user" aria-hidden="true"></span><span className="screen-reader-text">
+  <div><Link className="user-account-btn" to="/myaccount">
+    {
+        user !== null ? 
+        <img src="/assets/images/user.png" alt="" /> : 
+        <span className="icon-salient-m-user" aria-hidden="true"></span>
+    } 
+    <span className="screen-reader-text">
                    account </span></Link></div>  </li> <li className="nectar-woo-cart">
               <div className="cart-outer" data-user-set-ocm="off" data-cart-style="dropdown">
                   <div className="cart-menu-wrap">
@@ -690,7 +702,7 @@ const Header: FC<{  }> = (  ) => {
         <i className="fa fa-angle-down icon-in-menu" aria-hidden="true"></i></span></Link>
   <ul className="sub-menu">
       <li id="menu-item-505" className="text_center_txt menu-item menu-item-type-post_type menu-item-object-page nectar-regular-menu-item megamenu-column-width-40 megamenu-column-padding-default menu-item-505">
-        <Link to="/products/OUR-DUO-COLLECTION/duo" ><span className="menu-title-text">
+        <Link to="/kits/OUR-DUO-COLLECTION/duo" ><span className="menu-title-text">
             OUR DUO COLLECTION</span></Link></li>
       <li id="menu-item-591" className="border_left menu-item menu-item-type-custom menu-item-object-custom nectar-regular-menu-item megamenu-column-width-60 megamenu-column-padding-default menu-item-591">
         <Link to="/products/BATH-AND-BODY/bath"><div className="nectar-ext-menu-item style-img-above-text">

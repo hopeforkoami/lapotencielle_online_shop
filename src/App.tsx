@@ -22,6 +22,8 @@ import Main from './Core/Main';
 import Cart from './Pages/Cart';
 import Myaccount from './Pages/Myaccount';
 import News from './Pages/News';
+import Kits from './Pages/Kits';
+import Kit from './Pages/Kit';
 
 function App() {
   return ( 
@@ -36,6 +38,8 @@ function App() {
               <Route  path="/cart" element={ <Cart />} />
               <Route  path="/myaccount" element={ <Myaccount />} />
               <Route  path="/news/:title" element={ <News />} />
+              <Route  path="/kits/:group/:category" element={ <Kits />} />
+              <Route  path="/kit/:id" element={ <Kit />} />
             </Route>
             
             <Route path="*" element={ <NotFound />} />

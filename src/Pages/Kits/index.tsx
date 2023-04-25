@@ -4,19 +4,19 @@ import {
 } from "react-router-dom";
 
 import { useEffect } from 'react';
-import ProductsService from './service';
+import KitsService from './service';
 import WoocommerceProductBox from '../../Components/WoocommerceProductBox';
 import Footer from '../../Layouts/Footer';
 
 
 
-const Products: FC = () => {  
+const Kits: FC = () => {  
     let location = useLocation();
     let { group, category } = useParams();
     console.log(group);
     console.log(category);
 
-    const productsService = new ProductsService();
+    const kitsService = new KitsService();
 
     const [ products, setProducts ] = useState([]);
     const [ groupName, setGroupName ] = useState("");
@@ -24,7 +24,7 @@ const Products: FC = () => {
 
 	const getFilterByKeyword = () => {
         setLoading(true);
-		productsService.getFilterByKeyword( { "keyWord": category } ).then(async function (response: any) {
+		kitsService.getFilterByKeyword( { "keyWord": category } ).then(async function (response: any) {
             console.log(response);
             setProducts(response.data);
             setLoading(false);
@@ -167,7 +167,7 @@ const Products: FC = () => {
             {
                 products.map((product, id) =>  
                     <li className={`product type-product post-278 status-publish instock product_cat-body-care product_cat-body-lotion product_cat-uncategorized product_cat-our-orange-and-vanilla-products has-post-thumbnail taxable shipping-taxable purchasable product-type-simple ${ checkForRowBegin(id) ? 'first' : checkForRowLast(id) ? 'last' : '' }`}>
-                        <WoocommerceProductBox isForKit={false}
+                        <WoocommerceProductBox isForKit={true}
                         key={id} product={product}  />
                     </li>
                 )
@@ -176,7 +176,7 @@ const Products: FC = () => {
             </ul>
             :
             <h2>
-                <b>Produits non dispobinible</b>
+                <b>Kits non dispobinible</b>
             </h2>
         }
 		
@@ -195,4 +195,4 @@ const Products: FC = () => {
        </>
     );
 }
-export default Products;
+export default Kits;

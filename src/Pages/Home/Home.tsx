@@ -24,6 +24,7 @@ const Home: FC<{  }> = (  ) => {
 	const allService = new AllService();
 
 	const [ comingSoonProducts, setComingSoonProducts ] = useState([]);
+	const [ newsExclusiveProducts, setNewsExclusiveProducts ] = useState([]);
 	const [ bestSellerProducts, setBestSellerProducts ] = useState([]);
 
 	const getAllProducts = () => {
@@ -64,9 +65,19 @@ const Home: FC<{  }> = (  ) => {
         });
 	}
 
+	const getNewsExclusiveProducts = () => {
+		allService.getNewsExclusiveProducts().then(async function (response: any) {
+            console.log(response);
+			setNewsExclusiveProducts(response.data);
+        })
+          .catch(function (error: any) {
+            console.log(error); 
+        });
+	}
+
 	useEffect(() => {
 
-        getComingSoonProducts(); 
+        getNewsExclusiveProducts(); 
 		getBestSellerProducts();
 
     }, []);
@@ -198,10 +209,10 @@ const Home: FC<{  }> = (  ) => {
 
 
 
-{ comingSoonProducts.length > 0 ? <div id="service_inner_sec" data-midnight="" data-column-margin="default" className="wpb_row vc_row-fluid vc_row inner_row   right_padding_80px left_padding_80px "   ><div className="row-bg-wrap"> <div className="row-bg" ></div> </div><div className="row_col_wrap_12_inner col span_12  center">
+{ newsExclusiveProducts.length > 0 ? <div id="service_inner_sec" data-midnight="" data-column-margin="default" className="wpb_row vc_row-fluid vc_row inner_row   right_padding_80px left_padding_80px "   ><div className="row-bg-wrap"> <div className="row-bg" ></div> </div><div className="row_col_wrap_12_inner col span_12  center">
 	
 	{
-		comingSoonProducts.map((product, id) => <ProductBox key={id} productListLength={ 4 } product={product}  /> )
+		newsExclusiveProducts.map((product, id) => <ProductBox key={id} productListLength={ 4 } product={product}  /> )
 	}
 	
 
