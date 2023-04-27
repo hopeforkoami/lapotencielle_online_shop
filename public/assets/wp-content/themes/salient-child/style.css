@@ -107,7 +107,7 @@ div#ajax-content-wrap .woocommerce ul.products li.outofstock .product-add-to-car
 a.show-btn.borderfree__link { display: none; }
 
 /* Breadcrumb */
-body.home .breadcrumb {   }
+body.home .breadcrumb {   margin-top: 1.4em;   }
 .breadcrumb { flex-wrap: wrap; padding: 0.75rem 1rem; list-style: none; background-color: #e9ecef; border-radius: 0.25rem; }
 html body.page div#ajax-content-wrap .breadcrumb a { color: #007bff !important; text-decoration: none; background-color: transparent; font-family: 'Segoe_UI' !important; font-size: 16px !important; line-height: 24px !important; }
 label#Terms_of_use_Return_Policy { font-size: 20px !important; }

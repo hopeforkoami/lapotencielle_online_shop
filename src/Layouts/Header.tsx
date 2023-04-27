@@ -735,7 +735,7 @@ const Header: FC<{  }> = (  ) => {
   <Link to="/products/GIFTS-AND-SETS/gifts sets" ><span className="menu-title-text">GIFTS &#038; SETS</span><span className="sf-sub-indicator"><i className="fa fa-angle-down icon-in-menu" aria-hidden="true"></i></span></Link>
   <ul className="sub-menu">
       <li id="menu-item-528" className="text_center_txt menu-item menu-item-type-post_type menu-item-object-page nectar-regular-menu-item megamenu-column-width-40 megamenu-column-padding-default menu-item-528">
-        <Link to="/products/OUR-GIFTS-AND-SETS-COLLECTION/gifts" ><span className="menu-title-text">
+        <Link to="/kits/OUR-GIFTS-AND-SETS-COLLECTION/gifts" ><span className="menu-title-text">
             OUR GIFTS &#038; SETS COLLECTION</span></Link></li>
       <li id="menu-item-597" className="border_left menu-item menu-item-type-custom menu-item-object-custom nectar-regular-menu-item megamenu-column-width-60 megamenu-column-padding-default menu-item-597">
         <Link to="/products/OUR-GIFTS-AND-SETS-COLLECTION/gifts" >
@@ -775,9 +775,12 @@ const Header: FC<{  }> = (  ) => {
   </div></Link></li>
   </ul>
   </li>
-  <li id="menu-item-572" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children nectar-regular-menu-item megamenu nectar-megamenu-menu-item align-left width-100 sf-with-ul menu-item-572">
-  <Link to="/products/FACIAL-CARE/facial care" ><span className="menu-title-text">FACIAL CARE</span><span className="sf-sub-indicator"><i className="fa fa-angle-down icon-in-menu" aria-hidden="true"></i></span></Link>
-  <ul className="sub-menu">
+  <li id="menu-item-572" className="menu-item menu-item-type-post_type menu-item-object-page nectar-regular-menu-item menu-item-33">
+  <Link to="/products/FACIAL-CARE/facial care" >
+    <span className="menu-title-text">FACIAL CARE</span>
+  {/* <span className="sf-sub-indicator"><i className="fa fa-angle-down icon-in-menu" aria-hidden="true"></i></span> */}
+  </Link>
+  {/* <ul className="sub-menu">
       <li id="menu-item-602" className="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children nectar-regular-menu-item hide-title megamenu-column-width-40 megamenu-column-padding-default menu-item-602">
   <a href="#"><span className="menu-title-text">FACIAL CARE</span><span className="sf-sub-indicator"><i className="fa fa-angle-right icon-in-menu" aria-hidden="true"></i></span></a>
       <ul className="sub-menu">
@@ -804,7 +807,7 @@ const Header: FC<{  }> = (  ) => {
   </div>
   <div className="inner-content"><span className="title inherit-default"><span className="menu-title-text">DISCOVER NOW</span></span></div>
   </div></Link></li>
-  </ul>
+  </ul> */}
   </li>
   <li id="menu-item-33" className="menu-item menu-item-type-post_type menu-item-object-page nectar-regular-menu-item menu-item-33">
   <Link to="/products/HAIR-CARE/hair"><span className="menu-title-text">HAIR CARE</span></Link></li>

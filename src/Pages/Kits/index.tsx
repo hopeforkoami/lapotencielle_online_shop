@@ -35,15 +35,17 @@ const Kits: FC = () => {
 	}
 
     useEffect(() => { 
-		getFilterByKeyword();
-        setGroupName(group?.replaceAll("-", " ") ?? '');
-
+        if (group !== 'FACIAL CARE' && group !== 'FACIAL-CARE' && group !== 'HAIR CARE' && group !== 'HAIR-CARE') {
+            getFilterByKeyword();
+            setGroupName(group?.replaceAll("-", " ") ?? '');
+        } 
     }, []);
 
     useEffect(() => { 
-		getFilterByKeyword();
-        setGroupName(group?.replaceAll("-", " ") ?? '');
-
+		if (group !== 'FACIAL CARE' && group !== 'FACIAL-CARE' && group !== 'HAIR CARE' && group !== 'HAIR-CARE') {
+            getFilterByKeyword();
+            setGroupName(group?.replaceAll("-", " ") ?? '');
+        } 
     }, [ location ]);
 
     const checkForRowBegin = (id: number) => {
@@ -58,6 +60,86 @@ const Kits: FC = () => {
         };
 
         return compar % 3 === 0 ;
+    }
+
+
+      const getPageHeader = ( title: string ) => {
+        switch (title?.replaceAll("-", " ")) {
+            case "OUR ORANGE AND VANILLA PRODUCTS":
+                return "#c4c851";
+                break;
+            case "OUR LILY AND LAVENDER PRODUCTS":
+                return "#c881ab";
+                break;
+            case "OUR AGE GRACEFULLY PRODUCTS":
+                return "#000080";
+                break;
+            case "IN PARIS BODY CRÉME SOUFFLÉ PRODUCTS":
+                return "#deccff";
+                break;
+            case "OUR BELLE COMME LE JOUR PRODUCTS":
+                return "#6a3ad9";
+                break;
+            case "ACCESSORIES & TOOLS":
+                return "#000000";
+                break;
+            case "BATH AND BODY":
+                return "#ddb3c1";
+                break;
+            case "OUR DUO COLLECTION":
+                return "#ddb3c1";
+                break;
+            case "HOME SPA":
+                return "#eb9e93";
+                break;
+            case "BODY POLISH":
+                return "#ec939b";
+                break;
+            case "GIFTS AND SETS":
+                return "#9e003f";
+                break;
+            case "OUR GIFTS AND SETS COLLECTION":
+                return "#92003f";
+                break;
+            case "BODY CARE":
+                return "#004085";
+                break;
+            case "BODY LOTION":
+                return "#e8f5e5";
+                break;
+            case "BODY CREAM": 
+                return "#E8F5E5";
+                break;
+            case "BODY CREAM BUTTER": 
+                return "#E8F5E5";
+                break;
+            case "BODY SCRUB": 
+                return "#E8F5E5";
+                break;
+            case "BODY OIL": 
+                return "#E8F5E5";
+                break;
+            case "BODY BALM": 
+                return "#E8F5E5";
+                break;
+            case "WHIPPED BODY BUTTER":
+                return "#E8F5E5";
+                break;
+            case "WHIPPED BODY BUTTER":
+                return "#E8F5E5";
+                break;
+            case "FACIAL CARE":
+                return "#0a0808";
+                break;
+            case "HAIR CARE":
+                return "#0a0a0a";
+                break;
+            
+        
+            default:
+                return "#c4c851";
+                break;
+        }
     }
 
     const firstDescriptionText = ( title: string ) => {
@@ -110,7 +192,7 @@ const Kits: FC = () => {
                 {groupName} </span></span></span> </div>
             <div id="page-header-wrap" data-animate-in-effect="none" data-midnight="light" className="" style={{height: '200px'}}>
             <div id="page-header-bg" className="not-loaded " data-padding-amt="low" data-animate-in-effect="none" data-midnight="light" data-text-effect="none" data-bg-pos="center" data-alignment="center" data-alignment-v="middle" data-parallax="0" data-height="200"
-             style={{ backgroundColor: "#c4c851", height: "200px" }}>
+             style={{ backgroundColor: getPageHeader(group ?? ''), height: "200px" }}>
 				<div className="container">
                     <div className="row">
                         <div className="col span_6 ">

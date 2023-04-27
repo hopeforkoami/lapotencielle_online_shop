@@ -106,9 +106,12 @@ const Product: FC = () => {
 
     return (
         <> 
-        { loading ? <h2>
-            <b>Chargement...</b>
-        </h2> :
+        { loading ? <div style={{ marginTop: '1.5em' }}>
+                <h2 >
+                    <b>Chargement...</b>
+                </h2>
+            </div>
+        :
        		<div id="ajax-content-wrap">
 		<div className="breadcrumb">
 			<span><span><a href="/">Home</a> / 
