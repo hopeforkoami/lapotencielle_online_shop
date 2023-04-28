@@ -196,7 +196,7 @@ const Products: FC = () => {
                     <div className="row">
                         <div className="col span_6 ">
                             <div className="inner-wrap">
-                                <h1>{groupName}</h1> 						
+                                <h1 className="colored_in_black">{groupName}</h1> 						
                                 <span className="subheader"></span>
                             </div>
                         </div>

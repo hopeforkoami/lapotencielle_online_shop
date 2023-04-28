@@ -7,7 +7,9 @@ Author URI:  https://themeforest.net/user/themenectar
 Template: salient
 Version: 1.0
 */
-
+.colored_in_black{
+    color: black!important;
+}
 
 /* HOME PAGE PRODUCT CSS margin-bottom: -30px;  */
 .home.page-template-default li.product.type-product { border: none; }

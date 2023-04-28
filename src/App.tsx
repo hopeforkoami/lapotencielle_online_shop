@@ -24,6 +24,7 @@ import Myaccount from './Pages/Myaccount';
 import News from './Pages/News';
 import Kits from './Pages/Kits';
 import Kit from './Pages/Kit';
+import About from './Pages/About/About';
 
 function App() {
   return ( 
@@ -40,6 +41,7 @@ function App() {
               <Route  path="/news/:title" element={ <News />} />
               <Route  path="/kits/:group/:category" element={ <Kits />} />
               <Route  path="/kit/:id" element={ <Kit />} />
+              <Route  path="/about" element={ <About />} />
             </Route>
             
             <Route path="*" element={ <NotFound />} />
