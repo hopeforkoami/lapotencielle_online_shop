@@ -680,7 +680,7 @@ const Header: FC<{  }> = (  ) => {
                     <li id="menu-item-485" className="menu-item menu-item-type-post_type menu-item-object-page nectar-regular-menu-item menu-item-485">
                         <Link to="/products/OUR-LILY-AND-LAVENDER-PRODUCTS/lavender">
                             <span className="menu-title-text">OUR LILY AND LAVENDER PRODUCTS</span></Link></li>
-                    <li id="menu-item-484" className="menu-item menu-item-type-post_type menu-item-object-page nectar-regular-menu-item menu-item-484">
+                    {/* <li id="menu-item-484" className="menu-item menu-item-type-post_type menu-item-object-page nectar-regular-menu-item menu-item-484">
                         <Link to="/products/OUR-AGE-GRACEFULLY-PRODUCTS/age" >
                             <span className="menu-title-text">OUR AGE GRACEFULLY PRODUCTS</span></Link></li>
                     <li id="menu-item-495" className="menu-item menu-item-type-post_type menu-item-object-page nectar-regular-menu-item menu-item-495">
@@ -688,7 +688,7 @@ const Header: FC<{  }> = (  ) => {
                             <span className="menu-title-text">IN PARIS BODY CRÉME SOUFFLÉ PRODUCTS</span></Link></li>
                     <li id="menu-item-498" className="menu-item menu-item-type-post_type menu-item-object-page nectar-regular-menu-item menu-item-498">
                         <Link to="/products/OUR-BELLE-COMME-LE-JOUR-PRODUCTS/belle">
-                            <span className="menu-title-text">OUR BELLE COMME LE JOUR PRODUCTS</span></Link></li>
+                            <span className="menu-title-text">OUR BELLE COMME LE JOUR PRODUCTS</span></Link></li> */}
                     <li id="menu-item-501" className="menu-item menu-item-type-post_type menu-item-object-page nectar-regular-menu-item menu-item-501">
                         <Link to="/products/ACCESSORIES-&-TOOLS/accessories">
                         <span className="menu-title-text">ACCESSORIES &#038; TOOLS</span></Link></li>
@@ -761,7 +761,7 @@ const Header: FC<{  }> = (  ) => {
           <li id="menu-item-549" className="text_right_txt text_left menu-item menu-item-type-post_type menu-item-object-page nectar-regular-menu-item menu-item-549"><Link to="/products/BODY-OIL/body oil"><span className="menu-title-text">BODY OIL</span></Link></li>
           <li id="menu-item-548" className="text_right_txt text_left menu-item menu-item-type-post_type menu-item-object-page nectar-regular-menu-item menu-item-548"><Link to="/products/BODY-SCRUB/body scrub"><span className="menu-title-text">BODY SCRUB</span></Link></li>
           <li id="menu-item-547" className="text_right_txt text_left menu-item menu-item-type-post_type menu-item-object-page nectar-regular-menu-item menu-item-547"><Link to="/products/BODY-BALM/body balm" ><span className="menu-title-text">BODY BALM</span></Link></li>
-          <li id="menu-item-554" className="text_right_txt text_left menu-item menu-item-type-post_type menu-item-object-page nectar-regular-menu-item menu-item-554"><Link to="/products/WHIPPED-BODY-BUTTER/body whipped" ><span className="menu-title-text">WHIPPED BODY BUTTER</span></Link></li>
+          {/* <li id="menu-item-554" className="text_right_txt text_left menu-item menu-item-type-post_type menu-item-object-page nectar-regular-menu-item menu-item-554"><Link to="/products/WHIPPED-BODY-BUTTER/body whipped" ><span className="menu-title-text">WHIPPED BODY BUTTER</span></Link></li> */}
       </ul>
   </li>
       <li id="menu-item-600" className="border_left menu-item menu-item-type-custom menu-item-object-custom nectar-regular-menu-item megamenu-column-width-60 megamenu-column-padding-default menu-item-600">
