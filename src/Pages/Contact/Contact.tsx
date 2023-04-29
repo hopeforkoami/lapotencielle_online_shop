@@ -28,7 +28,7 @@ const Contact = () => {
       <div id="ajax-content-wrap">
         <div className="breadcrumb">
           <span><span><Link to="/">Home</Link> / <span className="breadcrumb_last" aria-current="page">
-            ABOUT US </span></span></span> </div>
+            CONTACT </span></span></span> </div>
         <div id="page-header-wrap" data-animate-in-effect="none" data-midnight="light" className="" style={{ height: '200px' }}>
           <div id="page-header-bg" className="not-loaded " data-padding-amt="low"
             data-animate-in-effect="none" data-midnight="light" data-text-effect="none"
@@ -38,7 +38,7 @@ const Contact = () => {
               <div className="row">
                 <div className="col span_6 ">
                   <div className="inner-wrap">
-                    <h1 className="colored_in_black">About US </h1>
+                    <h1 className="colored_in_black">Contact Info </h1>
                     <span className="subheader"></span>
                   </div>
                 </div>
