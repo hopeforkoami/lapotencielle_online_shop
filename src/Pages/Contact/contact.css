@@ -1,0 +1,27 @@
+.about_style_1
+{
+  display: "inline-block"; 
+  width: 0px;
+  overflow: "hidden";
+  line-height: 0
+}
+.about_style_2{
+  padding-top: 60px;
+  padding-bottom: 0px;
+}
+.about_style_3{
+  text-align: center;
+}
+.about_style_4{
+  text-decoration: "underline"
+}
+.about_align_center{
+  text-align: center;
+}
+.about_style_5{
+  text-decoration: underline;
+  color: #000000;
+}
+.about_align_left{
+  text-align: left;
+}

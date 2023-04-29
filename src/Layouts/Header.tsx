@@ -817,7 +817,10 @@ const Header: FC<{  }> = (  ) => {
     </Link>
     </li>
   <li id="menu-item-30" className="menu-item menu-item-type-post_type menu-item-object-page nectar-regular-menu-item menu-item-30">
-    <a href="#"><span className="menu-title-text">CONTACT</span></a></li>
+    <Link to="/contact">
+        <span className="menu-title-text">CONTACT</span>
+    </Link>
+    </li>
                               </ul>
                           
                       </nav>
