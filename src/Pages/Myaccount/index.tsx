@@ -29,13 +29,14 @@ const Myaccount: FC = () => {
     let [ loading, setLoading ] = useState(false);
  
     return (
-        <>
+        <div className='woocommerce-account'>
             <div id="ajax-content-wrap">
                 <br />
-		            <div className="breadcrumb">
+		            {/* <div className="breadcrumb">
 			            <span><span><a href="/">Home</a></span> / 
                         <span className="breadcrumb_last" aria-current="page">My account</span></span>
-                    </div>
+                    </div> */}
+                    <br />
                     <div className="container-wrap" style={{ minHeight: '566px' }}>
                         <div className="container main-content">
                             <div className="row">
@@ -210,7 +211,7 @@ const Myaccount: FC = () => {
                             
                     </div> */}
                     </div>
-        </>
+        </div>
 );
 }
 
