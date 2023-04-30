@@ -25,3 +25,10 @@
 .about_align_left{
   text-align: left;
 }
+#about_formula h5{
+  font-family: "Mallory Book", sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  margin-bottom: 20px;
+  line-height: 30px;
+}

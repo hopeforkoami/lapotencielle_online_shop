@@ -59,6 +59,23 @@ const Products: FC = () => {
 
         return compar % 3 === 0 ;
     }
+    const getTitleColor = ( title: string ) => {
+        switch (title?.replaceAll("-", " ")) {
+            case "FACIAL CARE":
+                return "white";
+                break;
+            case "HAIR CARE":
+                return "white";
+                break;
+            case "ACCESSORIES & TOOLS":
+                return "white";
+                break;
+        
+            default:
+                return "#0a0a0a";
+                break;
+        }
+    }
 
     const getPageHeader = ( title: string ) => {
         switch (title?.replaceAll("-", " ")) {
@@ -196,7 +213,7 @@ const Products: FC = () => {
                     <div className="row">
                         <div className="col span_6 ">
                             <div className="inner-wrap">
-                                <h1 className="colored_in_black">{groupName}</h1> 						
+                                <h1 style={{ color: getTitleColor(group ?? '')}}>{groupName}</h1> 						
                                 <span className="subheader"></span>
                             </div>
                         </div>
@@ -260,7 +277,7 @@ const Products: FC = () => {
             </ul>
             :
             <h2>
-                <b>Produits non dispobinible</b>
+                {/* <b>Produits non dispobinible</b> */}
             </h2>
         }
 		
