@@ -67,7 +67,9 @@ const Products: FC = () => {
             case "HAIR CARE":
                 return "white";
                 break;
-            
+            case "ACCESSORIES & TOOLS":
+                return "white";
+                break;
         
             default:
                 return "#0a0a0a";
@@ -275,7 +277,7 @@ const Products: FC = () => {
             </ul>
             :
             <h2>
-                <b>Produits non dispobinible</b>
+                {/* <b>Produits non dispobinible</b> */}
             </h2>
         }
 		

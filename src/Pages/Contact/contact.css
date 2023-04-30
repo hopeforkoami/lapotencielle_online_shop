@@ -25,3 +25,12 @@
 .about_align_left{
   text-align: left;
 }
+.about_border_box{
+  box-sizing: border-box;
+}
+.hidden{
+  display: none!important;
+}
+.visible{
+  display: block!important;
+}

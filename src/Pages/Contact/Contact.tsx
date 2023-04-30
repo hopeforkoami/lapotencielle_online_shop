@@ -2,12 +2,17 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Footer from "../../Layouts/Footer";
 import axiosInstance from '../../Utils/axios_manager';
+import "./contact.css"
 
 const Contact = () => {
   const [clientName, setClientName] = useState('');
   const [clientEmail, setClientEmail] = useState('');
   const [clientPhone, setClientPhone] = useState('');
   const [clientMessage, setClientMessage] = useState('');
+  const [mailResponse, setMailResponse] = useState('');
+  function sleep() {
+    return new Promise(resolve => setTimeout(resolve, 2000));
+  }
   const sendEmail = () => {
     const mailerPass = 'LapotMailer2@23';
     const mailerUser = 'lapotencielle@nogdevhouse.com';
@@ -19,7 +24,14 @@ const Contact = () => {
         message: clientMessage
     })
     .then((response: any) => {
-      console.log(response);
+      setClientEmail('');
+      setClientName('');
+      setClientPhone('');
+      setClientMessage('');
+      setMailResponse("Your Message has been sent successfully");
+      const msgbox = document.getElementById('responsebox');
+      msgbox?.classList.add('visible');
+      msgbox?.classList.remove('hidden');
     });
   }
   return (
@@ -96,7 +108,7 @@ const Contact = () => {
     </span>
     <br/>
     <span className="wpcf7-form-control-wrap" data-name="tel-118">
-      <input size={40} className="wpcf7-form-control wpcf7-text wpcf7-tel wpcf7-validates-as-tel" aria-invalid="false" placeholder="Your Phone N;umber" value={clientPhone} type="tel" name={clientPhone}
+      <input size={40} className="wpcf7-form-control wpcf7-text wpcf7-tel wpcf7-validates-as-tel" aria-invalid="false" placeholder="Your Phone Number" value={clientPhone} type="tel" name={clientPhone}
       onChange={(event) =>
         setClientPhone(event.target.value)
       }
@@ -104,7 +116,7 @@ const Contact = () => {
     </span>
     <br/>
     <span className="wpcf7-form-control-wrap" data-name="textarea-739">
-      <textarea cols={40} rows={10} className="wpcf7-form-control wpcf7-textarea" aria-invalid="false" placeholder="Your Message" name={clientMessage}
+      <textarea cols={40} rows={10} className="wpcf7-form-control wpcf7-textarea" aria-invalid="false" placeholder="Your Message" name={clientMessage} value={clientMessage}
       onChange={(event) =>
         setClientMessage(event.target.value)
       }
@@ -112,10 +124,10 @@ const Contact = () => {
     </span>
   </p>
   <p style={{paddingBottom: '0px'}}>
-    <input className="wpcf7-form-control has-spinner" id="submit_btn" type="submit" value="Get a Call Back"/>
+    <input className="wpcf7-form-control has-spinner" id="submit_btn" type="button" value="Get a Call Back" onClick={sendEmail}/>
     <span className="wpcf7-spinner"></span>
   </p>
-  <div className="wpcf7-response-output" aria-hidden="true"></div>
+  <div id="responsebox" className="hidden" style={{color:'green',border:'2px solid green',padding:'0.5em',textAlign:'center'}}>{mailResponse}</div>
 </form>
 </div>
 			</div> 
