@@ -1007,7 +1007,7 @@ const Home: FC<{  }> = (  ) => {
 
 
 
-<div id="service_inner_sec" data-midnight="" data-column-margin="default" className="wpb_row vc_row-fluid vc_row inner_row   right_padding_80px left_padding_80px "   ><div className="row-bg-wrap"> <div className="row-bg" ></div> </div><div className="row_col_wrap_12_inner col span_12  center">
+{/* <div id="service_inner_sec" data-midnight="" data-column-margin="default" className="wpb_row vc_row-fluid vc_row inner_row   right_padding_80px left_padding_80px "   ><div className="row-bg-wrap"> <div className="row-bg" ></div> </div><div className="row_col_wrap_12_inner col span_12  center">
 	
 	{
 		bestSellerProducts.slice(0,4).map((product, id) => <ProductBox key={id} productListLength={4} product={product}  /> )
@@ -1218,7 +1218,243 @@ const Home: FC<{  }> = (  ) => {
 		</div> 
 	</div>
 	</div>  */}
+{/* </div>
+
+</div> */} 
+
+{/* ceci est le debut */}
+
+<div id="service_inner_sec" data-midnight="" data-column-margin="default" className="wpb_row vc_row-fluid vc_row inner_row   right_padding_80px left_padding_80px " >
+	<div className="row-bg-wrap"> <div className="row-bg"></div> </div><div className="row_col_wrap_12_inner col span_12  center">
+		<div className="vc_col-sm-3 vc_col-xs-12 wpb_column column_container vc_column_container col child_column no-extra-padding inherit_tablet inherit_phone one-fourths clear-both" data-padding-pos="all" data-has-bg-color="false" data-bg-color="" data-bg-opacity="1" data-animation="" data-delay="0">
+			<div className="vc_column-inner">
+			<div className="wpb_wrapper">
+				<div className="img-with-aniamtion-wrap " data-max-width="100%" data-max-width-mobile="default" data-shadow="none" data-animation="fade-in">
+				<div className="inner">
+					<div className="hover-wrap" style={{opacity: 1}}> 
+						<div className="hover-wrap-inner">
+							<a href="#" target="_self" className="img-loaded">
+								<img className="img-with-animation skip-lazy nectar-lazy animated-in loaded" data-delay="0" data-animation="fade-in" src="https://www.lapotencielle.com/wp-content/uploads/2022/01/o4-1637218448.jpg" alt="" sizes="(min-width: 1450px) 75vw, (min-width: 1000px) 85vw, 100vw"  srcSet="https://www.lapotencielle.com/wp-content/uploads/2022/01/o4-1637218448.jpg 776w, https://www.lapotencielle.com/wp-content/uploads/2022/01/o4-1637218448-300x387.jpg 300w, https://www.lapotencielle.com/wp-content/uploads/2022/01/o4-1637218448-600x773.jpg 600w, https://www.lapotencielle.com/wp-content/uploads/2022/01/o4-1637218448-233x300.jpg 233w, https://www.lapotencielle.com/wp-content/uploads/2022/01/o4-1637218448-768x990.jpg 768w" width="776" height="1000"/>
+							</a>
+						</div>
+					</div>
+				</div>
+				</div><div className="img-with-aniamtion-wrap " data-max-width="100%" data-max-width-mobile="default" data-shadow="none" data-animation="fade-in">
+				<div className="inner">
+					<div className="hover-wrap" style={{opacity: 1}}> 
+						<div className="hover-wrap-inner">
+							<a href="#" target="_self" className="img-loaded">
+								<img className="img-with-animation skip-lazy hover_show nectar-lazy animated-in loaded" data-delay="0" data-animation="fade-in" src="https://www.lapotencielle.com/wp-content/uploads/2022/01/o4a-1637218440-1.jpg" alt="" sizes="(min-width: 1450px) 75vw, (min-width: 1000px) 85vw, 100vw"  srcSet="https://www.lapotencielle.com/wp-content/uploads/2022/01/o4a-1637218440-1.jpg 776w, https://www.lapotencielle.com/wp-content/uploads/2022/01/o4a-1637218440-1-300x387.jpg 300w, https://www.lapotencielle.com/wp-content/uploads/2022/01/o4a-1637218440-1-600x773.jpg 600w, https://www.lapotencielle.com/wp-content/uploads/2022/01/o4a-1637218440-1-233x300.jpg 233w, https://www.lapotencielle.com/wp-content/uploads/2022/01/o4a-1637218440-1-768x990.jpg 768w" width="776" height="1000"/>
+							</a>
+						</div>
+					</div>
+				</div>
+				</div>
+	<div className="wpb_text_column wpb_content_element ">
+		<div className="wpb_wrapper">
+			<p><a style={{fontSize: '13px' , fontWeight: 500}} href="#">ORANGE &amp; VANILLA LUXURIOUS NATURAL BODY OIL</a></p>
+		</div>
+	</div>
+
+
+
+
+	<div className="wpb_text_column wpb_content_element ">
+		<div className="wpb_wrapper">
+			<p style={{textAlign: 'center'}}><a style={{fontSize: '13px', fontWeight: 500}} href="#">$58.00</a></p>
+		</div>
+	</div>
+
+
+
+
+	<div className="wpb_text_column wpb_content_element  hover_show_text">
+		<div className="wpb_wrapper">
+			<p>BODY CARE<br/>
+	<a href="#">Add to Cart</a></p>
+		</div>
+	</div>
+
+
+
+
+			</div> 
+		</div>
+		</div> 
+
+		<div className="vc_col-sm-3 vc_col-xs-12 wpb_column column_container vc_column_container col child_column no-extra-padding inherit_tablet inherit_phone one-fourths right-edge" data-padding-pos="all" data-has-bg-color="false" data-bg-color="" data-bg-opacity="1" data-animation="" data-delay="0">
+			<div className="vc_column-inner">
+			<div className="wpb_wrapper">
+				<div className="img-with-aniamtion-wrap " data-max-width="100%" data-max-width-mobile="default" data-shadow="none" data-animation="fade-in">
+				<div className="inner">
+					<div className="hover-wrap" style={{opacity: 1}}> 
+						<div className="hover-wrap-inner">
+							<a href="#" target="_self" className="img-loaded">
+								<img className="img-with-animation skip-lazy nectar-lazy animated-in loaded" data-delay="0" data-animation="fade-in" src="https://www.lapotencielle.com/wp-content/uploads/2022/01/orduo1-1629471836-1.jpg" alt="" sizes="(min-width: 1450px) 75vw, (min-width: 1000px) 85vw, 100vw"  srcSet="https://www.lapotencielle.com/wp-content/uploads/2022/01/orduo1-1629471836-1.jpg 776w, https://www.lapotencielle.com/wp-content/uploads/2022/01/orduo1-1629471836-1-300x387.jpg 300w, https://www.lapotencielle.com/wp-content/uploads/2022/01/orduo1-1629471836-1-600x773.jpg 600w, https://www.lapotencielle.com/wp-content/uploads/2022/01/orduo1-1629471836-1-233x300.jpg 233w, https://www.lapotencielle.com/wp-content/uploads/2022/01/orduo1-1629471836-1-768x990.jpg 768w" width="776" height="1000"/>
+							</a>
+						</div>
+					</div>
+				</div>
+				</div><div className="img-with-aniamtion-wrap " data-max-width="100%" data-max-width-mobile="default" data-shadow="none" data-animation="fade-in">
+				<div className="inner">
+					<div className="hover-wrap" style={{opacity: 1}}> 
+						<div className="hover-wrap-inner">
+							<a href="#" target="_self" className="img-loaded">
+								<img className="img-with-animation skip-lazy hover_show nectar-lazy animated-in loaded" data-delay="0" data-animation="fade-in" src="https://www.lapotencielle.com/wp-content/uploads/2022/01/orduo1-1629471836-1.jpg" alt="" sizes="(min-width: 1450px) 75vw, (min-width: 1000px) 85vw, 100vw"  srcSet="https://www.lapotencielle.com/wp-content/uploads/2022/01/orduo1-1629471836-1.jpg 776w, https://www.lapotencielle.com/wp-content/uploads/2022/01/orduo1-1629471836-1-300x387.jpg 300w, https://www.lapotencielle.com/wp-content/uploads/2022/01/orduo1-1629471836-1-600x773.jpg 600w, https://www.lapotencielle.com/wp-content/uploads/2022/01/orduo1-1629471836-1-233x300.jpg 233w, https://www.lapotencielle.com/wp-content/uploads/2022/01/orduo1-1629471836-1-768x990.jpg 768w" width="776" height="1000"/>
+							</a>
+						</div>
+					</div>
+				</div>
+				</div>
+	<div className="wpb_text_column wpb_content_element ">
+		<div className="wpb_wrapper">
+			<p><a href="#">ORANGE &amp; VANILLA SKIN GLOW NOURISHMENT CREAM BUTTER &amp; BODY POLISH DUO</a></p>
+		</div>
+	</div>
+
+
+
+
+	<div className="wpb_text_column wpb_content_element ">
+		<div className="wpb_wrapper">
+			<p style={{textAlign: 'center'}}><a style={{fontSize: '13px', fontWeight: 500}} href="#">$119.00</a></p>
+		</div>
+	</div>
+
+
+
+
+	<div className="wpb_text_column wpb_content_element  hover_show_text">
+		<div className="wpb_wrapper">
+			<p>BATH AND BODY<br/>
+	<a href="#">Add to Cart</a></p>
+		</div>
+	</div>
+
+
+
+
+			</div> 
+		</div>
+		</div> 
+
+		<div className="vc_col-sm-3 vc_col-xs-12 wpb_column column_container vc_column_container col child_column no-extra-padding inherit_tablet inherit_phone one-fourths clear-both" data-padding-pos="all" data-has-bg-color="false" data-bg-color="" data-bg-opacity="1" data-animation="" data-delay="0">
+			<div className="vc_column-inner">
+			<div className="wpb_wrapper">
+				<div className="img-with-aniamtion-wrap " data-max-width="100%" data-max-width-mobile="default" data-shadow="none" data-animation="fade-in">
+				<div className="inner">
+					<div className="hover-wrap" style={{opacity: 1}}> 
+						<div className="hover-wrap-inner">
+							<a href="#" target="_self" className="img-loaded">
+								<img className="img-with-animation skip-lazy nectar-lazy animated-in loaded" data-delay="0" data-animation="fade-in" src="https://www.lapotencielle.com/wp-content/uploads/2022/01/o2-1637218600.jpg" alt="" sizes="(min-width: 1450px) 75vw, (min-width: 1000px) 85vw, 100vw" srcSet="https://www.lapotencielle.com/wp-content/uploads/2022/01/o2-1637218600.jpg 776w, https://www.lapotencielle.com/wp-content/uploads/2022/01/o2-1637218600-300x387.jpg 300w, https://www.lapotencielle.com/wp-content/uploads/2022/01/o2-1637218600-600x773.jpg 600w, https://www.lapotencielle.com/wp-content/uploads/2022/01/o2-1637218600-233x300.jpg 233w, https://www.lapotencielle.com/wp-content/uploads/2022/01/o2-1637218600-768x990.jpg 768w" width="776" height="1000"/>
+							</a>
+						</div>
+					</div>
+				</div>
+				</div><div className="img-with-aniamtion-wrap " data-max-width="100%" data-max-width-mobile="default" data-shadow="none" data-animation="fade-in">
+				<div className="inner">
+					<div className="hover-wrap" style={{opacity: 1}}> 
+						<div className="hover-wrap-inner">
+							<a href="#" target="_self" className="img-loaded">
+								<img className="img-with-animation skip-lazy hover_show nectar-lazy animated-in loaded" data-delay="0" data-animation="fade-in" src="https://www.lapotencielle.com/wp-content/uploads/2022/01/o2a-1637218595.jpg" alt="" sizes="(min-width: 1450px) 75vw, (min-width: 1000px) 85vw, 100vw"  srcSet="https://www.lapotencielle.com/wp-content/uploads/2022/01/o2a-1637218595.jpg 776w, https://www.lapotencielle.com/wp-content/uploads/2022/01/o2a-1637218595-300x387.jpg 300w, https://www.lapotencielle.com/wp-content/uploads/2022/01/o2a-1637218595-600x773.jpg 600w, https://www.lapotencielle.com/wp-content/uploads/2022/01/o2a-1637218595-233x300.jpg 233w, https://www.lapotencielle.com/wp-content/uploads/2022/01/o2a-1637218595-768x990.jpg 768w" width="776" height="1000"/>
+							</a>
+						</div>
+					</div>
+				</div>
+				</div>
+	<div className="wpb_text_column wpb_content_element ">
+		<div className="wpb_wrapper">
+			<p><a href="#">ORANGE &amp; VANILLA LUXURIOUS NATURAL BODY CREAM</a></p>
+		</div>
+	</div>
+
+
+
+
+	<div className="wpb_text_column wpb_content_element ">
+		<div className="wpb_wrapper">
+			<p style={{textAlign: 'center'}}><a style={{fontSize: '13px' , fontWeight: 500}} href="#">$60.00</a></p>
+		</div>
+	</div>
+
+
+
+
+	<div className="wpb_text_column wpb_content_element  hover_show_text">
+		<div className="wpb_wrapper">
+			<p>BODY CARE<br/>
+	<a href="#">Add to Cart</a></p>
+		</div>
+	</div>
+
+
+
+
+			</div> 
+		</div>
+		</div> 
+
+		<div className="vc_col-sm-3 vc_col-xs-12 wpb_column column_container vc_column_container col child_column no-extra-padding inherit_tablet inherit_phone one-fourths right-edge" data-padding-pos="all" data-has-bg-color="false" data-bg-color="" data-bg-opacity="1" data-animation="" data-delay="0">
+			<div className="vc_column-inner">
+			<div className="wpb_wrapper">
+				<div className="img-with-aniamtion-wrap " data-max-width="100%" data-max-width-mobile="default" data-shadow="none" data-animation="fade-in">
+				<div className="inner">
+					<div className="hover-wrap" style={{opacity: 1}}> 
+						<div className="hover-wrap-inner">
+							<a href="#" target="_self" className="img-loaded">
+								<img className="img-with-animation skip-lazy nectar-lazy animated-in loaded" data-delay="0" data-animation="fade-in" src="https://www.lapotencielle.com/wp-content/uploads/2022/01/set2a-1629404118-1.jpg" alt="" sizes="(min-width: 1450px) 75vw, (min-width: 1000px) 85vw, 100vw"  srcSet="https://www.lapotencielle.com/wp-content/uploads/2022/01/set2a-1629404118-1.jpg 776w, https://www.lapotencielle.com/wp-content/uploads/2022/01/set2a-1629404118-1-300x387.jpg 300w, https://www.lapotencielle.com/wp-content/uploads/2022/01/set2a-1629404118-1-600x773.jpg 600w, https://www.lapotencielle.com/wp-content/uploads/2022/01/set2a-1629404118-1-233x300.jpg 233w, https://www.lapotencielle.com/wp-content/uploads/2022/01/set2a-1629404118-1-768x990.jpg 768w" width="776" height="1000"/>
+							</a>
+						</div>
+					</div>
+				</div>
+				</div><div className="img-with-aniamtion-wrap " data-max-width="100%" data-max-width-mobile="default" data-shadow="none" data-animation="fade-in">
+				<div className="inner">
+					<div className="hover-wrap" style={{opacity: 1}}> 
+						<div className="hover-wrap-inner">
+							<a href="#" target="_self" className="img-loaded">
+								<img className="img-with-animation skip-lazy hover_show nectar-lazy animated-in loaded" data-delay="0" data-animation="fade-in" src="https://www.lapotencielle.com/wp-content/uploads/2022/01/set2a-1629404118-1.jpg" alt="" sizes="(min-width: 1450px) 75vw, (min-width: 1000px) 85vw, 100vw"  srcSet="https://www.lapotencielle.com/wp-content/uploads/2022/01/set2a-1629404118-1.jpg 776w, https://www.lapotencielle.com/wp-content/uploads/2022/01/set2a-1629404118-1-300x387.jpg 300w, https://www.lapotencielle.com/wp-content/uploads/2022/01/set2a-1629404118-1-600x773.jpg 600w, https://www.lapotencielle.com/wp-content/uploads/2022/01/set2a-1629404118-1-233x300.jpg 233w, https://www.lapotencielle.com/wp-content/uploads/2022/01/set2a-1629404118-1-768x990.jpg 768w" width="776" height="1000"/>
+							</a>
+						</div>
+					</div>
+				</div>
+				</div>
+	<div className="wpb_text_column wpb_content_element ">
+		<div className="wpb_wrapper">
+			<p><a href="#">LILY &amp; LAVENDER SKIN PAMPER &amp; NOURISHING SPA TRIO SET</a></p>
+		</div>
+	</div>
+
+
+
+
+	<div className="wpb_text_column wpb_content_element ">
+		<div className="wpb_wrapper">
+			<p style={{textAlign: 'center'}}><a style={{fontSize: '13px' , fontWeight: 500}} href="#">$184.00</a></p>
+		</div>
+	</div>
+
+
+
+
+	<div className="wpb_text_column wpb_content_element  hover_show_text">
+		<div className="wpb_wrapper">
+			<p>GIFTS &amp; SETS<br/>
+	<a href="#">Add to Cart</a></p>
+		</div>
+	</div>
+
+
+
+
+			</div> 
+		</div>
+		</div> 
 </div></div>
+
+
+{/* ceci est la fin */}
+
+
 			</div> 
 		</div>
 	</div> 
@@ -1551,7 +1787,7 @@ what moisturizer to use. What&#8217;s the diffe&#8230;</p>
 		</div>
 	</div> 
 </div></div>
-		<div id="instagram_sec"  data-column-margin="default" data-midnight="dark"  className="wpb_row vc_row-fluid vc_row full-width-content  vc_row-o-equal-height vc_row-flex "  style={{ paddingTop: "120px", paddingBottom: "15px" }} ><div className="row-bg-wrap" data-bg-animation="none" data-bg-overlay="false"><div className="inner-wrap"><div className="row-bg using-bg-color"  style={{ backgroundColor: "#f5f5f5" }}></div></div></div><div className="row_col_wrap_12 col span_12 dark left">
+		{/* <div id="instagram_sec"  data-column-margin="default" data-midnight="dark"  className="wpb_row vc_row-fluid vc_row full-width-content  vc_row-o-equal-height vc_row-flex "  style={{ paddingTop: "120px", paddingBottom: "15px" }} ><div className="row-bg-wrap" data-bg-animation="none" data-bg-overlay="false"><div className="inner-wrap"><div className="row-bg using-bg-color"  style={{ backgroundColor: "#f5f5f5" }}></div></div></div><div className="row_col_wrap_12 col span_12 dark left">
 	<div  className="vc_col-sm-12 wpb_column column_container vc_column_container col no-extra-padding inherit_tablet inherit_phone "  data-padding-pos="all" data-has-bg-color="false" data-bg-color="" data-bg-opacity="1" data-animation="" data-delay="0" >
 		<div className="vc_column-inner" >
 			<div className="wpb_wrapper">
@@ -1671,7 +1907,145 @@ paddingTop: "10px" }} >Instagram</div>
 			</div> 
 		</div>
 	</div> 
+</div>
+		</div> */}
+		{/* debut */}
+
+		<div id="instagram_sec" data-column-margin="default" data-midnight="dark" className="wpb_row vc_row-fluid vc_row full-width-content  vc_row-o-equal-height vc_row-flex  " style={{paddingTop: '120px', paddingBottom: '15px'}}><div className="row-bg-wrap" data-bg-animation="none" data-bg-overlay="false"><div className="inner-wrap"><div className="row-bg using-bg-color" style={{backgroundColor: '#f5f5f5'}}></div></div></div><div className="row_col_wrap_12 col span_12 dark left">
+	<div className="vc_col-sm-12 wpb_column column_container vc_column_container col no-extra-padding inherit_tablet inherit_phone " data-padding-pos="all" data-has-bg-color="false" data-bg-color="" data-bg-opacity="1" data-animation="" data-delay="0">
+		<div className="vc_column-inner">
+			<div className="wpb_wrapper">
+				<div id="insta_inner_image_sec" data-midnight="" data-column-margin="default" className="wpb_row vc_row-fluid vc_row inner_row   right_padding_100px right_padding_tablet_80px left_padding_phone_0px "><div className="row-bg-wrap"> <div className="row-bg"></div> </div><div className="row_col_wrap_12_inner col span_12  left">
+	<div className="vc_col-sm-2 wpb_column column_container vc_column_container col child_column no-extra-padding inherit_tablet inherit_phone " data-padding-pos="all" data-has-bg-color="false" data-bg-color="" data-bg-opacity="1" data-animation="" data-delay="0">
+		<div className="vc_column-inner">
+		<div className="wpb_wrapper">
+			<div className="img-with-aniamtion-wrap " data-max-width="100%" data-max-width-mobile="default" data-shadow="none" data-animation="fade-in">
+      <div className="inner">
+        <div className="hover-wrap" style={{opacity: 1}}> 
+          <div className="hover-wrap-inner img-loaded">
+            <img className="img-with-animation skip-lazy insta_img_one nectar-lazy animated-in loaded" data-delay="0" data-animation="fade-in" src="https://www.lapotencielle.com/wp-content/uploads/2022/01/290x290a.jpg" alt="" sizes="(min-width: 1450px) 75vw, (min-width: 1000px) 85vw, 100vw"  srcSet="https://www.lapotencielle.com/wp-content/uploads/2022/01/290x290a.jpg 290w, https://www.lapotencielle.com/wp-content/uploads/2022/01/290x290a-150x150.jpg 150w, https://www.lapotencielle.com/wp-content/uploads/2022/01/290x290a-100x100.jpg 100w, https://www.lapotencielle.com/wp-content/uploads/2022/01/290x290a-140x140.jpg 140w" width="290" height="290"/>
+          </div>
+        </div>
+      </div>
+    </div>
+		</div> 
+	</div>
+	</div> 
+
+	<div className="vc_col-sm-2 wpb_column column_container vc_column_container col child_column no-extra-padding inherit_tablet inherit_phone " data-padding-pos="all" data-has-bg-color="false" data-bg-color="" data-bg-opacity="1" data-animation="" data-delay="0">
+		<div className="vc_column-inner">
+		<div className="wpb_wrapper">
+			<div className="img-with-aniamtion-wrap " data-max-width="100%" data-max-width-mobile="default" data-shadow="none" data-animation="fade-in">
+      <div className="inner">
+        <div className="hover-wrap" style={{opacity: 1}}> 
+          <div className="hover-wrap-inner img-loaded">
+            <img className="img-with-animation skip-lazy insta_img_two nectar-lazy animated-in loaded" data-delay="0" data-animation="fade-in" src="https://www.lapotencielle.com/wp-content/uploads/2023/01/290x290b.jpeg" alt="" sizes="(min-width: 1450px) 75vw, (min-width: 1000px) 85vw, 100vw"  srcSet="https://www.lapotencielle.com/wp-content/uploads/2023/01/290x290b.jpeg 1160w, https://www.lapotencielle.com/wp-content/uploads/2023/01/290x290b-300x300.jpeg 300w, https://www.lapotencielle.com/wp-content/uploads/2023/01/290x290b-1024x1024.jpeg 1024w, https://www.lapotencielle.com/wp-content/uploads/2023/01/290x290b-150x150.jpeg 150w, https://www.lapotencielle.com/wp-content/uploads/2023/01/290x290b-768x768.jpeg 768w, https://www.lapotencielle.com/wp-content/uploads/2023/01/290x290b-100x100.jpeg 100w, https://www.lapotencielle.com/wp-content/uploads/2023/01/290x290b-140x140.jpeg 140w, https://www.lapotencielle.com/wp-content/uploads/2023/01/290x290b-500x500.jpeg 500w, https://www.lapotencielle.com/wp-content/uploads/2023/01/290x290b-350x350.jpeg 350w, https://www.lapotencielle.com/wp-content/uploads/2023/01/290x290b-1000x1000.jpeg 1000w, https://www.lapotencielle.com/wp-content/uploads/2023/01/290x290b-800x800.jpeg 800w, https://www.lapotencielle.com/wp-content/uploads/2023/01/290x290b-600x600.jpeg 600w" width="1160" height="1160"/>
+          </div>
+        </div>
+      </div>
+    </div>
+		</div> 
+	</div>
+	</div> 
+
+	<div className="vc_col-sm-2 wpb_column column_container vc_column_container col child_column no-extra-padding inherit_tablet inherit_phone " data-padding-pos="all" data-has-bg-color="false" data-bg-color="" data-bg-opacity="1" data-animation="" data-delay="0">
+		<div className="vc_column-inner">
+		<div className="wpb_wrapper">
+			<div className="img-with-aniamtion-wrap " data-max-width="100%" data-max-width-mobile="default" data-shadow="none" data-animation="fade-in">
+      <div className="inner">
+        <div className="hover-wrap" style={{opacity: 1}}> 
+          <div className="hover-wrap-inner img-loaded">
+            <img className="img-with-animation skip-lazy insta_img_three nectar-lazy animated-in loaded" data-delay="0" data-animation="fade-in" src="https://www.lapotencielle.com/wp-content/uploads/2022/01/290x290c.jpg" alt="" sizes="(min-width: 1450px) 75vw, (min-width: 1000px) 85vw, 100vw"  srcSet="https://www.lapotencielle.com/wp-content/uploads/2022/01/290x290c.jpg 290w, https://www.lapotencielle.com/wp-content/uploads/2022/01/290x290c-150x150.jpg 150w, https://www.lapotencielle.com/wp-content/uploads/2022/01/290x290c-100x100.jpg 100w, https://www.lapotencielle.com/wp-content/uploads/2022/01/290x290c-140x140.jpg 140w" width="290" height="290"/>
+          </div>
+        </div>
+      </div>
+    </div>
+		</div> 
+	</div>
+	</div> 
+
+	<div className="vc_col-sm-2 wpb_column column_container vc_column_container col child_column no-extra-padding inherit_tablet inherit_phone " data-padding-pos="all" data-has-bg-color="false" data-bg-color="" data-bg-opacity="1" data-animation="" data-delay="0">
+		<div className="vc_column-inner">
+		<div className="wpb_wrapper">
+			<div className="img-with-aniamtion-wrap " data-max-width="100%" data-max-width-mobile="default" data-shadow="none" data-animation="fade-in">
+      <div className="inner">
+        <div className="hover-wrap" style={{opacity: 1}}> 
+          <div className="hover-wrap-inner img-loaded">
+            <img className="img-with-animation skip-lazy insta_img_four nectar-lazy animated-in loaded" data-delay="0" data-animation="fade-in" src="https://www.lapotencielle.com/wp-content/uploads/2022/01/290x290d.jpg" alt="" sizes="(min-width: 1450px) 75vw, (min-width: 1000px) 85vw, 100vw" srcSet="https://www.lapotencielle.com/wp-content/uploads/2022/01/290x290d.jpg 290w, https://www.lapotencielle.com/wp-content/uploads/2022/01/290x290d-150x150.jpg 150w, https://www.lapotencielle.com/wp-content/uploads/2022/01/290x290d-100x100.jpg 100w, https://www.lapotencielle.com/wp-content/uploads/2022/01/290x290d-140x140.jpg 140w" width="290" height="290"/>
+          </div>
+        </div>
+      </div>
+    </div>
+		</div> 
+	</div>
+	</div> 
+
+	<div className="vc_col-sm-2 wpb_column column_container vc_column_container col child_column no-extra-padding inherit_tablet inherit_phone " data-padding-pos="all" data-has-bg-color="false" data-bg-color="" data-bg-opacity="1" data-animation="" data-delay="0">
+		<div className="vc_column-inner">
+		<div className="wpb_wrapper">
+			<div className="img-with-aniamtion-wrap " data-max-width="100%" data-max-width-mobile="default" data-shadow="none" data-animation="fade-in">
+      <div className="inner">
+        <div className="hover-wrap" style={{opacity: 1}}> 
+          <div className="hover-wrap-inner img-loaded">
+            <img className="img-with-animation skip-lazy insta_img_five nectar-lazy animated-in loaded" data-delay="0" data-animation="fade-in" src="https://www.lapotencielle.com/wp-content/uploads/2022/01/290x290e.jpg" alt="" sizes="(min-width: 1450px) 75vw, (min-width: 1000px) 85vw, 100vw" srcSet="https://www.lapotencielle.com/wp-content/uploads/2022/01/290x290e.jpg 290w, https://www.lapotencielle.com/wp-content/uploads/2022/01/290x290e-150x150.jpg 150w, https://www.lapotencielle.com/wp-content/uploads/2022/01/290x290e-100x100.jpg 100w, https://www.lapotencielle.com/wp-content/uploads/2022/01/290x290e-140x140.jpg 140w" width="290" height="290"/>
+          </div>
+        </div>
+      </div>
+    </div>
+		</div> 
+	</div>
+	</div> 
+
+	<div className="vc_col-sm-2 wpb_column column_container vc_column_container col child_column no-extra-padding inherit_tablet inherit_phone " data-padding-pos="all" data-has-bg-color="false" data-bg-color="" data-bg-opacity="1" data-animation="" data-delay="0">
+		<div className="vc_column-inner">
+		<div className="wpb_wrapper">
+			<div className="img-with-aniamtion-wrap " data-max-width="100%" data-max-width-mobile="default" data-shadow="none" data-animation="fade-in">
+      <div className="inner">
+        <div className="hover-wrap" style={{opacity: 1}}> 
+          <div className="hover-wrap-inner img-loaded">
+            <img className="img-with-animation skip-lazy insta_img_six nectar-lazy animated-in loaded" data-delay="0" data-animation="fade-in" src="https://www.lapotencielle.com/wp-content/uploads/2022/01/290x290f.jpg" alt="" sizes="(min-width: 1450px) 75vw, (min-width: 1000px) 85vw, 100vw"  srcSet="https://www.lapotencielle.com/wp-content/uploads/2022/01/290x290f.jpg 290w, https://www.lapotencielle.com/wp-content/uploads/2022/01/290x290f-150x150.jpg 150w, https://www.lapotencielle.com/wp-content/uploads/2022/01/290x290f-100x100.jpg 100w, https://www.lapotencielle.com/wp-content/uploads/2022/01/290x290f-140x140.jpg 140w" width="290" height="290"/>
+          </div>
+        </div>
+      </div>
+    </div>
+		</div> 
+	</div>
+	</div> 
 </div></div>
+	<div className="wpb_raw_code wpb_content_element wpb_raw_html">
+		<div className="wpb_wrapper">
+			<a href="https://www.instagram.com/lapotencielle">
+		<div className="c-ip-instagram__info">
+				<svg className="svg-inline--fa fa-instagram fa-w-14 fa-2x" aria-hidden="true" data-prefix="fab" data-icon="instagram" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg="">
+					<path fill="currentColor" d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z">
+					</path>
+				</svg>{/*<!-- <i className="fab fa-instagram fa-2x"></i> -->*/}
+		</div>
+		</a>
+		<div className="c-ip-instagram__insta" style={{
+		fontSize: '20px',
+		textTransform: 'uppercase',
+		paddingTop: '10px'}}>Instagram</div>
+			<div className="c-ip-instagram__title" style={{fontSize: '22px'}}>
+			@lapotencielle
+			</div>
+		</div>
+</div>
+		</div>
+	</div>
+
+			</div> 
+		</div>
+	</div> 
+</div></div>
+
+
+
+
+
+		{/* fin */}
+
+
 		</div>
 	</div>
 	
@@ -1681,7 +2055,7 @@ paddingTop: "10px" }} >Instagram</div>
     {/* Footer  */}
 
 
- 
+{/*  
 
 </div>
 
@@ -1790,7 +2164,7 @@ paddingTop: "10px" }} >Instagram</div>
 				<div className="bottom-meta-wrap"></div> </div>  
 				</div>
 		
-</div>
+</div> */}
             </>
         )  
     }
