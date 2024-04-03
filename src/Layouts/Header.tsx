@@ -4,6 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from '../Hooks/customSelector'; 
 import { setUser } from '../Redux/Reducers/userReducer';
 import { RootState } from '../Redux/store';
+//importing the special css file for the header
+import './header.css';
  
 import { Formik, Field, Form, FormikProps } from 'formik'
 import * as yup from 'yup';
