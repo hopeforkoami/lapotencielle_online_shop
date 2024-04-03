@@ -1499,7 +1499,7 @@ getting the right amount of nutrients your skin deserves.</span></p>
       <div className="inner">
         <div className="hover-wrap"> 
           <div className="hover-wrap-inner">
-            <img className="img-with-animation skip-lazy  nectar-lazy" data-delay="0" height="2304" width="1728" data-animation="fade-in" data-nectar-img-src="https://www.lapotencielle.com/wp-content/uploads/2022/01/1627069191-our-commitment2.png" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%201728%202304'%2F%3E" alt="" data-nectar-img-srcset="https://www.lapotencielle.com/wp-content/uploads/2022/01/1627069191-our-commitment2.png 1728w, https://www.lapotencielle.com/wp-content/uploads/2022/01/1627069191-our-commitment2-300x400.png 300w, https://www.lapotencielle.com/wp-content/uploads/2022/01/1627069191-our-commitment2-600x800.png 600w, https://www.lapotencielle.com/wp-content/uploads/2022/01/1627069191-our-commitment2-225x300.png 225w, https://www.lapotencielle.com/wp-content/uploads/2022/01/1627069191-our-commitment2-768x1024.png 768w, https://www.lapotencielle.com/wp-content/uploads/2022/01/1627069191-our-commitment2-1152x1536.png 1152w, https://www.lapotencielle.com/wp-content/uploads/2022/01/1627069191-our-commitment2-1536x2048.png 1536w" sizes="(min-width: 1450px) 75vw, (min-width: 1000px) 85vw, 100vw" />
+            <img className="img-with-animation skip-lazy  nectar-lazy" data-delay="0" height="2304" width="1728" data-animation="fade-in" data-nectar-img-src="./assets/wp-content/uploads/2022/01/1627069191-our-commitment2.jpeg" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%201728%202304'%2F%3E" alt="" data-nectar-img-srcset="./assets/wp-content/uploads/2022/01/1627069191-our-commitment2.jpeg 1728w, ./assets/wp-content/uploads/2022/01/1627069191-our-commitment2.jpeg 300w, ./assets/wp-content/uploads/2022/01/1627069191-our-commitment2.jpeg 600w, ./assets/wp-content/uploads/2022/01/1627069191-our-commitment2.jpeg 225w, ./assets/wp-content/uploads/2022/01/1627069191-our-commitment2.jpeg 768w, ./assets/wp-content/uploads/2022/01/1627069191-our-commitment2.jpeg 1152w, ./assets/wp-content/uploads/2022/01/1627069191-our-commitment2.jpeg 1536w" sizes="(min-width: 1450px) 75vw, (min-width: 1000px) 85vw, 100vw" />
           </div>
         </div>
       </div>
@@ -1538,7 +1538,7 @@ getting the right amount of nutrients your skin deserves.</span></p>
           <div className="hover-wrap-inner">
             <img className="img-with-animation skip-lazy  nectar-lazy" data-delay="0" height="112" width="234"
 			data-animation="fade-in" 
-			data-nectar-img-src="https://www.lapotencielle.com/wp-content/uploads/2022/01/images-logo_solo2.png" 
+			data-nectar-img-src="./assets/wp-content/uploads/2022/01/images-logo_solo2.png" 
 			src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%20234%20112'%2F%3E" alt=""  />
           </div>
         </div>
@@ -1571,7 +1571,7 @@ NEWSLETTER</li>
 	<div className="wpb_widgetised_column wpb_content_element">
 		<div id="sidebar" data-nectar-ss="" className="wpb_wrapper">
 			<div id="newsletterwidgetminimal-4" className="widget widget_newsletterwidgetminimal"><h4>Get latest news, offers and discounts.</h4><div className="tnp tnp-widget-minimal">
-		<form className="tnp-form" action="https://www.lapotencielle.com/?na=s" method="post">
+		<form className="tnp-form" action="#" method="post">
 			{/* <input type="hidden" name="nr" value="widget-minimal"/> */}
 			<input className="tnp-email" type="email" required name="ne"   placeholder="your email" />
 			<input className="tnp-submit" type="submit" value="Subscribe" />
