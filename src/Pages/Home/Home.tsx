@@ -18,6 +18,8 @@ import ProductBox from '../../Components/ProductBox';
 //Utils
 import { products, products2 } from '../../Utils/products';
 import AllService from '../service';
+/** import customised css for the home */
+import './Home.css';
 
 const Home: FC<{  }> = (  ) => { 
 
@@ -1696,17 +1698,18 @@ what moisturizer to use. What&#8217;s the diffe&#8230;</p>
 		</div>
 	</div> 
 </div></div>
-		<div id="brand_sec"  data-column-margin="default" data-midnight="dark"  className="wpb_row vc_row-fluid vc_row full-width-section  "  style={{paddingTop: "0px", paddingBottom: "60px" }}><div className="row-bg-wrap" data-bg-animation="none" data-bg-overlay="false"><div className="inner-wrap"><div className="row-bg using-bg-color"  style={{ backgroundColor: "#f5f5f5" }}></div></div></div><div className="row_col_wrap_12 col span_12 dark left">
-	<div  className="vc_col-sm-1/5 wpb_column column_container vc_column_container col no-extra-padding inherit_tablet inherit_phone "  data-padding-pos="all" data-has-bg-color="false" data-bg-color="" data-bg-opacity="1" data-animation="" data-delay="0" >
+		<div id="brand_sec"  data-column-margin="default" data-midnight="dark"  className="wpb_row vc_row-fluid vc_row full-width-section  "  style={{paddingTop: "0px", paddingBottom: "60px" }}><div className="row-bg-wrap" data-bg-animation="none" data-bg-overlay="false"><div className="inner-wrap"><div className="row-bg using-bg-color"  style={{ backgroundColor: "#f5f5f5" }}></div></div></div><div className="row_col_wrap_12 col span_12 dark center  justify_content_center">
+	{/* <div  className="vc_col-sm-1/5 wpb_column column_container vc_column_container col no-extra-padding inherit_tablet inherit_phone "  data-padding-pos="all" data-has-bg-color="false" data-bg-color="" data-bg-opacity="1" data-animation="" data-delay="0" >
 		<div className="vc_column-inner" >
 			<div className="wpb_wrapper">
 				<div className="img-with-aniamtion-wrap " data-max-width="100%" data-max-width-mobile="default" data-shadow="none" data-animation="fade-in" >
       <div className="inner">
         <div className="hover-wrap"> 
           <div className="hover-wrap-inner">
-            <a href="our-age-gracefully-products/index.html" target="_self" className="">
-              <img className="img-with-animation skip-lazy grey_bg_image nectar-lazy" data-delay="0" height="38" width="350" data-animation="fade-in" data-nectar-img-src="https://www.lapotencielle.com/wp-content/uploads/2022/01/age.png" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%20350%2038'%2F%3E" alt="" data-nectar-img-srcset="https://www.lapotencielle.com/wp-content/uploads/2022/01/age.png 350w, https://www.lapotencielle.com/wp-content/uploads/2022/01/age-300x33.png 300w" sizes="(min-width: 1450px) 75vw, (min-width: 1000px) 85vw, 100vw" />
-            </a>
+					<Link to="/products/OUR-AGE-GRACEFULLY-PRODUCTS/age" >
+							<img className="img-with-animation skip-lazy grey_bg_image nectar-lazy" data-delay="0" height="38" width="350" data-animation="fade-in" data-nectar-img-src="./assets/wp-content/uploads/2022/01/age.png" src="./assets/wp-content/uploads/2022/01/age.png" alt="" data-nectar-img-srcset="./assets/wp-content/uploads/2022/01/age.png 350w, ./assets/wp-content/uploads/2022/01/age-300x33.png 300w" sizes="(min-width: 1450px) 75vw, (min-width: 1000px) 85vw, 100vw" />
+					</Link>
+           
           </div>
         </div>
       </div>
@@ -1722,9 +1725,10 @@ what moisturizer to use. What&#8217;s the diffe&#8230;</p>
       <div className="inner">
         <div className="hover-wrap"> 
           <div className="hover-wrap-inner">
-            <a href="our-belle-comme-le-jour-products/index.html" target="_self" className="">
-              <img className="img-with-animation skip-lazy grey_bg_image nectar-lazy" data-delay="0" height="41" width="376" data-animation="fade-in" data-nectar-img-src="https://www.lapotencielle.com/wp-content/uploads/2022/01/bell.png" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%20376%2041'%2F%3E" alt="" data-nectar-img-srcset="https://www.lapotencielle.com/wp-content/uploads/2022/01/bell.png 376w, https://www.lapotencielle.com/wp-content/uploads/2022/01/bell-300x33.png 300w" sizes="(min-width: 1450px) 75vw, (min-width: 1000px) 85vw, 100vw" />
-            </a>
+					<Link to="/products/OUR-BELLE-COMME-LE-JOUR-PRODUCTS/belle">
+							<img className="img-with-animation skip-lazy grey_bg_image nectar-lazy" data-delay="0" height="41" width="376" data-animation="fade-in" data-nectar-img-src="./assets/wp-content/uploads/2022/01/bell.png" src="./assets/wp-content/uploads/2022/01/bell.png" alt="" data-nectar-img-srcset="./assets/wp-content/uploads/2022/01/bell.png 376w, ./assets/wp-content/uploads/2022/01/bell-300x33.png 300w" sizes="(min-width: 1450px) 75vw, (min-width: 1000px) 85vw, 100vw" />
+					</Link>
+            
           </div>
         </div>
       </div>
@@ -1740,9 +1744,29 @@ what moisturizer to use. What&#8217;s the diffe&#8230;</p>
       <div className="inner">
         <div className="hover-wrap"> 
           <div className="hover-wrap-inner">
-            <a href="in-paris-body-creme-souffle-products/index.html" target="_self" className="">
-              <img className="img-with-animation skip-lazy grey_bg_image nectar-lazy" data-delay="0" height="41" width="331" data-animation="fade-in" data-nectar-img-src="https://www.lapotencielle.com/wp-content/uploads/2022/02/sun-1.png" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%20331%2041'%2F%3E" alt="" data-nectar-img-srcset="https://www.lapotencielle.com/wp-content/uploads/2022/02/sun-1.png 331w, https://www.lapotencielle.com/wp-content/uploads/2022/02/sun-1-300x37.png 300w" sizes="(min-width: 1450px) 75vw, (min-width: 1000px) 85vw, 100vw" />
-            </a>
+					<Link to="/products/IN-PARIS-BODY-CRÉME-SOUFFLÉ-PRODUCTS/paris">
+							<img className="img-with-animation skip-lazy grey_bg_image nectar-lazy" data-delay="0" height="41" width="331" data-animation="fade-in" data-nectar-img-src="./assets/wp-content/uploads/2022/02/sun.png" src="./assets/wp-content/uploads/2022/02/sun.png" alt="" data-nectar-img-srcset="./assets/wp-content/uploads/2022/02/sun.png 331w, ./assets/wp-content/uploads/2022/02/sun-300x37.png 300w" sizes="(min-width: 1450px) 75vw, (min-width: 1000px) 85vw, 100vw" />
+					</Link>
+           
+          </div>
+        </div>
+      </div>
+      </div>
+			</div> 
+		</div>
+	</div>  */}
+
+	<div  className="vc_col-sm-1/5 wpb_column column_container vc_column_container col no-extra-padding inherit_tablet inherit_phone "  data-padding-pos="all" data-has-bg-color="false" data-bg-color="" data-bg-opacity="1" data-animation="" data-delay="0" >
+		<div className="vc_column-inner" >
+			<div className="wpb_wrapper">
+				<div className="img-with-aniamtion-wrap " data-max-width="100%" data-max-width-mobile="default" data-shadow="none" data-animation="fade-in" >
+      <div className="inner">
+        <div className="hover-wrap"> 
+          <div className="hover-wrap-inner">
+					<Link to="/products/OUR-ORANGE-AND-VANILLA-PRODUCTS/orange">
+							<img className="img-with-animation skip-lazy grey_bg_image nectar-lazy" data-delay="0" height="41" width="331" data-animation="fade-in" data-nectar-img-src="./assets/wp-content/uploads/2022/01/orange.png" src="./assets/wp-content/uploads/2022/01/orange.png" alt="" data-nectar-img-srcset="./assets/wp-content/uploads/2022/01/orange.png 331w, ./assets/wp-content/uploads/2022/01/orange-300x37.png 300w" sizes="(min-width: 1450px) 75vw, (min-width: 1000px) 85vw, 100vw" />
+					</Link>
+            
           </div>
         </div>
       </div>
@@ -1758,27 +1782,11 @@ what moisturizer to use. What&#8217;s the diffe&#8230;</p>
       <div className="inner">
         <div className="hover-wrap"> 
           <div className="hover-wrap-inner">
-            <a href="our-orange-and-vanilla-products/index.html" target="_self" className="">
-              <img className="img-with-animation skip-lazy grey_bg_image nectar-lazy" data-delay="0" height="41" width="331" data-animation="fade-in" data-nectar-img-src="https://www.lapotencielle.com/wp-content/uploads/2022/01/orange.png" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%20331%2041'%2F%3E" alt="" data-nectar-img-srcset="https://www.lapotencielle.com/wp-content/uploads/2022/01/orange.png 331w, https://www.lapotencielle.com/wp-content/uploads/2022/01/orange-300x37.png 300w" sizes="(min-width: 1450px) 75vw, (min-width: 1000px) 85vw, 100vw" />
-            </a>
-          </div>
-        </div>
-      </div>
-      </div>
-			</div> 
-		</div>
-	</div> 
+					<Link to="/products/OUR-LILY-AND-LAVENDER-PRODUCTS/lavender">
+							<img className="img-with-animation skip-lazy grey_bg_image nectar-lazy" data-delay="0" height="41" width="331" data-animation="fade-in" data-nectar-img-src="./assets/wp-content/uploads/2022/01/lily.png" src="./assets/wp-content/uploads/2022/01/lily.png" alt="" data-nectar-img-srcset="./assets/wp-content/uploads/2022/01/lily.png 331w, ./assets/wp-content/uploads/2022/01/lily-300x37.png 300w" sizes="(min-width: 1450px) 75vw, (min-width: 1000px) 85vw, 100vw" />
 
-	<div  className="vc_col-sm-1/5 wpb_column column_container vc_column_container col no-extra-padding inherit_tablet inherit_phone "  data-padding-pos="all" data-has-bg-color="false" data-bg-color="" data-bg-opacity="1" data-animation="" data-delay="0" >
-		<div className="vc_column-inner" >
-			<div className="wpb_wrapper">
-				<div className="img-with-aniamtion-wrap " data-max-width="100%" data-max-width-mobile="default" data-shadow="none" data-animation="fade-in" >
-      <div className="inner">
-        <div className="hover-wrap"> 
-          <div className="hover-wrap-inner">
-            <a href="our-lily-and-lavender-products/index.html" target="_self" className="">
-              <img className="img-with-animation skip-lazy grey_bg_image nectar-lazy" data-delay="0" height="41" width="331" data-animation="fade-in" data-nectar-img-src="https://www.lapotencielle.com/wp-content/uploads/2022/01/lily.png" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%20331%2041'%2F%3E" alt="" data-nectar-img-srcset="https://www.lapotencielle.com/wp-content/uploads/2022/01/lily.png 331w, https://www.lapotencielle.com/wp-content/uploads/2022/01/lily-300x37.png 300w" sizes="(min-width: 1450px) 75vw, (min-width: 1000px) 85vw, 100vw" />
-            </a>
+					</Link>
+            
           </div>
         </div>
       </div>
