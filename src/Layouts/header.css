@@ -1,0 +1,11 @@
+/* hidding the google translate bar */
+
+.skiptranslate {
+  display: none !important;
+  } 
+body {
+  /* top: 0px !important;  */
+  }
+iframe {
+  display: none !important;
+  }
