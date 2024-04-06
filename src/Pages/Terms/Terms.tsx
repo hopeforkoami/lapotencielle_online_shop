@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import Footer from "../../Layouts/Footer";
-import "./about.css";
 
 const Terms = () => {
   return (
@@ -10,24 +9,24 @@ const Terms = () => {
         <div className="breadcrumb">
           <span><span><Link to="/">Home</Link> / <span className="breadcrumb_last" aria-current="page">
           Return Policy </span></span></span> </div>
-        <div id="page-header-wrap" data-animate-in-effect="none" data-midnight="light" className="" style={{ height: '200px' }}>
-          <div id="page-header-bg" className="not-loaded " data-padding-amt="low"
-            data-animate-in-effect="none" data-midnight="light" data-text-effect="none"
-            data-bg-pos="center" data-alignment="center" data-alignment-v="middle" data-parallax="0" data-height="200"
-            style={{ backgroundColor: "#E8F5E5", height: "200px" }}>
-            <div className="container">
-              <div className="row">
-                <div className="col span_6 ">
-                  <div className="inner-wrap">
-                    <h1 className="colored_in_black">About US </h1>
-                    <span className="subheader"></span>
-                  </div>
+          <div id="page-header-wrap" data-animate-in-effect="none" data-midnight="light" className="" style={{height: "250px"}}><div id="page-header-bg" className="not-loaded " data-padding-amt="low" data-animate-in-effect="none" data-midnight="light" data-text-effect="rotate_in" data-bg-pos="center" data-alignment="center" data-alignment-v="middle" data-parallax="0" data-height="250" style={{backgroundColor: "#e8f5e5", height:"250px"}}>
+              <div className="container">
+            <div className="row">
+              <div className="col span_6 ">
+                <div className="inner-wrap">
+                  <h1 className="top-heading" ><span className="wraped"><span style={{transform: "rotateX(0deg) translate(0px)", opacity: 1,color: "black"}}>Terms</span></span> <span className="wraped"><span style={{transform: "rotateX(0deg) translate(0px)", opacity: 1,color: "black"}}>&amp;</span></span> <span className="wraped"><span style={{transform: "rotateX(0deg) translate(0px)", opacity: 1,color: "black"}}>Conditions</span></span></h1> 						<span className="subheader" style={{transform: "rotateX(0deg) translate(0px)", opacity: 1}}></span>
                 </div>
-              </div>
-            </div>
-          </div>
 
-        </div>
+                          </div>
+              </div>
+
+              
+
+
+            </div>
+      </div>
+
+      </div>
 
         <div className="container-wrap">
           <div className="container main-content">
@@ -222,7 +221,7 @@ const Terms = () => {
 
       <Footer />
       {/* Footer  */}
-    </div>
+        </div>
     </div>
     </>
  );
