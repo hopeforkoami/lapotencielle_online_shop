@@ -52,7 +52,7 @@ const Privacy = () => {
                         >
                           Privacy
                         </span>
-                      </span>
+                      </span>{" "}
                       <span className="wraped">
                         <span
                           style={{
