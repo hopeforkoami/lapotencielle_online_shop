@@ -910,8 +910,8 @@ const Home: FC<{}> = () => {
                                         style={{ opacity: 1 }}
                                       >
                                         <div className="hover-wrap-inner">
-                                          <a
-                                            href="https://lapotencielle.com/product/orange-vanilla-luxurious-natural-body-cream/"
+                                          <Link
+                                            to="/product/17"
                                             target="_self"
                                             className="img-loaded"
                                           >
@@ -926,7 +926,7 @@ const Home: FC<{}> = () => {
                                               width="776"
                                               height="1000"
                                             />
-                                          </a>
+                                          </Link>
                                         </div>
                                       </div>
                                     </div>
@@ -934,10 +934,10 @@ const Home: FC<{}> = () => {
                                   <div className="wpb_text_column wpb_content_element ">
                                     <div className="wpb_wrapper">
                                       <p>
-                                        <a href="https://lapotencielle.com/product/orange-vanilla-luxurious-natural-body-cream/">
+                                        <Link to ="product/17">
                                           ORANGE &amp; VANILLA LUXURIOUS NATURAL
                                           BODY CREAM
-                                        </a>
+                                        </Link>
                                       </p>
                                     </div>
                                   </div>
@@ -945,15 +945,15 @@ const Home: FC<{}> = () => {
                                   <div className="wpb_text_column wpb_content_element ">
                                     <div className="wpb_wrapper">
                                       <p style={{ textAlign: "center" }}>
-                                        <a
+                                        <Link
                                           style={{
                                             fontSize: "13px",
                                             fontWeight: 500,
                                           }}
-                                          href="https://lapotencielle.com/product/orange-vanilla-luxurious-natural-body-cream/"
+                                          to="product/17"
                                         >
                                           $60.00
-                                        </a>
+                                        </Link>
                                       </p>
                                     </div>
                                   </div>
@@ -963,7 +963,7 @@ const Home: FC<{}> = () => {
                                       <p>
                                         BODY CARE
                                         <br />
-                                        <Link to="/product/16">
+                                        <Link to="/product/17">
                                           Add to Cart
                                         </Link>
                                       </p>
