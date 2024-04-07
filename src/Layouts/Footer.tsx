@@ -82,7 +82,7 @@ const Footer: FC<{  }> = (  ) => {
             <p style={{ color:"#FF0" , marginTop:"20px", textAlign: "left", fontSize: "15px !important", 
             fontWeight: "300 !important" }}>WE ACCEPT ALL MAJOR DEBIT &amp; CREDIT<br /> CARDS</p>
                                                 <p className="paypal_img">
-                                                     <img src="/assets/images/icon-pay.png" /></p>
+                                                     <img alt='' src="/assets/images/icon-pay.png" /></p>
                                                             </div>
                     </div>
                 </div>
