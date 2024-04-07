@@ -47,6 +47,7 @@ const CookiesPolicy = () => {
                           style={{
                             transform: "rotateX(0deg) translate(0px)",
                             opacity: 1,
+                            color: "black",
                           }}
                         >
                           Cookie
@@ -57,6 +58,7 @@ const CookiesPolicy = () => {
                           style={{
                             transform: "rotateX(0deg) translate(0px)",
                             opacity: 1,
+                            color: "black",
                           }}
                         >
                           Policy
