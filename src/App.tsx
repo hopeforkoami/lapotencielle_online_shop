@@ -28,6 +28,7 @@ import About from './Pages/About/About';
 import Contact from './Pages/Contact/Contact';
 import Terms from './Pages/Terms/Terms';
 import Privacy from './Pages/Privacy/Privacy';
+import ShippingPolicy from './Pages/ShippingPolicy/ShippingPolicy';
 
 function App() {
   return ( 
@@ -48,6 +49,7 @@ function App() {
               <Route  path="/contact" element={ <Contact />} />
               <Route  path="/terms-conditions" element={ <Terms/>} />
               <Route  path="/privacy-policy" element={ <Privacy/>} />
+              <Route  path="/shipping-policy" element={ <ShippingPolicy/>} />
             </Route>
             
             <Route path="*" element={ <NotFound />} />
