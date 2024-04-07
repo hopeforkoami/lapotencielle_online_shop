@@ -108,7 +108,8 @@ const Footer: FC<{  }> = (  ) => {
             <li>© 2022 Lapotencielle. All rights reserved.</li>
             <li><Link to="/terms-conditions">Terms of Use</Link></li>
             <li><Link to="/privacy-policy">Privacy Policy</Link></li>
-            <li><a className="bfx-hide" href="https://lapotencielle.com/cookie-policy/">Cookie Policy</a></li>
+            <li><Link to="/shipping-policy">Shipping Policy</Link></li>
+            <li><Link className="bfx-hide" to="/shipping-policy">Cookie Policy</Link></li>
             <li><a href="https://lapotencielle.com/legal-disclaimer/">Legal Disclaimer</a></li>
             <li><a href="https://lapotencielle.com/return-policy/">Return Policy</a></li>
             </ul>
