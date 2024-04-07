@@ -30,6 +30,7 @@ import Terms from './Pages/Terms/Terms';
 import Privacy from './Pages/Privacy/Privacy';
 import ShippingPolicy from './Pages/ShippingPolicy/ShippingPolicy';
 import CookiesPolicy from './Pages/CookiesPolicy/CookiesPolicy';
+import ReturnPolicy from './Pages/Return/ReturnPolicy';
 
 function App() {
   return ( 
@@ -52,6 +53,7 @@ function App() {
               <Route  path="/privacy-policy" element={ <Privacy/>} />
               <Route  path="/shipping-policy" element={ <ShippingPolicy/>} />
               <Route  path="/cookie-policy" element={ <CookiesPolicy/>} />
+              <Route  path="/return-policy" element={ <ReturnPolicy/>} />
             </Route>
             
             <Route path="*" element={ <NotFound />} />
