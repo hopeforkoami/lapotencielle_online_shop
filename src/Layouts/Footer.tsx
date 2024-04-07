@@ -111,7 +111,7 @@ const Footer: FC<{  }> = (  ) => {
             <li><Link to="/shipping-policy">Shipping Policy</Link></li>
             <li><Link to="/cookie-policy">Cookie Policy</Link></li>
             <li><Link to="/return-policy">Return Policy</Link></li>
-            <li><a href="https://lapotencielle.com/legal-disclaimer/">Legal Disclaimer</a></li>
+            <li><Link to="/legal-disclaimer">Legal Disclaimer</Link></li>
             </ul>
                 </div>
             </div>
