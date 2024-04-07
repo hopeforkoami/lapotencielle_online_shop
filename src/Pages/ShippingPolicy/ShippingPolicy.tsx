@@ -82,26 +82,7 @@ const ShippingPolicy = () => {
         <div className="container-wrap">
         <div className="container main-content">
     <div className="row">
-        <div id="fws_6611fcace62b1" data-column-margin="default" data-midnight="dark" className="wpb_row vc_row-fluid vc_row top-level full-width-section first-section loaded" style={{paddingTop: "0px", paddingBottom: "0px"}}>
-            <div className="row-bg-wrap" data-bg-animation="none" data-bg-overlay="false">
-                <div className="inner-wrap">
-                    <div className="row-bg using-bg-color" style={{ backgroundColor: "#e7f5e5" }}></div>
-                </div>
-            </div>
-            <div className="row_col_wrap_12 col span_12 dark left">
-                <div className="vc_col-sm-12 wpb_column column_container vc_column_container col has-animation no-extra-padding inherit_tablet inherit_phone triggered-animation animated-in" data-padding-pos="all" data-has-bg-color="false" data-bg-color="" data-bg-opacity="1" data-animation="fade-in-from-left" data-delay="0" style={{opacity: 1, transform: "none"}}>
-                    <div className="vc_column-inner">
-                        <div className="wpb_wrapper">
-                            <div className="wpb_text_column wpb_content_element  vc_custom_1672891211744">
-                                <div className="wpb_wrapper">
-                                    <h1 style={{textAlign: "center", fontFamily: "-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol", fontWeight: 300, fontSize: "48px", color: "black"}}>Shipping Policy</h1>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        
         <div id="fws_6611fcace6dd1" data-column-margin="default" data-midnight="dark" className="wpb_row vc_row-fluid vc_row  " style={{paddingTop: "0px", paddingBottom: "0px"}}>
             <div className="row-bg-wrap" data-bg-animation="none" data-bg-overlay="false">
                 <div className="inner-wrap">
@@ -114,6 +95,7 @@ const ShippingPolicy = () => {
                         <div className="wpb_wrapper">
                             <div className="wpb_text_column wpb_content_element  vc_custom_1672428930402">
                                 <div className="wpb_wrapper">
+                                  <div style={{height:"20px"}}></div>
                                     <p><span style={{color: "#000000"}}><strong>SHIPPING TIME</strong></span><br/>
                                         All orders are processed &amp; shipped within 7 to 10 business days (excluding weekends and holidays) after receiving your order confirmation email. You will receive another notification when your order has shipped.</p>
                                     <p><span style={{color: "#000000"}}><strong>SHIPPING RATES AND ESTIMATES<br/>
