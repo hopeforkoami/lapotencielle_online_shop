@@ -6,6 +6,7 @@ import {
 import { useAppDispatch, useAppSelector } from '../Hooks/customSelector'; 
 import { setUser } from '../Redux/Reducers/userReducer';
 import { RootState } from '../Redux/store';
+import { updateProducts } from '../Redux/Reducers/storeReducer';
 
 const Main: FC = () => {  
     const store = useAppSelector((state) => state.store);
@@ -16,7 +17,11 @@ const Main: FC = () => {
         () => {
             let user  = window.localStorage.getItem('__user');
             if (user !== null) { 
-                dispatch( setUser( user ) );
+                dispatch( setUser( JSON.parse(user) ) );
+            }
+            let storeProducts = window.localStorage.getItem('_store_products');
+            if (storeProducts !== null) { 
+                dispatch( updateProducts( JSON.parse(storeProducts) ) );
             }
         }, []
     )

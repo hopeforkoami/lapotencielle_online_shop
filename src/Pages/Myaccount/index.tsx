@@ -98,7 +98,7 @@ const Myaccount: FC = () => {
                                     }}
                                 >
                                     {({ dirty, errors, touched, isValid, handleChange, handleBlur, handleSubmit, values }) => (
-                                    <Form  className="woocommerce-form woocommerce-form-login login" method="post">
+                                    <Form  className="woocommerce-form woocommerce-form-login login" >
 
                                 
                                 <p className="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">

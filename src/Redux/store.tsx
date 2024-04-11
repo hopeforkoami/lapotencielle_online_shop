@@ -4,11 +4,13 @@ import { configureStore } from '@reduxjs/toolkit'
 import storeReducer from './Reducers/storeReducer';
 import userReducer from './Reducers/userReducer';
 
+import productPriceReducer from './Reducers/productPriceReducer';
 
 const store = configureStore({
   reducer: { 
     store: storeReducer,
-    users: userReducer
+    users: userReducer,
+    units: productPriceReducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

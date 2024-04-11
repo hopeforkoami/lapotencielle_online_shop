@@ -26,6 +26,7 @@ import Kits from './Pages/Kits';
 import Kit from './Pages/Kit';
 import About from './Pages/About/About';
 import Contact from './Pages/Contact/Contact';
+import Checkout from './Pages/Cart/checkout';
 
 function App() {
   return ( 
@@ -37,12 +38,17 @@ function App() {
               <Route index element={<Home />} />
               <Route  path="/products/:group/:category" element={ <Products />} />
               <Route  path="/product/:id" element={ <Product />} />
+
               <Route  path="/cart" element={ <Cart />} />
+              <Route  path="/cart/checkout" element={ <Checkout />} />
+
               <Route  path="/myaccount" element={ <Myaccount />} />
+
               <Route  path="/news/:title" element={ <News />} />
               <Route  path="/kits/:group/:category" element={ <Kits />} />
               <Route  path="/kit/:id" element={ <Kit />} />
-              <Route  path="/about" element={ <About />} />
+              <Route  path="/kit/:id" element={ <Kit />} />
+              
               <Route  path="/contact" element={ <Contact />} />
             </Route>
             

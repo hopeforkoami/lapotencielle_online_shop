@@ -14,5 +14,13 @@ export default class CartService {
         });
     }
 
+    public initializeBasketId = async (data: Record<string, any>) => {
+        return await axiosInstance.post('/basket/initialize',  data);
+    }
+
+    public getShippings =  async () => {
+        return await axiosInstance.get('/shipingService/list');
+    }
+
 
 }

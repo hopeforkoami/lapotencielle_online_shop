@@ -63,3 +63,56 @@
   margin: 0 !important;
   color: 'white' !important;
 } */
+
+#zoid-paypal-buttons-uid_05b842d6fb_mja6mjc6mza {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  min-height: 35px;
+  min-width: 200px;
+  max-width: 750px;
+  font-size: 0;
+}
+
+#zoid-paypal-buttons-uid_05b842d6fb_mja6mjc6mza > iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#zoid-paypal-buttons-uid_05b842d6fb_mja6mjc6mza > iframe.component-frame {
+  z-index: 100;
+}
+
+#zoid-paypal-buttons-uid_05b842d6fb_mja6mjc6mza > iframe.prerender-frame {
+  transition: opacity .2s linear;
+  z-index: 200;
+}
+
+#zoid-paypal-buttons-uid_05b842d6fb_mja6mjc6mza > iframe.visible {
+  opacity: 1;
+}
+
+#zoid-paypal-buttons-uid_05b842d6fb_mja6mjc6mza > iframe.invisible {
+  opacity: 0;
+  pointer-events: none;
+}
+
+#zoid-paypal-buttons-uid_05b842d6fb_mja6mjc6mza > .smart-menu {
+  position: absolute;
+  z-index: 300;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+#zoid-paypal-message-uid_cb8fb4975b_mja6mjc6mzi > iframe {
+  width: 100%;
+  height: 0;
+}
+
+#zoid-paypal-message-uid_cb8fb4975b_mja6mjc6mzi > iframe:nth-of-type(2) {
+  display: none;
+}

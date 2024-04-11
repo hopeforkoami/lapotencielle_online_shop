@@ -16,14 +16,20 @@ import * as yup from 'yup';
 import { useAppDispatch, useAppSelector } from '../../Hooks/customSelector';
 import { addProduct, removeProduct, updateProductQty, updateProducts } from '../../Redux/Reducers/storeReducer';
 import Footer from '../../Layouts/Footer';
+import { RootState } from '../../Redux/store';
 
 const Cart: FC = () => {   
     
     let location = useLocation();
+    let navigate = useNavigate();
     const store = useAppSelector((state) => state.store)
     const dispatch = useAppDispatch();
+    const user = useAppSelector((state: RootState) => state.users.user );
     const cartService = new CartService();
     const [ loading, setLoading ] = useState(false);
+
+   
+
     const [ showShppingForm, setShowShppingForm ] = useState(false);
 
     let initialTotal: number = 0;
@@ -38,9 +44,12 @@ const Cart: FC = () => {
         );
         setStoreTotal( strTtl );
     }
+
+    
  
 
     useEffect(() => {   
+        console.log(user);
         getStoreTotal();
     }, []);
 
@@ -225,8 +234,32 @@ const Cart: FC = () => {
                             </tbody></table>
 
                             <div className="wc-proceed-to-checkout">
-                        <a href="#" className="checkout-button button alt wc-forward">
-                            Proceed to checkout</a>
+                        <button onClick={() => {
+
+                            if (user !== null && user !== undefined) {
+                                navigate('/cart/checkout');
+                                // setLoading(true);
+                                // console.log(user);
+                                // cartService.initializeBasketId({
+                                //     "idClient": user?.id
+                                // }).then(async function (response: any) {
+                                //     console.log(response); 
+                                //     setLoading(false);
+                                // })
+                                // .catch(function (error: any) {
+                                //     console.log(error); 
+                                // });
+                                // 
+                            } else {
+                                alert("Please, you must login first");
+                            }
+
+                        }} className="checkout-button button alt wc-forward">
+                            Proceed to checkout  
+                               {
+                                loading && <i className="fa fa-circle-o-notch fa-spin fa-1x fa-fw"></i>
+                               }
+                        </button>
                         <Link to="/myaccount" className="checkout-button button alt wc-forward">
                             Sign Up / Login</Link>
                         <Link to="/products/OUR-ORANGE-AND-VANILLA-PRODUCTS/orange" className="checkout-button button alt wc-forward">
