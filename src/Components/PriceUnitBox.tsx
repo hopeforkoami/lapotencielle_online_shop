@@ -43,7 +43,11 @@ const PriceUnitBox: FC<{ price: any }> = ( { price} ) => {
 
         console.log(data);
 
-        setPriceCopy( Number(price) * Number(data?.result) );
+        if(data?.result) {
+            setPriceCopy( Number(price) * Number(data?.result) );
+        }
+
+        
  
 
         // const agent = new https.Agent({  
@@ -64,15 +68,11 @@ const PriceUnitBox: FC<{ price: any }> = ( { price} ) => {
     useEffect(
         () => {
 
-            console.log("Unit change");
-        
-            // let pr = fx.convert(price, {from: "USD", to: unit });
-            
-            // console.log(pr);
-
-           
-            getRateOfExchnge();
-            
+            if (defaultUnit !== unit) {
+                console.log("Unit change");
+                setDefaultUnit(unit);
+                getRateOfExchnge();
+            }
 
         }, [unit]
     );

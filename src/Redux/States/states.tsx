@@ -14,3 +14,9 @@ export interface UserState {
 export interface PriceUnitState {
     unit: string
 }
+
+export interface RouteState {
+    message: string;
+    currentRoute: Array<String>;
+    currentPath: string;
+}

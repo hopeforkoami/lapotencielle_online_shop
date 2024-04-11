@@ -33,7 +33,7 @@ const ProductBox: FC<{ product: any, productListLength: number }> = ( {product, 
                                 <div className="hover-wrap-inner">
                                     <Link to={ '/product/' + product.id }
                                         target="_self" className="">
-                                        <img className="img-with-animation skip-lazy nectar-lazy" data-delay="0"
+                                        <img className="  skip-lazy nectar-lazy" data-delay="0"
                                         height="1000" width="776" data-animation="fade-in"  
                                         data-nectar-img-src={Utils._mediaUrl + product?.image }
                                         src={Utils._mediaUrl + product?.image } 
@@ -50,7 +50,7 @@ const ProductBox: FC<{ product: any, productListLength: number }> = ( {product, 
                                 <div className="hover-wrap"> 
                                 <div className="hover-wrap-inner">
                                 <Link to={ '/product/' + product.id } target="_self" className="">
-                                        <img className="img-with-animation skip-lazy hover_show nectar-lazy" data-delay="0" 
+                                        <img className="  skip-lazy hover_show nectar-lazy" data-delay="0" 
                                             height="1000" width="776" data-animation="fade-in"
                                             data-nectar-img-src={Utils._mediaUrl + product?.image }
                                             src={Utils._mediaUrl + product?.image } alt=""  
@@ -62,9 +62,9 @@ const ProductBox: FC<{ product: any, productListLength: number }> = ( {product, 
                             </div>
                         <div className="wpb_text_column wpb_content_element " >
                             <div className="wpb_wrapper">
-                                <p><Link style={{ fontSize: "13px" , fontWeight: "500" }} 
+                                <Link style={{ fontSize: "13px" , fontWeight: "500" }} 
                                 to={ '/product/' + product.id } >
-                                   {product.fullName} </Link></p>
+                                   {product.fullName} </Link>
                             </div>
                         </div>
                         
@@ -73,9 +73,8 @@ const ProductBox: FC<{ product: any, productListLength: number }> = ( {product, 
                         
                         <div className="wpb_text_column wpb_content_element " >
                             <div className="wpb_wrapper">
-                                <p style={{ textAlign: "center" }} ><Link style={{ fontSize: "13px" , fontWeight: "500" }}
-                                to={ '/product/' + product.id } >
-                                    <PriceUnitBox price={product?.pu} /></Link></p>
+                                <p style={{ textAlign: "center", fontSize: "13px" , fontWeight: "500" }} > 
+                                    <PriceUnitBox price={product?.pu} /> </p>
                             </div>
                         </div>
                         

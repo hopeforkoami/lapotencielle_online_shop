@@ -1,4 +1,5 @@
 import { FC } from 'react' 
+import { Link } from 'react-router-dom'
 
 
 const Footer: FC<{  }> = (  ) => { 
@@ -45,18 +46,18 @@ const Footer: FC<{  }> = (  ) => {
                     <div className="wpb_wrapper">
                         <div className="j_footer_social">
             <ul>
-            <li className="j_footer_instagram"><a href="https://www.instagram.com/lapotencielle" target="_blank"><i className="fa fa-instagram" aria-hidden="true"></i></a></li>
+            <li className="j_footer_instagram"><Link to="https://www.instagram.com/lapotencielle" target="_blank"><i className="fa fa-instagram" aria-hidden="true"></i></Link></li>
 
-            <li className="j_footer_facebook"><a href="https://www.facebook.com/lapotencielle" target="_blank"><i className="fa fa-facebook-official" aria-hidden="true"></i></a></li>
+            <li className="j_footer_facebook"><Link to="https://www.facebook.com/lapotencielle" target="_blank"><i className="fa fa-facebook-official" aria-hidden="true"></i></Link></li>
 
-            <li className="j_footer_pinterest"><a href="https://www.pinterest.com/lapotencielle/_saved/" target="_blank"><i className="fa fa-pinterest" aria-hidden="true"></i>
-            </a></li>
+            <li className="j_footer_pinterest"><Link to="https://www.pinterest.com/lapotencielle/_saved/" target="_blank"><i className="fa fa-pinterest" aria-hidden="true"></i>
+            </Link></li>
 
-            <li className="j_footer_twitter"><a href="https://twitter.com/lapotencielle" target="_blank"><i className="fa fa-twitter" aria-hidden="true"></i>
-            </a></li>
+            <li className="j_footer_twitter"><Link to="https://twitter.com/lapotencielle" target="_blank"><i className="fa fa-twitter" aria-hidden="true"></i>
+            </Link></li>
 
-            <li className="j_footer_youtube" style={{ color: "#FFF" }}><a href="https://www.youtube.com/channel/UCbZa7h3rvBOWdU8QMEL3oNg" target="_blank"><i className="fa fa-youtube-play" aria-hidden="true"></i>
-            </a></li>
+            <li className="j_footer_youtube" style={{ color: "#FFF" }}><Link to="https://www.youtube.com/channel/UCbZa7h3rvBOWdU8QMEL3oNg" target="_blank"><i className="fa fa-youtube-play" aria-hidden="true"></i>
+            </Link></li>
 
             </ul>
 
@@ -81,7 +82,7 @@ const Footer: FC<{  }> = (  ) => {
             <p style={{ color:"#FF0" , marginTop:"20px", textAlign: "left", fontSize: "15px !important", 
             fontWeight: "300 !important" }}>WE ACCEPT ALL MAJOR DEBIT &amp; CREDIT<br /> CARDS</p>
                                                 <p className="paypal_img">
-                                                     <img src="/assets/images/icon-pay.png" /></p>
+                                                     <img alt='' src="/assets/images/icon-pay.png" /></p>
                                                             </div>
                     </div>
                 </div>
@@ -105,11 +106,12 @@ const Footer: FC<{  }> = (  ) => {
                 <div className="wpb_wrapper">
                     <ul>
             <li>© 2022 Lapotencielle. All rights reserved.</li>
-            <li><a href="https://lapotencielle.com/terms-conditions/">Terms of Use</a></li>
-            <li><a href="https://lapotencielle.com/privacy-policy-2/">Privacy Policy</a></li>
-            <li><a className="bfx-hide" href="https://lapotencielle.com/cookie-policy/">Cookie Policy</a></li>
-            <li><a href="https://lapotencielle.com/legal-disclaimer/">Legal Disclaimer</a></li>
-            <li><a href="https://lapotencielle.com/return-policy/">Return Policy</a></li>
+            <li><Link to="/terms-conditions">Terms of Use</Link></li>
+            <li><Link to="/privacy-policy">Privacy Policy</Link></li>
+            <li><Link to="/shipping-policy">Shipping Policy</Link></li>
+            <li><Link to="/cookie-policy">Cookie Policy</Link></li>
+            <li><Link to="/return-policy">Return Policy</Link></li>
+            <li><Link to="/legal-disclaimer">Legal Disclaimer</Link></li>
             </ul>
                 </div>
             </div>

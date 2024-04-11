@@ -5,12 +5,15 @@ import storeReducer from './Reducers/storeReducer';
 import userReducer from './Reducers/userReducer';
 
 import productPriceReducer from './Reducers/productPriceReducer';
+// ...
+import routeReducer from './Reducers/routeReducer';
 
 const store = configureStore({
   reducer: { 
     store: storeReducer,
     users: userReducer,
-    units: productPriceReducer
+    units: productPriceReducer,
+    routes: routeReducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

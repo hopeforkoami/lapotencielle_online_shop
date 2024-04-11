@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 import Header from '../Layouts/Header'; 
 import {
     Outlet
@@ -8,10 +8,16 @@ import { setUser } from '../Redux/Reducers/userReducer';
 import { RootState } from '../Redux/store';
 import { updateProducts } from '../Redux/Reducers/storeReducer';
 
+
+
+
 const Main: FC = () => {  
     const store = useAppSelector((state) => state.store);
     const user = useAppSelector((state: RootState) => state.users.user );
     const dispatch = useAppDispatch();
+
+    const routes = useAppSelector((state) => state.routes);
+    let [ lastRoute, setLastRoute ] = useState("/");
 
     useEffect(
         () => {
@@ -25,6 +31,27 @@ const Main: FC = () => {
             }
         }, []
     )
+
+    const smoothScroll = (elementId: string) => { 
+        console.log(elementId);
+        console.log(document.querySelector('#'+elementId));
+        document.querySelector('#'+elementId)?.scrollIntoView({
+            behavior: 'smooth'
+        });
+    }
+    
+    useEffect(() => {
+        console.log(routes);
+        // window.scrollTo(0, 0);
+        smoothScroll("body-top");
+        
+        if (routes.currentPath == "/" && lastRoute != routes.currentPath) {
+            window.location.reload();
+        }
+
+        setLastRoute(routes.currentPath);
+
+    }, [ routes ]);
     
     return (
         <> 
