@@ -1,4 +1,4 @@
-import { FC } from 'react' 
+import { FC, useState } from 'react' 
 import { useEffect } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from '../Hooks/customSelector'; 
@@ -19,6 +19,8 @@ const Header: FC<{  }> = (  ) => {
     const user = useAppSelector((state: RootState) => state.users.user );
 
     const unit = useAppSelector((state: RootState) => state.units.unit );
+
+    let [ currency, setCurrency ] = useState('USD')
 
     const dispatch = useAppDispatch();
 
@@ -45,7 +47,7 @@ const Header: FC<{  }> = (  ) => {
     
         const onCurrencyChange = (e: any) => {
             console.log(e.target.value);
-
+            setCurrency(e.target.value);
             dispatch( setUnit(e.target.value) );
 
         }
@@ -71,7 +73,8 @@ const Header: FC<{  }> = (  ) => {
                 </div> 
               </div> 
               <div id="close"><a href="#"><span className="screen-reader-text">Close Search</span>
-                <span className="close-wrap"> <span className="close-line close-line1"></span> <span className="close-line close-line2"></span> </span>				 </a></div>
+                <span className="close-wrap"> <span className="close-line close-line1"></span> <span className="close-line close-line2"></span>
+                 </span>				 </a></div>
             </div> 
           </div> 
         </div> 
@@ -85,7 +88,7 @@ const Header: FC<{  }> = (  ) => {
       <div className="modal-dialog" role="document">
           <div className="modal-content">
               <div className="modal-header">
-                  <h5 className="modal-title" id="exampleModalLabel">Choose your Country</h5>
+                  <h5 className="modal-title" id="exampleModalLabel">Choose currency</h5>
                   <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">×</span>
                   </button>
@@ -309,7 +312,7 @@ const Header: FC<{  }> = (  ) => {
                       <form action="" id="borderfree-dropdown-form">
                           
                           <label>
-                              I'm shipping to: onchange="list(this.value)"
+                              Current currency 
                               <select  onChange={ onCurrencyChange }  name="country" id="con" >
                                   {/* <script type="text/javascript">
                                   document.write("<option value=-1>Select Country<\/option>");
@@ -677,7 +680,8 @@ const Header: FC<{  }> = (  ) => {
                                   <option value="192">Zambia</option>
                                   <option value="193">Zimbabwe</option> */}
                               </select>
-                              <input type="text" id="curr" 
+
+                              {/* <input type="text" id="curr" 
                               style={{ borderRadius: 0,
                               border: "1px solid #979797",
                               backgroundColor: "#fff",
@@ -687,10 +691,10 @@ const Header: FC<{  }> = (  ) => {
                               lineHeight: "26px",
                               padding: "10px 18px", 
                               verticalAlign: "baseline",
-                              width: "100%" }} size={40} name="currency" readOnly={true} />
+                              width: "100%" }} size={40} name="currency" readOnly={true} /> */}
                               
                           </label>
-                          <input type="submit" className="button button-small button-default" value="Ok" />
+                          {/* <input type="submit" className="button button-small button-default" value="Ok" /> */}
                       </form>
                   </div>
               </div>
@@ -769,7 +773,8 @@ const Header: FC<{  }> = (  ) => {
                                       <div style={{ marginTop:"-7px" }}
                                             className="borderfree bfx_hidden" data-block="borderfree__dropdown">
                                             <a className="show-btn borderfree__link" href="#">
-                                                <img src="/assets/wp-content/uploads/2022/02/flags-borderflag.gif" width="18px" height="12px" alt="United States" /><span>$USD</span>
+                                                <img src="/assets/wp-content/uploads/2022/02/flags-borderflag.gif" 
+                                                width="18px" height="12px" alt="United States" /><span> { currency } </span>
                                             </a>
                                       </div>
                                   </div>

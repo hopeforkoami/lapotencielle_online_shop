@@ -24,10 +24,10 @@ const PriceUnitBox: FC<{ price: any }> = ( { price} ) => {
     const dispatch = useAppDispatch();
     const unit = useAppSelector((state: RootState) => state.units.unit );
     
-    const [ defaultUnit, setDefaultUnit ] = useState("$");
-    const [ priceCopy, setPriceCopy ] = useState(price); 
+    let [ defaultUnit, setDefaultUnit ] = useState("$");
+    let [ priceCopy, setPriceCopy ] = useState(Number(price)); 
 
-    const getRateOfExchnge = async() => { 
+    const getRateOfExchnge = async function() { 
 
         var myHeaders = new Headers();
         myHeaders.append("apikey", "sGsiswQDg397FRbY0EIW176O1tKIS55R");
@@ -35,50 +35,111 @@ const PriceUnitBox: FC<{ price: any }> = ( { price} ) => {
         var requestOptions: RequestInit = {
             method: 'GET',
             redirect: 'follow',
-            headers: myHeaders
+            // headers: myHeaders
         };
 
-        const response = await fetch(`https://api.apilayer.com/exchangerates_data/convert?to=${unit}&from=USD&amount=1`, requestOptions);
+        const response = await fetch(`https://lapotnewapi2.nogdevhouse.com/api/currency/usdrate?currency=${ unit.toLowerCase() }`, requestOptions);
         const data = await response.json();
 
         console.log(data);
 
-        if(data?.result) {
-            setPriceCopy( Number(price) * Number(data?.result) );
-        }
+        console.log(data?.data.length);
 
-        
- 
+        if(data?.data.length > 0) {
 
-        // const agent = new https.Agent({  
-        //     rejectUnauthorized: false
-        // });
+            console.log("Unit change");
+            console.log(unit);
+            setDefaultUnit(current => unit );
+            console.log(data?.data[0].exchangeRate);
+            console.log('New price');
+            console.log(Number(price) * Number(data?.data[0].exchangeRate));
+            setPriceCopy( priecopy => Number(price) * Number(data?.data[0].exchangeRate) );
 
+        } 
 
-        // const data = await axios.get(`http://api.exchangeratesapi.io/latest/convert?access_key=9a342acc48117180614501bce922d17e&from=USD&to=${unit}&amount=1`, { httpsAgent: agent });
-
-
-        //await fetch(`http://api.exchangeratesapi.io/latest/convert?access_key=9a342acc48117180614501bce922d17e&from=USD&to=${unit}&amount=1`);
-
-        // console.log(data);
- 
     }
 
 
     useEffect(
         () => {
 
-            if (defaultUnit !== unit) {
-                console.log("Unit change");
-                setDefaultUnit(unit);
-                getRateOfExchnge();
+            if (defaultUnit !== unit) { 
+                // getRateOfExchnge();
+                (async function anyNameFunction(){ 
+
+                    var myHeaders = new Headers();
+                    myHeaders.append("apikey", "sGsiswQDg397FRbY0EIW176O1tKIS55R");
+            
+                    var requestOptions: RequestInit = {
+                        method: 'GET',
+                        redirect: 'follow',
+                        // headers: myHeaders
+                    };
+            
+                    const response = await fetch(`https://lapotnewapi2.nogdevhouse.com/api/currency/usdrate?currency=${ unit.toLowerCase() }`, requestOptions);
+                    const data = await response.json();
+            
+                    console.log(data);
+            
+                    console.log(data?.data.length);
+            
+                    if(data?.data.length > 0) {
+            
+                        console.log("Unit change");
+                        console.log(unit);
+                        setDefaultUnit(current => unit );
+                        console.log(data?.data[0].exchangeRate);
+                        console.log('New price');
+                        console.log(Number(price) * Number(data?.data[0].exchangeRate));
+                        setPriceCopy( priecopy => Number((Number(price) * Number(data?.data[0].exchangeRate)).toFixed(2)) );
+            
+                    } 
+                })();
+
             }
 
         }, [unit]
     );
 
+    useEffect(
+        () => {
+            if (unit !== '$' && unit !== 'USD') {
+                (async function anyNameFunction(){ 
+
+                    var myHeaders = new Headers();
+                    myHeaders.append("apikey", "sGsiswQDg397FRbY0EIW176O1tKIS55R");
+            
+                    var requestOptions: RequestInit = {
+                        method: 'GET',
+                        redirect: 'follow',
+                        // headers: myHeaders
+                    };
+            
+                    const response = await fetch(`https://lapotnewapi2.nogdevhouse.com/api/currency/usdrate?currency=${ unit.toLowerCase() }`, requestOptions);
+                    const data = await response.json();
+            
+                    console.log(data);
+            
+                    console.log(data?.data.length);
+            
+                    if(data?.data.length > 0) {
+            
+                        console.log("Unit change");
+                        console.log(unit);
+                        setDefaultUnit(current => unit );
+                        console.log(data?.data[0].exchangeRate);
+                        console.log('New price');
+                        console.log(Number(price) * Number(data?.data[0].exchangeRate));
+                        setPriceCopy( priecopy => Number((Number(price) * Number(data?.data[0].exchangeRate)).toFixed(2)) );
+            
+                    } 
+                })();
+            }
+        }, []
+    )
+
     return ( 
-        <>{ unit ? unit : defaultUnit } {priceCopy}</>
+        <span>{ unit } {priceCopy}</span>
     ); 
 }
 

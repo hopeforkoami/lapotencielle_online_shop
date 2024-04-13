@@ -19875,123 +19875,123 @@
 			// Document ready event - starting everything up.
 			jQuery(document).ready(function ($) {
 
-				// Initialize Nectar DOM helper.
-				nectarDOMInfo.init();
+						// Initialize Nectar DOM helper.
+						nectarDOMInfo.init();
 
-				// Priority calls
-				nectarBoxRollInit();
-				nectarFullPageInit();
-				nectarLazyImageLoading();
+						// Priority calls
+						nectarBoxRollInit();
+						nectarFullPageInit();
+						nectarLazyImageLoading();
 
-				// Header navigation.
-				initSF();
-				navigationSearchInit();
-				centeredNavBottomBarInit();
-				centeredLogoHeaderInit();
-				headerNavPreInit();
-				headerNavScrollInit();
-				headerNavOffsetInit();
+						// Header navigation.
+						initSF();
+						navigationSearchInit();
+						centeredNavBottomBarInit();
+						centeredLogoHeaderInit();
+						headerNavPreInit();
+						headerNavScrollInit();
+						headerNavOffsetInit();
 
-				// Page builder elements.
-				salientPageBuilderElInit();
+						// Page builder elements.
+						salientPageBuilderElInit();
 
-				// Column related.
-				columnBGColors();
-				vcMobileColumnsInit();
+						// Column related.
+						columnBGColors();
+						vcMobileColumnsInit();
 
-				// Row related.
-				fullWidthSections();
-				fwsClasses();
-				fwCarouselLinkFix();
-				fullWidthSectionsPreInit();
-				firstFWSection();
-				parallaxScrollInit();
-				parallaxRowsBGCals();
-				fullWidthRowPaddingAdjust();
-				fullWidthContentColumns();
-				oneFourthClasses();
-				fixIeFlexbox();
-				vcFullHeightRowInit();
+						// Row related.
+						fullWidthSections();
+						fwsClasses();
+						fwCarouselLinkFix();
+						fullWidthSectionsPreInit();
+						firstFWSection();
+						parallaxScrollInit();
+						parallaxRowsBGCals();
+						fullWidthRowPaddingAdjust();
+						fullWidthContentColumns();
+						oneFourthClasses();
+						fixIeFlexbox();
+						vcFullHeightRowInit();
 
-				// Media.
-				lightBoxInit();
-				audioVideoVis();
-				responsiveVideoIframesInit();
-				responsiveVideoIframes();
-				videoBGInit();
-				blogSingle();
-
-
-				// Off canvas navigation.
-				mobileNavMegamenuCorrect();
-				materialSkinOCM_Init();
-				OCM_dropdownMarkup();
-				OCM_dropdownIconPos();
-				clickToggleSubmenus();
-				OCM_init();
+						// Media.
+						lightBoxInit();
+						audioVideoVis();
+						responsiveVideoIframesInit();
+						responsiveVideoIframes();
+						videoBGInit();
+						blogSingle();
 
 
-				// Page header
-				pageHeaderInit();
-
-				// Footer.
-				footerRevealInit();
-
-				// Third party.
-				wooCommerceEvents();
-				fancySelectStyling();
-
-				// Scrolling
-				infiniteScrollInit();
-				scrollToTopInit();
-				animatedAnchorLinks();
-				updatePerspectiveOriginInit();
-				sectionDownArrowEvent();
-
-				// Cross browser assist.
-				crossBrowserAdjust();
-				bfCacheAssist();
-
-				// Front end editing.
-				wpBakeryFrontendInit();
-
-				// Page transitions and waypoint activation.
-				pageTransitionInit();
+						// Off canvas navigation.
+						mobileNavMegamenuCorrect();
+						materialSkinOCM_Init();
+						OCM_dropdownMarkup();
+						OCM_dropdownIconPos();
+						clickToggleSubmenus();
+						OCM_init();
 
 
+						// Page header
+						pageHeaderInit();
 
-				// Main Debounced Resize Event.
-				$window.off('smartresize.srInit');
-				$window.on('smartresize.srInit', smartResizeInit);
+						// Footer.
+						footerRevealInit();
 
-				// Main Resize Event.
-				$window.off('resize.srInit');
-				$window.on('resize.srInit', resizeInit);
+						// Third party.
+						wooCommerceEvents();
+						fancySelectStyling();
 
-				// Orientation change.
-				window.addEventListener("orientationchange", orientationChangeInit);
+						// Scrolling
+						infiniteScrollInit();
+						scrollToTopInit();
+						animatedAnchorLinks();
+						updatePerspectiveOriginInit();
+						sectionDownArrowEvent();
 
-				// Window Load Event.
-				$window.on('load', function () {
+						// Cross browser assist.
+						crossBrowserAdjust();
+						bfCacheAssist();
 
-					// Set header space.
-					if ( $(window).scrollTop() == 0 ) {
-						headerSpace();
-					}
+						// Front end editing.
+						wpBakeryFrontendInit();
 
-					$('video').css('visibility', 'visible');
+						// Page transitions and waypoint activation.
+						pageTransitionInit();
 
-					// Scroll to anchor
-					pageLoadHashInit();
 
-					// Row/Column related.
-					fullWidthContentColumns();
-					parallaxRowsBGCals();
 
-					// Video BG
-					resizeVideoToCover();
+						// Main Debounced Resize Event.
+						$window.off('smartresize.srInit');
+						$window.on('smartresize.srInit', smartResizeInit);
 
-				});
+						// Main Resize Event.
+						$window.off('resize.srInit');
+						$window.on('resize.srInit', resizeInit);
+
+						// Orientation change.
+						window.addEventListener("orientationchange", orientationChangeInit);
+
+						// Window Load Event.
+						$window.on('load', function () {
+
+							// Set header space.
+							if ( $(window).scrollTop() == 0 ) {
+								headerSpace();
+							}
+
+							$('video').css('visibility', 'visible');
+
+							// Scroll to anchor
+							pageLoadHashInit();
+
+							// Row/Column related.
+							fullWidthContentColumns();
+							parallaxRowsBGCals();
+
+							// Video BG
+							resizeVideoToCover();
+
+						});
 
 
 			});

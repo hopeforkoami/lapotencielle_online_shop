@@ -16,13 +16,18 @@ import * as yup from 'yup';
 import { useAppDispatch, useAppSelector } from '../../Hooks/customSelector';
 import { addProduct } from '../../Redux/Reducers/storeReducer';
 import Footer from '../../Layouts/Footer';
+import { RootState } from '../../Redux/store';
+
+import PriceUnitBox from '../../Components/PriceUnitBox';
 
 const Product: FC = () => {  
     let { id } = useParams(); 
     let location = useLocation();
     let navigate = useNavigate();
     const store = useAppSelector((state) => state.store)
-    const dispatch = useAppDispatch();
+    const dispatch = useAppDispatch(); 
+    const unit = useAppSelector((state: RootState ) => state.units.unit );
+
     const productService = new ProductService();
 
     const [ products, setProducts ] = useState([]);
@@ -160,8 +165,9 @@ const Product: FC = () => {
 		<h1 className="product_title entry-title">
             { product?.libProduit }
         </h1>
-<p className="price nectar-inherit-default"><span className="woocs_price_code" data-product-id="278">USD : <span className="woocommerce-Price-amount amount"><bdi><span className="woocommerce-Price-currencySymbol">&#36;</span>
-{ Number(product?.capitalUnitaireProduit) + Number(product?.interetUnitaireProduit)  }</bdi></span></span></p>
+<p className="price nectar-inherit-default"><span className="woocs_price_code" data-product-id="278">
+<span className="woocommerce-Price-amount amount"><bdi><span className="woocommerce-Price-currencySymbol"></span>
+<PriceUnitBox price={ Number(product?.capitalUnitaireProduit) + Number(product?.interetUnitaireProduit)  } /></bdi></span></span></p>
 <div className="woocommerce-product-details__short-description">
 	<p><strong>Size: 12 oz. | Skin Type: Normal to Dry Skin/ Mature/ sensitive</strong></p>
 <p><strong>HYDRATE &#8211; NOURISH &#8211; BRIGTHEN</strong></p>
