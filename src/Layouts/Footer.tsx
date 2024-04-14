@@ -46,18 +46,18 @@ const Footer: FC<{  }> = (  ) => {
                     <div className="wpb_wrapper">
                         <div className="j_footer_social">
             <ul>
-            <li className="j_footer_instagram"><Link to="https://www.instagram.com/lapotencielle" target="_blank"><i className="fa fa-instagram" aria-hidden="true"></i></Link></li>
+            <li className="j_footer_instagram"><a href="https://www.instagram.com/lapotencielle" target="_blank"><i className="fa fa-instagram" aria-hidden="true"></i></a></li>
 
-            <li className="j_footer_facebook"><Link to="https://www.facebook.com/lapotencielle" target="_blank"><i className="fa fa-facebook-official" aria-hidden="true"></i></Link></li>
+            <li className="j_footer_facebook"><a href="https://www.facebook.com/lapotencielle" target="_blank"><i className="fa fa-facebook-official" aria-hidden="true"></i></a></li>
 
-            <li className="j_footer_pinterest"><Link to="https://www.pinterest.com/lapotencielle/_saved/" target="_blank"><i className="fa fa-pinterest" aria-hidden="true"></i>
-            </Link></li>
+            <li className="j_footer_pinterest"><a href="https://www.pinterest.com/lapotencielle/_saved/" target="_blank"><i className="fa fa-pinterest" aria-hidden="true"></i>
+            </a></li>
 
-            <li className="j_footer_twitter"><Link to="https://twitter.com/lapotencielle" target="_blank"><i className="fa fa-twitter" aria-hidden="true"></i>
-            </Link></li>
+            <li className="j_footer_twitter"><a href="https://twitter.com/lapotencielle" target="_blank"><i className="fa fa-twitter" aria-hidden="true"></i>
+            </a></li>
 
-            <li className="j_footer_youtube" style={{ color: "#FFF" }}><Link to="https://www.youtube.com/channel/UCbZa7h3rvBOWdU8QMEL3oNg" target="_blank"><i className="fa fa-youtube-play" aria-hidden="true"></i>
-            </Link></li>
+            <li className="j_footer_youtube" style={{ color: "#FFF" }}><a href="https://www.youtube.com/channel/UCbZa7h3rvBOWdU8QMEL3oNg" target="_blank"><i className="fa fa-youtube-play" aria-hidden="true"></i>
+            </a></li>
 
             </ul>
 
