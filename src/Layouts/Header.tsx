@@ -9,9 +9,13 @@ import './header.css';
  
 import { Formik, Field, Form, FormikProps } from 'formik'
 import * as yup from 'yup';
+import * as Utils from '../Utils';
 import { setUnit } from '../Redux/Reducers/productPriceReducer';
- 
-const converter = require('currency-code-converter');
+
+import '../country-flags-master/dist/country-flag.css'
+const CountryFlag = require( '../country-flags-master/dist/country-flag.js');
+
+var countries        = require('country-data-list').countries ;
 
 const Header: FC<{  }> = (  ) => { 
 
@@ -22,9 +26,16 @@ const Header: FC<{  }> = (  ) => {
 
     let [ currency, setCurrency ] = useState('USD')
 
+    let cchoose: any = null;
+    let [ countryChoose, setCountryChoose ] = useState(cchoose);
+
     const dispatch = useAppDispatch();
 
     let navigate = useNavigate();
+
+    let flagInit: any = null;
+
+    let [ flag, setFlag ] = useState(flagInit);
 
     useEffect(() => { 
         let serach_input = window.document.getElementById('630b971a47893');
@@ -36,21 +47,39 @@ const Header: FC<{  }> = (  ) => {
                 event.preventDefault();
               // navigate( '/products/' + 'SEARCH-'+ event?.target?.value.toUpperCase() + '/' + values.searchStr.toLowerCase() );
             }
-        });
+        });   
 
-        console.log(user);
+        const parentElement = document.getElementById("flag-parent-element");
+        setFlag(new CountryFlag.CountryFlag(parentElement));
 
-        console.log(converter.allCodes());
+    }, []);
 
-        }, []);
+    useEffect(() => { 
+             
+    
+        if (flag !==  null) { 
+            flag.selectByAlpha2("us");
+        }
+
+    }, [flag]);
 
     
         const onCurrencyChange = (e: any) => {
-            console.log(e.target.value);
-            setCurrency(e.target.value);
-            dispatch( setUnit(e.target.value) );
+            const c = countries.all.filter((ch: any) => ch.alpha2 ===e.target.value)[0];
+            setCountryChoose(c)
+            setCurrency(c.currencies[0]);
+            dispatch( setUnit(c.currencies[0]) );
 
         }
+
+        useEffect(() => { 
+             
+    
+            if (countryChoose !==  null) { 
+                flag.selectByAlpha2(countryChoose.alpha2.toLowerCase());
+            }
+    
+        }, [countryChoose]);
 
       
         return (      
@@ -88,7 +117,7 @@ const Header: FC<{  }> = (  ) => {
       <div className="modal-dialog" role="document">
           <div className="modal-content">
               <div className="modal-header">
-                  <h5 className="modal-title" id="exampleModalLabel">Choose currency</h5>
+                  <h5 className="modal-title" id="exampleModalLabel">Choose country</h5>
                   <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">×</span>
                   </button>
@@ -320,7 +349,13 @@ const Header: FC<{  }> = (  ) => {
                                   for(i=0;i<count;i++)
                                   document.write("<option value="+i+">"+con[i]+"<\/option>");
                                   </script> */}
-                                  <option value="USD" selected={true}  label="US dollar">USD</option>
+                                  {
+                                    countries !== null ? countries.all.map((c:any, index: number) => 
+                                    <option value={ c.alpha2  } selected={ c.alpha2 === 'US' }  label={c.name}>
+                                         {c.name}</option>)
+                                    : <></>
+                                  }
+                                  {/* <option value="USD" selected={true}  label={c.name}>{c.name}</option>
     <option value="EUR" label="Euro">EUR</option>
     <option value="JPY" label="Japanese yen">JPY</option>
     <option value="GBP" label="Pound sterling">GBP</option>
@@ -483,7 +518,9 @@ const Header: FC<{  }> = (  ) => {
     <option value="XPF" label="CFP franc">XPF</option>
     <option value="ZAR" label="South African rand">ZAR</option>
     <option value="ZMW" label="Zambian kwacha">ZMW</option>
-    <option value="ZWB" label="Zimbabwean bonds">ZWB</option>
+    <option value="ZWB" label="Zimbabwean bonds">ZWB</option> */}
+
+
                                   {/* <option value="-1">Select Country</option>
                                   <option value="0">Afghanistan</option>
                                   <option value="1">Albania</option>
@@ -773,8 +810,8 @@ const Header: FC<{  }> = (  ) => {
                                       <div style={{ marginTop:"-7px" }}
                                             className="borderfree bfx_hidden" data-block="borderfree__dropdown">
                                             <a className="show-btn borderfree__link" href="#">
-                                                <img src="/assets/wp-content/uploads/2022/02/flags-borderflag.gif" 
-                                                width="18px" height="12px" alt="United States" /><span> { currency } </span>
+                                                <div id="flag-parent-element"
+                                                 className='flag-element'></div><span> { currency } </span>
                                             </a>
                                       </div>
                                   </div>
@@ -841,7 +878,8 @@ const Header: FC<{  }> = (  ) => {
                       
                           <a id="mobile-cart-link" data-cart-style="dropdown" href="./cart/index.html"><i className="icon-salient-cart"></i><div className="cart-wrap"><span>0 </span></div></a>
                                           <a className="show-btn borderfree__link" href="#">
-                                              <img src="/assets/wp-content/uploads/2022/02/flags-borderflag.gif" width="18px" height="12px" alt="United States" /><span>$USD</span>
+                                                {/* <img src="/assets/wp-content/uploads/2022/02/flags-borderflag.gif" width="18px" height="12px" alt="United States" /> */}
+                                                <div id="flag-parent-element" className='flag-element'></div><span> { currency }</span>
                                           </a>
                                                                               <div className="slide-out-widget-area-toggle mobile-icon slide-out-from-right" data-custom-color="false" data-icon-animation="simple-transform">
                           <div> <a href="#sidewidgetarea" aria-label="Navigation Menu" aria-expanded="false" className="closed">

@@ -33,15 +33,15 @@ const Main: FC = () => {
     )
 
     const smoothScroll = (elementId: string) => { 
-        console.log(elementId);
-        console.log(document.querySelector('#'+elementId));
+        // console.log(elementId);
+        // console.log(document.querySelector('#'+elementId));
         document.querySelector('#'+elementId)?.scrollIntoView({
             behavior: 'smooth'
         });
     }
     
     useEffect(() => {
-        console.log(routes);
+        // console.log(routes);
         // window.scrollTo(0, 0);
         smoothScroll("body-top");
         
