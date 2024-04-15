@@ -13,7 +13,6 @@ export const priceUnitSlice = createSlice({
   initialState,
   reducers: {
     setUnit: (state, action: PayloadAction< string  >) => {
-        console.log("SET USER");
         state.unit = action.payload;
     }
   },

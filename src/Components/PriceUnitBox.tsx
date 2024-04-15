@@ -27,38 +27,6 @@ const PriceUnitBox: FC<{ price: any }> = ( { price} ) => {
     let [ defaultUnit, setDefaultUnit ] = useState("$");
     let [ priceCopy, setPriceCopy ] = useState(Number(price)); 
 
-    const getRateOfExchnge = async function() { 
-
-        var myHeaders = new Headers();
-        myHeaders.append("apikey", "sGsiswQDg397FRbY0EIW176O1tKIS55R");
-
-        var requestOptions: RequestInit = {
-            method: 'GET',
-            redirect: 'follow',
-            // headers: myHeaders
-        };
-
-        const response = await fetch(`https://lapotnewapi2.nogdevhouse.com/api/currency/usdrate?currency=${ unit.toLowerCase() }`, requestOptions);
-        const data = await response.json();
-
-        console.log(data);
-
-        console.log(data?.data.length);
-
-        if(data?.data.length > 0) {
-
-            console.log("Unit change");
-            console.log(unit);
-            setDefaultUnit(current => unit );
-            console.log(data?.data[0].exchangeRate);
-            console.log('New price');
-            console.log(Number(price) * Number(data?.data[0].exchangeRate));
-            setPriceCopy( priecopy => Number(price) * Number(data?.data[0].exchangeRate) );
-
-        } 
-
-    }
-
 
     useEffect(
         () => {
@@ -79,18 +47,15 @@ const PriceUnitBox: FC<{ price: any }> = ( { price} ) => {
                     const response = await fetch(`https://lapotnewapi2.nogdevhouse.com/api/currency/usdrate?currency=${ unit.toLowerCase() }`, requestOptions);
                     const data = await response.json();
             
-                    console.log(data);
-            
-                    console.log(data?.data.length);
             
                     if(data?.data.length > 0) {
             
-                        console.log("Unit change");
-                        console.log(unit);
+                        // console.log("Unit change");
+                        // console.log(unit);
                         setDefaultUnit(current => unit );
-                        console.log(data?.data[0].exchangeRate);
-                        console.log('New price');
-                        console.log(Number(price) * Number(data?.data[0].exchangeRate));
+                        // console.log(data?.data[0].exchangeRate);
+                        // console.log('New price');
+                        // console.log(Number(price) * Number(data?.data[0].exchangeRate));
                         setPriceCopy( priecopy => Number((Number(price) * Number(data?.data[0].exchangeRate)).toFixed(2)) );
             
                     } 
@@ -117,19 +82,16 @@ const PriceUnitBox: FC<{ price: any }> = ( { price} ) => {
             
                     const response = await fetch(`https://lapotnewapi2.nogdevhouse.com/api/currency/usdrate?currency=${ unit.toLowerCase() }`, requestOptions);
                     const data = await response.json();
-            
-                    console.log(data);
-            
-                    console.log(data?.data.length);
+             
             
                     if(data?.data.length > 0) {
             
-                        console.log("Unit change");
-                        console.log(unit);
+                        // console.log("Unit change");
+                        // console.log(unit);
                         setDefaultUnit(current => unit );
-                        console.log(data?.data[0].exchangeRate);
-                        console.log('New price');
-                        console.log(Number(price) * Number(data?.data[0].exchangeRate));
+                        // console.log(data?.data[0].exchangeRate);
+                        // console.log('New price');
+                        // console.log(Number(price) * Number(data?.data[0].exchangeRate));
                         setPriceCopy( priecopy => Number((Number(price) * Number(data?.data[0].exchangeRate)).toFixed(2)) );
             
                     } 
@@ -139,7 +101,7 @@ const PriceUnitBox: FC<{ price: any }> = ( { price} ) => {
     )
 
     return ( 
-        <span>{ unit } {priceCopy}</span>
+        <>{ unit } {priceCopy}</>
     ); 
 }
 

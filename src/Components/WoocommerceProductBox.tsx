@@ -4,6 +4,8 @@ import { Link
 } from "react-router-dom";
 import { useEffect } from 'react';
 import * as Utils from '../Utils';
+import PriceUnitBox from './PriceUnitBox';
+
 //Props interface
 interface ProductBoxProps {
     product: any,
@@ -13,6 +15,7 @@ interface ProductBoxProps {
 const WoocommerceProductBox: FC<{ product: any, isForKit: Boolean}> = ( {product, isForKit }) => {
 
     useEffect( () => { 
+        console.log(product);
         if (isForKit === undefined || isForKit === null) isForKit = false; 
     }, [])
       
@@ -31,7 +34,8 @@ const WoocommerceProductBox: FC<{ product: any, isForKit: Boolean}> = ( {product
                 </div>		   </div>
                 <h2 className="woocommerce-loop-product__title">
                             <Link to={isForKit ? '/kit/' + product.id : '/product/' + product.id}> { product.fullName } </Link></h2>
-                <span className="price"><span className="woocs_price_code" data-product-id="278">USD : <span className="woocommerce-Price-amount amount"><bdi><span className="woocommerce-Price-currencySymbol">&#36;</span>{ product?.pu }</bdi></span></span></span>
+                <span   className="price" >
+                    <PriceUnitBox price={product?.pu} /></span> 
                 <Link to={isForKit ? '/kit/' + product.id : '/product/' + product.id} data-quantity="1" className="button product_type_simple add_to_cart_button ajax_add_to_cart" data-product_id="278" data-product_sku="" aria-label="Add &ldquo;ORANGE &amp; VANILLA LUXURIOUS NATURAL BODY LOTION&rdquo; to your cart" rel="nofollow">Add to cart</Link>
             </>
         )

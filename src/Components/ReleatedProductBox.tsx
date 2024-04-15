@@ -4,10 +4,14 @@ import { Link
 } from "react-router-dom";
 
 import * as Utils from '../Utils';
+import PriceUnitBox from './PriceUnitBox';
+
 //Props interface
 interface ProductBoxProps {
     product: any
 }
+
+
   
 const ReleatedProductBox: FC<{ product: any }> = ( {product} ) => {
       
@@ -27,7 +31,9 @@ const ReleatedProductBox: FC<{ product: any }> = ( {product} ) => {
 	    <span>Quick View</span></Link>
 </div>		   </div>
 		<h2 className="woocommerce-loop-product__title"><a href="./../sunset-in-paris-creamy-moist-body-polish-scrub/index.html">SUNSET IN PARIS CREAMY MOIST BODY POLISH SCRUB</a></h2>
-	<span className="price"><span className="woocs_price_code" data-product-id="264">USD : <span className="woocommerce-Price-amount amount"><bdi><span className="woocommerce-Price-currencySymbol">&#36;</span>{product?.pu}</bdi></span></span></span> <br/>
+	<span className="price" style={ { textAlign: "center", fontWeight: "bold" } } >
+        <PriceUnitBox price={product?.pu} /></span> <br/>
+        <br/>
     <Link to={'/product/' + product.id} data-quantity="1" className="button product_type_simple" data-product_id="264" data-product_sku="" aria-label="Read more about &ldquo;SUNSET IN PARIS CREAMY MOIST BODY POLISH SCRUB&rdquo;" rel="nofollow">Add to cart</Link>
 
                 {/* <div className="product-wrap">
