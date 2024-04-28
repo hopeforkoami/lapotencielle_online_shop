@@ -13,6 +13,8 @@ import * as Utils from '../Utils';
 import { setUnit } from '../Redux/Reducers/productPriceReducer';
 
 import '../country-flags-master/dist/country-flag.css'
+import AllService from '../Pages/service';
+import PriceUnitBox from '../Components/PriceUnitBox';
 const CountryFlag = require( '../country-flags-master/dist/country-flag.js');
 
 var countries        = require('country-data-list').countries ;
@@ -21,10 +23,14 @@ const Header: FC<{  }> = (  ) => {
 
     const store = useAppSelector((state) => state.store);
     const user = useAppSelector((state: RootState) => state.users.user );
-
     const unit = useAppSelector((state: RootState) => state.units.unit );
 
+    const allService = new AllService();
+
     let [ currency, setCurrency ] = useState('USD')
+
+    const productSearchResultsInit: Array<any> = [];
+    let [ productSearchResults, setProductSearchResults ] = useState(productSearchResultsInit);
 
     let cchoose: any = null;
     let [ countryChoose, setCountryChoose ] = useState(cchoose);
@@ -40,13 +46,23 @@ const Header: FC<{  }> = (  ) => {
     useEffect(() => { 
         let serach_input = window.document.getElementById('630b971a47893');
         
-        serach_input?.addEventListener("keypress", (event)=> {
-            console.log(event);
-            
-            if (event.keyCode === 13 || event.key === "Enter") { // key code of the keybord key
+        serach_input?.addEventListener("keyup", async (event)=> {
+
+            if (event.keyCode === 13 || event.key === "Enter") {
                 event.preventDefault();
-              // navigate( '/products/' + 'SEARCH-'+ event?.target?.value.toUpperCase() + '/' + values.searchStr.toLowerCase() );
             }
+
+            const eventTarget: any = event?.target;
+ 
+            await allService.searchByBarcodeOrName(  eventTarget.value  ).then(async function (response: any) {
+                console.log(response); 
+                setProductSearchResults(response?.data);
+            })
+              .catch(function (error: any) {
+                console.log(error); 
+            });
+            
+           
         });   
 
         const parentElement = document.getElementById("flag-parent-element");
@@ -66,6 +82,7 @@ const Header: FC<{  }> = (  ) => {
     
         const onCurrencyChange = (e: any) => {
             const c = countries.all.filter((ch: any) => ch.alpha2 ===e.target.value)[0];
+            window.localStorage.setItem('currentCountry', JSON.stringify(c));
             setCountryChoose(c)
             setCurrency(c.currencies[0]);
             dispatch( setUnit(c.currencies[0]) );
@@ -81,11 +98,56 @@ const Header: FC<{  }> = (  ) => {
     
         }, [countryChoose]);
 
+        const onProductSearch = (event: any) => {
+            event.preventDefault();
+            console.log(event.target.value);
+        }
+
+        useEffect(() => { 
+             
+            if (unit !== null) { 
+                let currentCountry =  window.localStorage.getItem('currentCountry');
+                if (currentCountry !== null && currentCountry !== '') {
+                    currentCountry = JSON.parse(currentCountry);
+                    setCountryChoose(currentCountry);
+                    setCurrency(unit);
+                }
+                
+            }
+    
+        }, [unit]);
+
+
       
         return (      
             < > 
     <div id="header-outer" data-has-menu="true" data-has-buttons="yes" data-header-button_style="default" data-using-pr-menu="false" data-mobile-fixed="1" data-ptnm="false" data-lhe="animated_underline" data-user-set-bg="#ffffff" data-format="centered-menu-bottom-bar" data-menu-bottom-bar-align="center" data-permanent-transparent="false" data-megamenu-rt="1" data-remove-fixed="1" data-header-resize="0" data-cart="true" data-transparency-option="0" data-box-shadow="large" data-shrink-num="6" data-using-secondary="0" data-using-logo="1" data-logo-height="100" data-m-logo-height="70" data-padding="28" data-full-width="true" data-condense="false">
-		
+        { productSearchResults.length > 0 ? <div id="aws-search-result-1" className="aws-search-result" style={{ width: '289px', top: '104px', left: '20px' }}>
+                    <ul>
+                        {
+                           productSearchResults.map(
+                            (prd) => (<li className="aws_result_item" style={{ position: 'relative' }}>
+                            <div className="aws_result_link">
+                                {/* <a  
+                            href="https://www.lapotencielle.com/product/organic-light-whipped-body-butter-coco-mousse/"> */}
+                                <Link className="aws_result_link_top" to={ '/product/' + prd?.id } >
+                                {prd?.fullName}</Link><span className="aws_result_image">
+                                    <img src={'https://lapotnewapi2files.nogdevhouse.com/images/products/'+prd?.image} /></span>
+                            <span className="aws_result_content">
+                                <span className="aws_result_title"> 
+                                <strong>{prd?.fullName}</strong></span>
+                                {/* <span className="aws_result_excerpt">ORGANIC VIRGIN <strong>COCO</strong>
+                                NUT OIL: It hydrates skin for 24 hours and helps to improve skin elasticity and collagen production.
+                                </span> */}
+                                <span className="aws_result_price">
+                                    <span className="woocs_price_code" data-product-id="271"> <PriceUnitBox price={prd?.pu} /> </span></span></span></div></li>)
+                           ) 
+                        }
+                        
+                        <li className="aws_result_item aws_search_more"><a href="#">Voir tous les résultats</a></li>
+                    </ul>
+                </div> : <></>
+        }
         <div id="search-outer" className="nectar">
           <div id="search">
             <div className="container">
@@ -94,16 +156,18 @@ const Header: FC<{  }> = (  ) => {
                   <div className="col span_12">
                         <form>
                             <input type="text" aria-label="Search" 
-                            placeholder="Search"  />
+                            placeholder="Search 2"  />
                             <span>Hit enter to search or ESC to close</span>
                             <input type="hidden" name="post_type" value="product" />						
                         </form>
                   </div> 
                 </div> 
               </div> 
-              <div id="close"><a href="#"><span className="screen-reader-text">Close Search</span>
-                <span className="close-wrap"> <span className="close-line close-line1"></span> <span className="close-line close-line2"></span>
-                 </span>				 </a></div>
+                <div id="close"><a href="#"><span className="screen-reader-text">Close Search</span>
+                    <span className="close-wrap"> <span className="close-line close-line1"></span> <span className="close-line close-line2"></span>
+                    </span>				 </a>
+                </div>
+                
             </div> 
           </div> 
         </div> 
@@ -138,7 +202,7 @@ const Header: FC<{  }> = (  ) => {
                           
                           <label>
                               I'm shipping to: 
-                              <select  onChange={ onCurrencyChange }  name="country" id="con" >
+                              <select  onChange={ onCurrencyChange } value={ countryChoose ? countryChoose.alpha2 : 'US' }  name="country" id="con" >
                                  
                                   {
                                     countries !== null ? countries.all.map((c:any, index: number) => 

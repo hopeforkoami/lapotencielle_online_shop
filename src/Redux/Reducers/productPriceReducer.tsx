@@ -13,6 +13,7 @@ export const priceUnitSlice = createSlice({
   initialState,
   reducers: {
     setUnit: (state, action: PayloadAction< string  >) => {
+        window.localStorage.setItem('currency', action.payload);
         state.unit = action.payload;
     }
   },

@@ -116,41 +116,43 @@ AwsHooks.filters = AwsHooks.filters || {};
 
             ajaxRequest: function() {
 
-                var data = {
-                    action: 'aws_action',
-                    keyword : searchFor,
-                    aws_page: d.pageId,
-                    aws_tax: d.tax,
-                    lang: d.lang,
-                    pageurl: window.location.href,
-                    typedata: 'json'
-                };
+                methods.hideLoader();
 
-                requests.push(
+                // var data = {
+                //     action: 'aws_action',
+                //     keyword : searchFor,
+                //     aws_page: d.pageId,
+                //     aws_tax: d.tax,
+                //     lang: d.lang,
+                //     pageurl: window.location.href,
+                //     typedata: 'json'
+                // };
 
-                    $.ajax({
-                        type: 'POST',
-                        url: ajaxUrl,
-                        data: data,
-                        dataType: 'json',
-                        success: function( response ) {
+                // requests.push(
 
-                            cachedResponse[searchFor] = response;
+                //     $.ajax({
+                //         type: 'POST',
+                //         url: ajaxUrl,
+                //         data: data,
+                //         dataType: 'json',
+                //         success: function( response ) {
 
-                            methods.showResults( response );
+                //             cachedResponse[searchFor] = response;
 
-                            methods.showResultsBlock();
+                //             methods.showResults( response );
 
-                            methods.analytics( searchFor );
+                //             methods.showResultsBlock();
 
-                        },
-                        error: function (jqXHR, textStatus, errorThrown) {
-                            console.log( "Request failed: " + textStatus );
-                            methods.hideLoader();
-                        }
-                    })
+                //             methods.analytics( searchFor );
 
-                );
+                //         },
+                //         error: function (jqXHR, textStatus, errorThrown) {
+                //             console.log( "Request failed: " + textStatus );
+                //             methods.hideLoader();
+                //         }
+                //     })
+
+                // );
 
             },
 

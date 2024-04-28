@@ -1,0 +1,60 @@
+ 
+.woocommerce ul.products li.product, .woocommerce-page ul.products li.product {
+    border: 1px solid rgba(0, 0, 0, .1);
+}
+
+.woocommerce ul.products li.first, .woocommerce-page ul.products li.first {
+    clear: both;
+}
+.woocommerce ul.products li.first, .woocommerce-page ul.products li.first {
+    clear: none;
+}
+.woocommerce ul.products li.product, .woocommerce-page ul.products li.product {
+    width: 23.45%;
+    margin-right: 2%;
+    margin-bottom: 2%;
+}
+.woocommerce ul.products li.first, .woocommerce-page ul.products li.first {
+    clear: both;
+}
+.woocommerce ul.products li.product, .woocommerce-page ul.products li.product {
+    float: left;
+    margin: 0 3.8% 2.992em 0;
+    padding: 0;
+    position: relative;
+    width: 22.05%;
+    margin-left: 0;
+}
+.woocommerce .products ul li, .woocommerce ul.products li {
+    list-style: none outside;
+}
+ul.products li {
+    text-align: center !important;
+}
+ul li {
+    list-style: disc;
+    list-style-position: outside;
+}
+
+.woocommerce nav.woocommerce-pagination {
+    text-align: center;
+}
+
+nav.woocommerce-pagination {
+    margin-top: 50px;
+}
+.woocommerce-pagination {
+    padding-bottom: 20px;
+}
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+
+nav {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}

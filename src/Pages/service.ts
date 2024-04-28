@@ -26,4 +26,8 @@ export default class AllService {
         return axiosInstance.get('/product/list/newsexclusive');
     }
 
+    public searchByBarcodeOrName =  async (searchStr: string) => {
+        return await axiosInstance.get(`/product/filter/keyword?keyWord=${searchStr}`);
+    }
+
 }

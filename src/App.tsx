@@ -33,6 +33,7 @@ import CookiesPolicy from './Pages/CookiesPolicy/CookiesPolicy';
 import ReturnPolicy from './Pages/Return/ReturnPolicy';
 import Legal from './Pages/Legal/Legal';
 import Checkout from './Pages/Cart/checkout';
+import Search from './Pages/Search';
 
 function App() {
   return ( 
@@ -62,6 +63,8 @@ function App() {
               <Route  path="/cookie-policy" element={ <CookiesPolicy/>} />
               <Route  path="/return-policy" element={ <ReturnPolicy/>} />
               <Route  path="/legal-disclaimer" element={ <Legal/>} />
+
+              <Route  path="/search" element={ <Search />} />
             </Route>
             
             <Route path="*" element={ <NotFound />} />
