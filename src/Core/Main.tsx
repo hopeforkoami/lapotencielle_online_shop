@@ -22,7 +22,7 @@ const Main: FC = () => {
 
     let [
         showModal, setShowModal
-    ] = useState(true);
+    ] = useState(false);
 
     useEffect(
         () => {
@@ -62,44 +62,48 @@ const Main: FC = () => {
  
         window.addEventListener("beforeunload", (event) => {
             
-            event.preventDefault(); 
+            // event.preventDefault(); 
 
-            const pageAccessedByReload = (
-                (window.performance.navigation && window.performance.navigation.type === 1) ||
-                  window.performance
-                    .getEntriesByType('navigation')
-                    .map((nav: any) => nav.type)
-                    .includes('reload')
-              );
-              
-              alert(pageAccessedByReload);
+            // const pageAccessedByReload = (
+            //     (window.performance.navigation && window.performance.navigation.type === 1) ||
+            //       window.performance
+            //         .getEntriesByType('navigation')
+            //         .map((nav: any) => nav.type)
+            //         .includes('reload')
+            //   ); 
+            
 
-            if(!pageAccessedByReload) { 
-                window.localStorage.removeItem("popup"); 
-                // window.localStorage.removeItem("currentCountry");
-                // window.localStorage.removeItem("currency");
-            } 
+            const navigationType = 
+                (window.performance.getEntriesByType('navigation')
+                    [0] as PerformanceNavigationTiming).type;
+
+            console.log(navigationType);
+
+            const isPageReload = navigationType === 'reload';
+
+            console.log("Page is on relaod or not");
+            console.log(isPageReload);
+
+            if(!isPageReload) { 
+                console.error('Clear storage');
+                window.localStorage.removeItem("popup");  
+            }  
+
+            return;
 
         });
-        // const popup = document.getElementById('pubpopup');
-        // console.log(popup);
-        // if (popup !== null) {
-        //     console.info('Popup exist');
-        // } else {
-        //     console.info('Popup not exist');
-        // } 
-
-        // popup?.addEventListener("click",function(e){    
-        //     alert(e.target+" clicked"); 
-        // }); 
-
+         
+    
         const pop = window.localStorage.getItem('popup');
 
-        if (pop === 'true') {
-            setShowModal(false);
+        console.log("Pop value");
+        console.log(pop);
+
+        if (!(pop === 'true')) {
+            console.log("Set pop value");
+            setShowModal(true);
         }
-
-
+        
         window.localStorage.setItem('popup', "true");
 
         const currency = window.localStorage.getItem('currency');
