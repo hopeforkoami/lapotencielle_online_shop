@@ -224,7 +224,8 @@ const Product: FC = () => {
                                         />
                         {/* <input name="Terms_of_use_Return_Policy" 
                         type="checkbox" value="Terms_of_use_Return_Policy" />  */}
-                        <a href="./../../terms-conditions-2/index.html">Terms of use </a> & <a href="./../../return-policy-2/index.html">Return Policy</a>
+                        <Link to={"/terms-conditions"}>Terms of use </Link> & 
+                        <Link to={"/return-policy"}>Return Policy</Link>
                         </label>
                         
                         <div className="quantity">
@@ -234,8 +235,11 @@ const Product: FC = () => {
                                 }
                             }} type="button" value="-" className="minus" />
                             
-                            <label className="screen-reader-text" htmlFor="quantity_630b972d6f174">ORANGE &amp; VANILLA LUXURIOUS NATURAL BODY LOTION quantity </label>
-                            <input type="number" id="quantity_630b972d6f174" className="input-text qty text" step="1" min="1" max="" name="quantity" value="1" title="Qty" size={4} placeholder="" inputMode="numeric" autoComplete="off" />
+                            <label className="screen-reader-text" htmlFor="quantity_630b972d6f174">
+                                ORANGE &amp; VANILLA LUXURIOUS NATURAL BODY LOTION quantity </label>
+                            <input type="number" id="quantity_630b972d6f174" className="input-text qty text" 
+                            step="1" min="1" max="" name="quantity" value={values.productQty} title="Qty" size={4} placeholder=""
+                             inputMode="numeric" autoComplete="off" />
                             
                             <input onClick={ () => { 
                                 values.productQty = values.productQty + 1; 
