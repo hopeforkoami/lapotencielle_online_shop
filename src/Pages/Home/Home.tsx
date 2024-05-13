@@ -1389,8 +1389,7 @@ getting the right amount of nutrients your skin deserves.</span></p>
 	<div className="wpb_raw_code wpb_content_element wpb_raw_html" >
 		<div className="wpb_wrapper">
 			<ul className="newsletter-text">
-<li style={{ width:"94px!important", opacity: "1" }} ><img style={{ float: "left" }} width="94" height="71" 
-src="./assets/trylink.xyz/dev1/lapOtencielle/wp-content/uploads/2022/01/mail.html" alt="" loading="lazy"/></li>
+			<li style={{width:"94px!important",opacity: 1}}><img decoding="async" width="94" height="71" src="https://trylink.xyz/dev1/lapOtencielle/wp-content/uploads/2022/01/mail.png" alt="" loading="lazy"/></li>
 <li style={{ fontSize: "17px", color:"#000!important" , opacity: "1", textAlign:"left" }}>SUBSCRIBE TO OUR <br />
 NEWSLETTER</li>
 </ul>

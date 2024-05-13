@@ -32,7 +32,7 @@ const News: FC = () => {
 
   return (
     <>
-      <div id="ajax-content-wrap">
+      <div className="newsPage" id="ajax-content-wrap">
         <br />
         <div className="breadcrumb">
           <span>
