@@ -60,21 +60,24 @@ const Products: FC = () => {
         return compar % 3 === 0 ;
     }
     const getTitleColor = ( title: string ) => {
+        console.log("the sended title is: "+ title?.replaceAll("-", " "));
         switch (title?.replaceAll("-", " ")) {
-            case "FACIAL CARE":
-                return "white";
-                break;
-            case "HAIR CARE":
-                return "white";
-                break;
+            
             case "ACCESSORIES & TOOLS":
-                return "white";
+                return "white!important";
                 break;
-        
+            case "FACIAL CARE":{
+                return "#ffffff!important";
+               
+            } break;
+            case "HAIR CARE":
+                return "#ffffff!important";
+                break;        
             default:
-                return "#0a0a0a";
+                return "white!important";
                 break;
         }
+        console.log("out of the switch: "+ title?.replaceAll("-", " "));
     }
 
     const getPageHeader = ( title: string ) => {
@@ -213,7 +216,7 @@ const Products: FC = () => {
                     <div className="row">
                         <div className="col span_6 ">
                             <div className="inner-wrap">
-                                <h1 style={{ color: getTitleColor(group ?? '')}}>{groupName}</h1> 						
+                                <h1 style={{color: getTitleColor(group ?? '')}}>{groupName}</h1> 						
                                 <span className="subheader"></span>
                             </div>
                         </div>

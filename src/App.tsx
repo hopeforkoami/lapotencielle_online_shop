@@ -56,6 +56,7 @@ function App() {
               <Route  path="/kit/:id" element={ <Kit />} />
               <Route  path="/kit/:id" element={ <Kit />} />
               
+              <Route  path="/about" element={ <About />} />
               <Route  path="/contact" element={ <Contact />} />
               <Route  path="/terms-conditions" element={ <Terms/>} />
               <Route  path="/privacy-policy" element={ <Privacy/>} />
