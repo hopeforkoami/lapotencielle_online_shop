@@ -1,0 +1,16 @@
+.woocommerce-MyAccount-navigation {
+    float: left;
+    width: 30%;
+}
+
+.woocommerce-MyAccount-content {
+    float: right ;
+    width: 68%;
+}
+
+@media only screen and (max-width : 690px) {
+    .woocommerce-account .woocommerce-MyAccount-content, .woocommerce-account .woocommerce-MyAccount-navigation {
+        float: none !important;
+        width: 100% !important;
+    }
+}

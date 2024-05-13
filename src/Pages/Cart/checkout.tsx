@@ -1,6 +1,6 @@
 
 
-
+import './style.css';
 import { FC, useState } from 'react';
 import {
     Link, useLocation, useNavigate, useParams
@@ -22,6 +22,7 @@ import Footer from '../../Layouts/Footer';
 import { RootState } from '../../Redux/store';
 
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
+import PriceUnitBox from '../../Components/PriceUnitBox';
 
 
 const Checkout: FC = () => {   
@@ -159,12 +160,13 @@ const Checkout: FC = () => {
 				
 <div className="wpb_text_column wpb_content_element ">
 	<div className="wpb_wrapper">
-		<div className="woocommerce"><div className="woocommerce-notices-wrapper"></div><div className="woocommerce-form-login-toggle">
+		<div className="woocommerce"><div className="woocommerce-notices-wrapper"></div>
+{/* <div className="woocommerce-form-login-toggle">
 	<br />
 	<div className="woocommerce-info">
-		Returning customer? <a href="#" className="showlogin">Click here to login</a>	</div>
-</div>
-<form className="woocommerce-form woocommerce-form-login login" method="post" style={{ display:'none' }}>
+		Returning customer? <Link to={ "/myaccount" } className="showlogin">Click here to login</Link>	</div>
+</div> */}
+{/* <form className="woocommerce-form woocommerce-form-login login" method="post" style={{ display:'none' }}>
 
 	
 	<p>If you have shopped with us before, please enter your details below. If you are a new customer, please proceed to the Billing section.</p>
@@ -194,14 +196,16 @@ const Checkout: FC = () => {
 	<div className="clear"></div>
 
 	
-</form>
+</form> */}
 <div className="woocommerce-form-coupon-toggle">
 	
 	<div className="woocommerce-info">
-		Have a coupon? <a href="#" className="showcoupon">Click here to enter your code</a>	</div>
+		Have a coupon? <a onClick={() =>{
+            document.getElementById('couponForm')?.classList.toggle("show-form");
+        }} className="showcoupon">Click here to enter your code</a>	</div>
 </div>
 
-<form className="checkout_coupon woocommerce-form-coupon" method="post" style={{ display:'none' }}>
+<form id="couponForm" className="checkout_coupon woocommerce-form-coupon" method="post" style={{ display:'none' }}>
 
 	<p>If you have a coupon code, please apply it below.</p>
 
@@ -353,18 +357,40 @@ const Checkout: FC = () => {
 		</tr>
 	</thead>
 	<tbody>
-						<tr className="cart_item">
-					<td className="product-name">
-						ORANGE &amp; VANILLA LUXURIOUS NATURAL BODY LOTION&nbsp;						 <strong className="product-quantity">×&nbsp;1</strong>											</td>
-					<td className="product-total">
-						<span className="woocs_special_price_code">USD : <span className="woocommerce-Price-amount amount"><bdi><span className="woocommerce-Price-currencySymbol">$</span>66.00</bdi></span></span>					</td>
-				</tr>
+					{
+                        store.products.map(
+                            (row) => <tr className="cart_item">
+                                    <td className="product-name">
+                                        {row.product.libProduit}&nbsp;						 
+                                        <strong className="product-quantity">×&nbsp;{ row.qty }</strong>											
+                                    </td>
+                                    <td className="product-total">
+                                        <span className="woocs_special_price_code">
+                                        <span className="woocommerce-Price-amount amount">
+                                        <bdi> <PriceUnitBox price={
+            ( (Number(row.product?.capitalUnitaireProduit) + Number(row.product?.interetUnitaireProduit)) * row.qty ) } /> </bdi></span></span>					
+                                    </td>
+				                </tr>
+                        )
+                    }	
+                        {/* <tr className="cart_item">
+                            <td className="product-name">
+                                ORANGE &amp; VANILLA LUXURIOUS NATURAL BODY LOTION&nbsp;						 
+                                <strong className="product-quantity">×&nbsp;1</strong>											
+                            </td>
+                            <td className="product-total">
+                                <span className="woocs_special_price_code">
+                                USD : <span className="woocommerce-Price-amount amount">
+                                <bdi><span className="woocommerce-Price-currencySymbol">$</span>66.00</bdi></span></span>					
+                            </td>
+				        </tr> */}
 					</tbody>
 	<tfoot>
 
 		<tr className="cart-subtotal">
 			<th>Subtotal</th>
-			<td><span className="woocs_special_price_code">USD : <span className="woocommerce-Price-amount amount"><bdi><span className="woocommerce-Price-currencySymbol">$</span>66.00</bdi></span></span></td>
+			<td><span className="woocs_special_price_code">
+            <span className="woocommerce-Price-amount amount"><bdi> <PriceUnitBox price={storeTotal} /> </bdi></span></span></td>
 		</tr>
 
 		
@@ -373,7 +399,7 @@ const Checkout: FC = () => {
 			<tr className="woocommerce-shipping-totals shipping">
 	<th>Shipping</th>
 	<td data-title="Shipping">
-		Enter your address to view shipping options.
+		Enter your address above to view shipping options.
 		
 			</td>
 </tr>
@@ -385,7 +411,8 @@ const Checkout: FC = () => {
 		
 		<tr className="order-total">
 			<th>Total</th>
-			<td><strong><span className="woocs_special_price_code">USD : <span className="woocommerce-Price-amount amount"><bdi><span className="woocommerce-Price-currencySymbol">$</span>66.00</bdi></span></span></strong> </td>
+			<td><strong><span className="woocs_special_price_code">
+               <span className="woocommerce-Price-amount amount"><bdi> <PriceUnitBox price={storeTotal} /> </bdi></span></span></strong> </td>
 		</tr>
 
 		
@@ -395,7 +422,8 @@ const Checkout: FC = () => {
 <div id="payment" className="woocommerce-checkout-payment" style={{ position: 'static', zoom: 1 }} >
 			<ul className="wc_payment_methods payment_methods methods">
 			<li className="wc_payment_method payment_method_ppcp-gateway">
-	<input id="payment_method_ppcp-gateway" type="radio" className="input-radio" name="payment_method" value="ppcp-gateway"  data-order_button_text="" style={{ display: 'none' }} />
+	<input id="payment_method_ppcp-gateway" type="radio" className="input-radio" name="payment_method" value="ppcp-gateway"
+      data-order_button_text="" style={{ display: 'none' }} />
 
 	<label htmlFor="payment_method_ppcp-gateway">
 		PayPal 	</label>
@@ -414,7 +442,8 @@ const Checkout: FC = () => {
 
 	
 		
-		<button type="submit" className="button alt ppcp-hidden" name="woocommerce_checkout_place_order" id="place_order" value="Place order" data-value="Place order">Place order</button>
+		{/* <button type="submit" className="button alt ppcp-hidden" name="woocommerce_checkout_place_order" 
+        id="place_order" value="Place order" data-value="Place order">Place order</button> */}
 		{/* <div id="ppcp-messages" data-partner-attribution-id="Woo_PPCP" data-pp-id="1">
             <span id="zoid-paypal-message-uid_cb8fb4975b_mja6mjc6mzi">
                 <style nonce=""></style>
@@ -448,7 +477,9 @@ const Checkout: FC = () => {
       <div className="inner">
         <div className="hover-wrap" style={{ opacity: 1 }} > 
           <div className="hover-wrap-inner img-loaded">
-            <img className="img-with-animation skip-lazy nectar-lazy animated-in loaded" data-delay="0" height="88" width="350" data-animation="fade-in" src="https://www.lapotencielle.com/wp-content/uploads/2022/05/paypal-cards-secure-768x193-1.png" alt="Payment Method" sizes="(min-width: 1450px) 75vw, (min-width: 1000px) 85vw, 100vw" srcSet="https://www.lapotencielle.com/wp-content/uploads/2022/05/paypal-cards-secure-768x193-1.png 350w, https://www.lapotencielle.com/wp-content/uploads/2022/05/paypal-cards-secure-768x193-1-300x75.png 300w" />
+            <img className="img-with-animation skip-lazy nectar-lazy animated-in loaded" 
+            data-delay="0" height="88" width="350" data-animation="fade-in" 
+            src="https://www.lapotencielle.com/wp-content/uploads/2022/05/paypal-cards-secure-768x193-1.png" alt="Payment Method" sizes="(min-width: 1450px) 75vw, (min-width: 1000px) 85vw, 100vw" srcSet="https://www.lapotencielle.com/wp-content/uploads/2022/05/paypal-cards-secure-768x193-1.png 350w, https://www.lapotencielle.com/wp-content/uploads/2022/05/paypal-cards-secure-768x193-1-300x75.png 300w" />
           </div>
         </div>
       </div>

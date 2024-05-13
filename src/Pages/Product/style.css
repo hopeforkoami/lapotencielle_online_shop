@@ -1,0 +1,199 @@
+  /* .woocommerce-tabs ul.tabs li.active {
+    color: #fff !important;
+}
+  .woocommerce-tabs ul.tabs li.active,  #content  .woocommerce-tabs ul.tabs li.active, .woocommerce-page  .woocommerce-tabs ul.tabs li.active, .woocommerce-page #content  .woocommerce-tabs ul.tabs li.active {
+    background-color: #000000;
+}
+  .woocommerce-tabs ul.tabs li.active {
+    background: #fff;
+    color: #515151;
+    z-index: 2;
+    border-bottom-color: #fff;
+}
+  .woocommerce-tabs ul.tabs li {
+    border-bottom: none !important;
+    background-color: rgba(0, 0, 0, 0.043);
+}
+  .woocommerce-tabs ul.tabs li,  #content  .woocommerce-tabs ul.tabs li, .woocommerce-page  .woocommerce-tabs ul.tabs li, .woocommerce-page #content  .woocommerce-tabs ul.tabs li {
+    background-image: none;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    margin-left: -2px;
+    margin-right: -2px;
+    border-radius: 0;
+    -webkit-border-radius: 0;
+    border-top: 0;
+    border-left: 0;
+    transition: background-color 0.2s linear;
+}
+  .woocommerce-tabs ul.tabs li {
+    border: 1px solid #cfc8d8;
+    background-color: #e9e6ed;
+    color: #515151;
+    display: inline-block;
+    position: relative;
+    z-index: 0;
+    border-radius: 4px 4px 0 0;
+    margin: 0 -5px;
+    padding: 0 1em;
+}
+ #content  .woocommerce-tabs ul.tabs li,   .woocommerce-tabs ul.tabs li, .woocommerce-page #content  .woocommerce-tabs ul.tabs li, .woocommerce-page  .woocommerce-tabs ul.tabs li {
+    display: inline-block;
+}
+ul li {
+    list-style: disc;
+    list-style-position: outside;
+}
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+feuille de style user-agent
+li {
+    display: list-item;
+    text-align: -webkit-match-parent;
+    unicode-bidi: isolate;
+}
+  .woocommerce-tabs ul.tabs {
+    list-style: none;
+    padding: 0 0 0 1em;
+    margin: 0 0 1.618em;
+    overflow: hidden;
+    position: relative;
+}
+
+
+  .woocommerce-tabs ul.tabs {
+    justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
+}
+  .woocommerce-tabs ul.tabs {
+    padding-left: 2px;
+    margin-bottom: 0;
+}
+  .woocommerce-tabs ul.tabs {
+    list-style: none;
+    padding: 0 0 0 1em;
+    margin: 0 0 1.618em;
+    overflow: hidden;
+    position: relative;
+}
+ul, ol {
+    margin-left: 30px;
+    margin-bottom: 30px;
+}
+
+
+  .woocommerce-tabs ul.tabs li.active {
+    color: #fff !important;
+}
+  .woocommerce-tabs ul.tabs li.active,  #content  .woocommerce-tabs ul.tabs li.active, .woocommerce-page  .woocommerce-tabs ul.tabs li.active, .woocommerce-page #content  .woocommerce-tabs ul.tabs li.active {
+    background-color: #000000;
+}
+  .woocommerce-tabs ul.tabs li.active {
+    background: #fff;
+    color: #515151;
+    z-index: 2;
+    border-bottom-color: #fff;
+}
+  .woocommerce-tabs ul.tabs li {
+    border-bottom: none !important;
+    background-color: rgba(0, 0, 0, 0.043);
+}
+  .woocommerce-tabs ul.tabs li,  #content  .woocommerce-tabs ul.tabs li, .woocommerce-page  .woocommerce-tabs ul.tabs li, .woocommerce-page #content  .woocommerce-tabs ul.tabs li {
+    background-image: none;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    margin-left: -2px;
+    margin-right: -2px;
+    border-radius: 0;
+    -webkit-border-radius: 0;
+    border-top: 0;
+    border-left: 0;
+    transition: background-color 0.2s linear;
+}
+  .woocommerce-tabs ul.tabs li {
+    border: 1px solid #cfc8d8;
+    background-color: #e9e6ed;
+    color: #515151;
+    display: inline-block;
+    position: relative;
+    z-index: 0;
+    border-radius: 4px 4px 0 0;
+    margin: 0 -5px;
+    padding: 0 1em;
+}
+ #content  .woocommerce-tabs ul.tabs li,   .woocommerce-tabs ul.tabs li, .woocommerce-page #content  .woocommerce-tabs ul.tabs li, .woocommerce-page  .woocommerce-tabs ul.tabs li {
+    display: inline-block;
+}
+ul li {
+    list-style: disc;
+    list-style-position: outside;
+}
+
+.woocommerce-tabs ul.tabs li {
+    border-bottom: none !important;
+    background-color: rgba(0, 0, 0, 0.043);
+}
+.woocommerce-tabs ul.tabs li,  #content  .woocommerce-tabs ul.tabs li, .woocommerce-page  .woocommerce-tabs ul.tabs li, .woocommerce-page #content  .woocommerce-tabs ul.tabs li {
+    background-image: none;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    margin-left: -2px;
+    margin-right: -2px;
+    border-radius: 0;
+    -webkit-border-radius: 0;
+    border-top: 0;
+    border-left: 0;
+    transition: background-color 0.2s linear;
+}
+.woocommerce-tabs ul.tabs li {
+    border: 1px solid #cfc8d8;
+    background-color: #e9e6ed;
+    color: #515151;
+    display: inline-block;
+    position: relative;
+    z-index: 0;
+    border-radius: 4px 4px 0 0;
+    margin: 0 -5px;
+    padding: 0 1em;
+}
+
+ .woocommerce-tabs ul.tabs {
+    justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+ .woocommerce-tabs ul.tabs {
+    padding-left: 2px;
+    margin-bottom: 0;
+}
+ .woocommerce-tabs ul.tabs {
+    list-style: none;
+    padding: 0 0 0 1em;
+    margin: 0 0 1.618em;
+    overflow: hidden;
+    position: relative;
+} */
+
+.tab-active {
+    background-color: #000000;
+    color: #fff;
+}
+
+.tab-list {
+    justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
+}

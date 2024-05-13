@@ -1,24 +1,29 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 
 import {
   BrowserRouter as Router,
   Route,
   Link,
-  Routes
+  Routes,
+  Navigate
 } from "react-router-dom";
 
- 
-import Home from './Pages/Home/Home';
-import NotFound from './Pages/NotFound';
-
-import Track from './Pages/Track';
-import Products from './Pages/Products';
-import Product from './Pages/Product';
+// Redux
+import { useAppDispatch } from './Hooks/customSelector';
+import { setUser } from './Redux/Reducers/userReducer';
 
 //Core  
 import Main from './Core/Main';
+
+// Pages
+import Home from './Pages/Home/Home';
+import NotFound from './Pages/NotFound';
+import Track from './Pages/Track';
+import Products from './Pages/Products';
+import Product from './Pages/Product';
 import Cart from './Pages/Cart';
 import Myaccount from './Pages/Myaccount';
 import News from './Pages/News';
@@ -34,6 +39,34 @@ import ReturnPolicy from './Pages/Return/ReturnPolicy';
 import Legal from './Pages/Legal/Legal';
 import Checkout from './Pages/Cart/checkout';
 import Search from './Pages/Search';
+import Client from './Pages/Client';
+import Dashboard from './Pages/Client/Dashboard';
+import Order from './Pages/Client/Order';
+import Download from './Pages/Client/Download';
+import Adress from './Pages/Client/Adress';
+import Account from './Pages/Client/Account';
+
+// A wrapper for <Route> that redirects to the login
+// screen if you're not yet authenticated.
+type ProtectedRouteProps = { 
+  outlet: JSX.Element;
+};
+
+
+function ProtectedRoute({ outlet }: ProtectedRouteProps) {
+
+  const dispatch = useAppDispatch();
+  const user = window.localStorage.getItem('__user');
+
+  if( user !== null && user !== undefined ) {
+    dispatch( setUser( JSON.parse(user)  ) ); 
+    return outlet;
+  } else {
+    window.location.href = "/myaccount"
+    return <Navigate to={{ pathname: '/myaccount' }}  replace={true} />;
+  }
+
+};
 
 function App() {
   return ( 
@@ -65,6 +98,16 @@ function App() {
               <Route  path="/legal-disclaimer" element={ <Legal/>} />
 
               <Route  path="/search" element={ <Search />} />
+
+              {/* Client */}
+              <Route path="client" element={<ProtectedRoute  outlet={ <Client />} />} >
+                <Route index element={<ProtectedRoute  outlet={ <Dashboard />} />} />
+                <Route path="orders" element={<ProtectedRoute  outlet={ <Order />} />} /> 
+                <Route path="downloads" element={<ProtectedRoute  outlet={ <Download />} />} /> 
+                <Route path="adresses" element={<ProtectedRoute  outlet={ <Adress />} />} /> 
+                <Route path="account-details" element={<ProtectedRoute  outlet={ <Account />} />} /> 
+              </Route>
+
             </Route>
             
             <Route path="*" element={ <NotFound />} />

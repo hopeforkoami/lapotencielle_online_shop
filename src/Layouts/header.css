@@ -17,3 +17,40 @@ iframe {
   margin-top: -5px;
   margin-right: 2px;
 }
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right: -45px;
+  background-color: #ffffff;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 100;
+}
+
+/* Links inside the dropdown */
+.dropdown-content ul li {
+  color: black;
+  min-width: 160px;
+  padding: 2px;
+  text-decoration: none;
+  display: block;
+  font-family: Segoe_UI !important;
+}
+.dropdown-content>ul>li>a { 
+  width: 100% !important; 
+  text-align: justify !important;
+  font-family: Segoe_UI !important;
+} 
+/* Change color of dropdown links on hover */
+.dropdown-content ul li:hover {background-color: #fff;}
+
+/* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+.show {display:block;}
+
+.user-photo {
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 50%;
+}

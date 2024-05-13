@@ -17,6 +17,7 @@ import { useAppDispatch, useAppSelector } from '../../Hooks/customSelector';
 import { addProduct, removeProduct, updateProductQty, updateProducts } from '../../Redux/Reducers/storeReducer';
 import Footer from '../../Layouts/Footer';
 import { RootState } from '../../Redux/store';
+import PriceUnitBox from '../../Components/PriceUnitBox';
 
 const Cart: FC = () => {   
     
@@ -42,7 +43,7 @@ const Cart: FC = () => {
                 strTtl += ( (Number(row.product?.capitalUnitaireProduit) + Number(row.product?.interetUnitaireProduit)) * row.qty );
             }
         );
-        setStoreTotal( strTtl );
+        setStoreTotal( (total) => (strTtl) );
     }
 
     
@@ -114,12 +115,13 @@ const Cart: FC = () => {
         {
             name: `Subtotal`,
             selector: (row: any) => <>
-            <b> USD : $ {
-            ( (Number(row.product?.capitalUnitaireProduit) + Number(row.product?.interetUnitaireProduit)) * row.qty ) } </b> </>,
+            <b> <PriceUnitBox price={
+            ( (Number(row.product?.capitalUnitaireProduit) + Number(row.product?.interetUnitaireProduit)) * row.qty ) } />  </b> </>,
         },
         {
             name: `Actions`,
             selector: (row: any) => <>
+            
                     <button onClick={() => {
                         dispatch( removeProduct( row ) )
                     }} className='button button-danger'>
@@ -185,7 +187,8 @@ const Cart: FC = () => {
                                 <tbody>
                                     <tr className="cart-subtotal">
                                         <th>Subtotal</th>
-                                        <td data-title="Subtotal"><span className="woocs_special_price_code">USD : <span className="woocommerce-Price-amount amount"><bdi><span className="woocommerce-Price-currencySymbol">$</span>{storeTotal}</bdi></span></span></td>
+                                        <td data-title="Subtotal"><span className="woocs_special_price_code">
+                                        <span className="woocommerce-Price-amount amount"><bdi> <PriceUnitBox price={storeTotal} /> </bdi></span></span></td>
                                     </tr>
                                     <tr className="woocommerce-shipping-totals shipping">
                             <th>Shipping</th>
@@ -227,7 +230,8 @@ const Cart: FC = () => {
                         </tr>
                                 <tr className="order-total">
                                     <th>Total</th>
-                                    <td data-title="Total"><strong><span className="woocs_special_price_code">USD : <span className="woocommerce-Price-amount amount"><bdi><span className="woocommerce-Price-currencySymbol">$</span>{ storeTotal }</bdi></span></span></strong> </td>
+                                    <td data-title="Total"><strong><span className="woocs_special_price_code"><span className="woocommerce-Price-amount amount">
+                                        <bdi> <PriceUnitBox price={storeTotal} /></bdi></span></span></strong> </td>
                                 </tr>
 
                                 
@@ -252,6 +256,7 @@ const Cart: FC = () => {
                                 // 
                             } else {
                                 alert("Please, you must login first");
+                                navigate('/myaccount');
                             }
 
                         }} className="checkout-button button alt wc-forward">
@@ -260,8 +265,13 @@ const Cart: FC = () => {
                                 loading && <i className="fa fa-circle-o-notch fa-spin fa-1x fa-fw"></i>
                                }
                         </button>
-                        <Link to="/myaccount" className="checkout-button button alt wc-forward">
+
+                        {
+                            user !== null ? <></> :
+                            <Link to="/myaccount" className="checkout-button button alt wc-forward">
                             Sign Up / Login</Link>
+                        }
+                        
                         <Link to="/products/OUR-ORANGE-AND-VANILLA-PRODUCTS/orange" className="checkout-button button alt wc-forward">
                             Continue Shopping</Link>	</div>
                             

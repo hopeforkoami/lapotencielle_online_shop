@@ -70,6 +70,40 @@ const Header: FC<{  }> = (  ) => {
 
     }, []);
 
+    useEffect(() => {
+
+        window.onload = function() {
+
+            // alert('Dom ready');
+
+            const userPhoto = document.getElementById("user-photo");
+
+            console.log('Dow ready');
+            console.log(userPhoto);
+
+            userPhoto?.addEventListener("click", (event)=> {
+                console.log(event);
+                document.getElementById('myDropdown')?.classList.toggle("show");
+            }); 
+
+            window.onclick = function(event) {
+                let targets: any = event.target;
+                if (!targets?.matches('.user-photo')) {
+                var dropdowns = document.getElementsByClassName("dropdown-content");
+                var i;
+                for (i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                    }
+                }
+                }
+            } 
+
+        };
+
+    }, []);
+
     useEffect(() => { 
              
     
@@ -309,7 +343,7 @@ const Header: FC<{  }> = (  ) => {
                               <div className="country_btn">
                                       <div style={{ marginTop:"-7px" }}
                                             className="borderfree bfx_hidden" data-block="borderfree__dropdown">
-                                            <a className="show-btn borderfree__link" href="#">
+                                            <a className="show-btn borderfree__link" >
                                                 <div id="flag-parent-element"
                                                  className='flag-element'></div><span> { currency } </span>
                                             </a>
@@ -338,14 +372,38 @@ const Header: FC<{  }> = (  ) => {
   </li></ul>						<ul className="buttons" data-user-set-ocm="off">
   <li id="search-btn">
   <div><a href="#searchbox"><span className="icon-salient-search" aria-hidden="true"></span><span className="screen-reader-text">search</span></a></div> </li>			 <li id="nectar-user-account" className="">
-  <div><Link className="user-account-btn" to="/myaccount">
+  <div>
     {
         user !== null ? 
-        <img src="/assets/images/user.png" alt="" /> : 
+        <div className="user-account-btn " >
+            <img id='user-photo' className='user-photo user-account-btn' src="/assets/images/user.png" alt="" /> 
+            <span className="screen-reader-text">
+                   account </span>
+            <div id="myDropdown" className="dropdown-content">
+                <ul style={{ listStyle: "none", marginLeft: "4px", minWidth: "160px" }}>
+                    <li>
+                        <Link to="/client">Dashboard</Link>
+                    </li>
+                    <li>
+                        <Link to="/client/account-details">My account</Link>
+                    </li>
+                    <li>
+                        <Link to="/client/orders">My orders</Link>
+                    </li>
+                    <li>
+                        <a href="#">Log-out</a>
+                    </li>
+                </ul>
+                
+               
+            </div>
+        </div> : 
+        <Link className="user-account-btn" to="/myaccount">
         <span className="icon-salient-m-user" aria-hidden="true"></span>
+        <span className="screen-reader-text">
+                   account </span></Link>
     } 
-    <span className="screen-reader-text">
-                   account </span></Link></div>  </li> <li className="nectar-woo-cart">
+    </div>  </li> <li className="nectar-woo-cart">
               <div className="cart-outer" data-user-set-ocm="off" data-cart-style="dropdown">
                   <div className="cart-menu-wrap">
                       <div className="cart-menu">
@@ -377,7 +435,7 @@ const Header: FC<{  }> = (  ) => {
                                           <a className="mobile-user-account" href="http://lapotencielle.com/my-account/"><span className="normal icon-salient-m-user" aria-hidden="true"></span><span className="screen-reader-text">account</span></a>
                       
                           <a id="mobile-cart-link" data-cart-style="dropdown" href="./cart/index.html"><i className="icon-salient-cart"></i><div className="cart-wrap"><span>0 </span></div></a>
-                                          <a className="show-btn borderfree__link" href="#">
+                                          <a className="show-btn borderfree__link"  >
                                                 {/* <img src="/assets/wp-content/uploads/2022/02/flags-borderflag.gif" width="18px" height="12px" alt="United States" /> */}
                                                 <div id="flag-parent-element" className='flag-element'></div><span> { currency }</span>
                                           </a>
