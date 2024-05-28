@@ -29,3 +29,8 @@
 .invalid-feedback{
     color: red;
 }
+
+.error-msg {
+    color: red !important;
+    text-align: center;
+}

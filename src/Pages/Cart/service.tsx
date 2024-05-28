@@ -22,5 +22,13 @@ export default class CartService {
         return await axiosInstance.get('/shipingService/list');
     }
 
+    public getPromoCodeReduction = async (data: Record<string, any>) => {
+        return await axiosInstance.post('/order/promo', data );
+    } 
+
+    public getShippingCosts = async (data: Record<string, any>) => {
+        return await axiosInstance.post('/shipping/coast', data );
+    } 
+
 
 }

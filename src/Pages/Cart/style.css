@@ -1,1 +1,14 @@
 .show-form {display:block !important;}
+
+.main-container {
+    margin-bottom: 200px;
+}
+
+.input-error {
+    border: 1px red solid;
+}
+
+.invalid-feedback{
+    color: red;
+    font-size: 10px;
+}

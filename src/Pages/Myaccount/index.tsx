@@ -42,6 +42,10 @@ const Myaccount: FC = () => {
         showLoginPassword, setShowLoginPassword
     ] = useState(false);
 
+    let [
+        message, setMessage
+    ] = useState(null);
+
     return (
         <div className='woocommerce-account'>
             <div id="ajax-content-wrap">
@@ -88,6 +92,7 @@ const Myaccount: FC = () => {
                                 onSubmit={async (
                                     values 
                                 ) => {
+                                        setMessage(() => null);
                                         console.log(values); 
                                         setLoading(true);
                                         myaccountService.login(values).then(async function (response: any) {
@@ -105,6 +110,8 @@ const Myaccount: FC = () => {
                                                 setLoading(false); 
                 
                                                 window.location.href = "/";
+                                            } else if (response.data.statut === 500) {
+                                                setMessage(() => response.data.message);
                                             }
                                         })
                                           .catch(function (error: any) {
@@ -114,7 +121,15 @@ const Myaccount: FC = () => {
                                 >
                                     {({ dirty, errors, touched, isValid, handleChange, handleBlur, handleSubmit, values }) => (
                                     <Form  className="woocommerce-form woocommerce-form-login login" >
+                                        {
+                                        
+                                            message !== null && message !== '' && 
+                                            <b className='error-msg'>
+                                                { message }
+                                            </b>
 
+                                        }
+                                     
                                 
                                 <p className="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
                                     <label htmlFor="username">Username or email address&nbsp;<span className="required">*</span></label>
@@ -294,7 +309,7 @@ const Myaccount: FC = () => {
                                                 setLoading(false); 
                 
                                                 window.location.href = "/";
-                                            }
+                                            } 
                                         }).catch(function (error: any) {
                                                 console.log(error); 
                                         });

@@ -33,6 +33,10 @@ export default class MyaccountService {
     public register =  async (client: Record<string, any>) => {
         return await axiosInstance.post('/client/add', client );
     } 
+
+    public getPromoCodeReduction = async (data: Record<string, any>) => {
+        return await axiosInstance.post('/order/promo', data );
+    } 
     
 
 
