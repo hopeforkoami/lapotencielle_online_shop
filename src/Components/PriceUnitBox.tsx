@@ -27,6 +27,9 @@ const PriceUnitBox: FC<{ price: any }> = ( { price} ) => {
     let [ defaultUnit, setDefaultUnit ] = useState("$");
     let [ priceCopy, setPriceCopy ] = useState(Number(price)); 
 
+    // const rateInit: any = null
+    // let [ rate, setRate ] = useState(rateInit);
+
     const numberWithCommas = (x: any) => {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
@@ -34,6 +37,8 @@ const PriceUnitBox: FC<{ price: any }> = ( { price} ) => {
 
     useEffect(
         () => {
+
+            console.log('unit changing')
 
             if (defaultUnit !== unit) { 
                 // getRateOfExchnge();
@@ -57,6 +62,11 @@ const PriceUnitBox: FC<{ price: any }> = ( { price} ) => {
                         // console.log("Unit change");
                         // console.log(unit);
                         setDefaultUnit(current => unit );
+                        window.localStorage.setItem(
+                            '_exchange_rate',
+                            data?.data[0].exchangeRate.toString()
+                        );
+                        // setRate((crr: any) => data?.data[0].exchangeRate);
                         // console.log(data?.data[0].exchangeRate);
                         // console.log('New price');
                         // console.log(Number(price) * Number(data?.data[0].exchangeRate));
@@ -72,7 +82,13 @@ const PriceUnitBox: FC<{ price: any }> = ( { price} ) => {
 
     useEffect(
         () => {
-            if (unit !== '$' && unit !== 'USD') {
+
+            console.log('unitialisaion');
+
+            let rate: any = window.localStorage.getItem('_exchange_rate');
+            rate = Number(rate);
+
+            if (unit !== '$' && unit !== 'USD' && ( rate === null || rate === undefined || rate === '') ) {
                 (async function anyNameFunction(){ 
 
                     var myHeaders = new Headers();
@@ -100,6 +116,12 @@ const PriceUnitBox: FC<{ price: any }> = ( { price} ) => {
             
                     } 
                 })();
+            } else {
+                setDefaultUnit(current => unit );
+                // console.log(data?.data[0].exchangeRate);
+                // console.log('New price');
+                // console.log(Number(price) * Number(data?.data[0].exchangeRate));
+                setPriceCopy( priecopy => Number((Number(price) * Number(rate)).toFixed(2)) );
             }
         }, []
     )
@@ -108,33 +130,44 @@ const PriceUnitBox: FC<{ price: any }> = ( { price} ) => {
         () => {
             setPriceCopy(Number(price));
 
-            (async function anyNameFunction(){ 
+            let rate: any = window.localStorage.getItem('_exchange_rate');
+            rate = Number(rate);
 
-                var myHeaders = new Headers();
-                myHeaders.append("apikey", "sGsiswQDg397FRbY0EIW176O1tKIS55R");
-        
-                var requestOptions: RequestInit = {
-                    method: 'GET',
-                    redirect: 'follow',
-                    // headers: myHeaders
-                };
-        
-                const response = await fetch(`https://lapotnewapi2.nogdevhouse.com/api/currency/usdrate?currency=${ unit.toLowerCase() }`, requestOptions);
-                const data = await response.json();
-        
-        
-                if(data?.data.length > 0) {
-        
-                    // console.log("Unit change");
-                    // console.log(unit);
-                    setDefaultUnit(current => unit );
-                    // console.log(data?.data[0].exchangeRate);
-                    // console.log('New price');
-                    // console.log(Number(price) * Number(data?.data[0].exchangeRate));
-                    setPriceCopy( priecopy => Number((Number(price) * Number(data?.data[0].exchangeRate)).toFixed(2)) );
-        
-                } 
-            })();
+            if (unit !== '$' && unit !== 'USD' && ( rate === null || rate === undefined || rate === '') ) {
+                (async function anyNameFunction(){ 
+
+                    var myHeaders = new Headers();
+                    myHeaders.append("apikey", "sGsiswQDg397FRbY0EIW176O1tKIS55R");
+            
+                    var requestOptions: RequestInit = {
+                        method: 'GET',
+                        redirect: 'follow',
+                        // headers: myHeaders
+                    };
+            
+                    const response = await fetch(`https://lapotnewapi2.nogdevhouse.com/api/currency/usdrate?currency=${ unit.toLowerCase() }`, requestOptions);
+                    const data = await response.json();
+             
+            
+                    if(data?.data.length > 0) {
+            
+                        // console.log("Unit change");
+                        // console.log(unit);
+                        setDefaultUnit(current => unit );
+                        // console.log(data?.data[0].exchangeRate);
+                        // console.log('New price');
+                        // console.log(Number(price) * Number(data?.data[0].exchangeRate));
+                        setPriceCopy( priecopy => Number((Number(price) * Number(data?.data[0].exchangeRate)).toFixed(2)) );
+            
+                    } 
+                })();
+            } else {
+                setDefaultUnit(current => unit );
+                // console.log(data?.data[0].exchangeRate);
+                // console.log('New price');
+                // console.log(Number(price) * Number(data?.data[0].exchangeRate));
+                setPriceCopy( priecopy => Number((Number(price) * Number(rate)).toFixed(2)) );
+            }
 
         }, 
         [price]

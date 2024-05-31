@@ -15,15 +15,29 @@ import { Formik, Field, Form, FormikProps } from 'formik'
 import * as yup from 'yup';
 
 import { useAppDispatch, useAppSelector } from '../../Hooks/customSelector';
-import { addProduct, removeProduct, updateProductQty, updateProducts } from '../../Redux/Reducers/storeReducer';
+import { addProduct, removeProduct, updateProductQty, updateProducts, setShippingCosts, setReductions, setCurrentShippingAddress } from '../../Redux/Reducers/storeReducer';
 import Footer from '../../Layouts/Footer';
 import { RootState } from '../../Redux/store';
 import PriceUnitBox from '../../Components/PriceUnitBox';
 
 var countries = require('country-data-list').countries ;
 
-interface shippingOptionsForm {
-    cost: string
+interface ShippingOptionsForm {
+    cost: string | null
+}
+
+
+interface PromotionCodeForm {
+    promoCode: string | null
+}
+
+interface ShippnAddressForm {
+    countryCode: string;
+    state: string;
+    city: string;
+    postalCode: string;
+    addressLine1: string;
+    saveAddress: boolean
 }
 
 const Cart: FC = () => {   
@@ -32,13 +46,18 @@ const Cart: FC = () => {
     let navigate = useNavigate();
     const store = useAppSelector((state) => state.store)
     const dispatch = useAppDispatch();
-    const user = useAppSelector((state: RootState) => state.users.user );
+    const user = useAppSelector((state: RootState) => state.users.user ); 
+
     const cartService = new CartService();
     const [ loading, setLoading ] = useState(false);
     const [ reduction, setReduction ] = useState(null);
-    const [ showShppingForm, setShowShppingForm ] = useState(false);
+    const [ showShppingForm, setShowShppingForm ] = useState(true);
 
-    const shippingOptionsFormRef = useRef< FormikProps< shippingOptionsForm >>(null);
+    const promoCodeFormRef = useRef< FormikProps< PromotionCodeForm >>(null);
+
+    const shippingOptionsFormRef = useRef< FormikProps< ShippingOptionsForm >>(null);
+
+    const shippingAddressFormRef = useRef< FormikProps< ShippnAddressForm >>(null);
 
     let initialTotal: number = 0;
     let [ storeTotal, setStoreTotal ] = useState(initialTotal);
@@ -46,19 +65,28 @@ const Cart: FC = () => {
     let [
         shippingOptions, setShippingOptions
     ] = useState(null);
-    const shippingCostInit: any = null;
+    const shippingCostInit: any = 0;
     let [
         shippingCost, setShippingCost
     ] = useState(shippingCostInit);
+
+    const shippingAddressInit: any = null;
+    let [
+        shippingAddress, setShippingAddress
+    ] = useState(shippingAddressInit);
 
     let [
         loadShppingOptions, setLoadShippingOptions
     ] = useState(false);
 
+    let [
+        loadReduction, setLoadReduction
+    ] = useState(false);
+
     const getStoreTotal = () => {
         let strTtl = 0;
         store.products.forEach(
-            (row) => {
+            (row: any) => {
                 strTtl += ( (Number(row.product?.capitalUnitaireProduit) + Number(row.product?.interetUnitaireProduit)) * row.qty );
             }
         );
@@ -165,6 +193,10 @@ const Cart: FC = () => {
 
     ];
 
+    const toString = (str:any) => {
+        return str.toString();
+    } 
+
     return (
         <>
             <div id="ajax-content-wrap">
@@ -219,10 +251,11 @@ const Cart: FC = () => {
                                             .required(`${'Ce champ est obligatoire'}`)
                                     })
                                 }
-                                // innerRef={formRef}
+                                innerRef={promoCodeFormRef}
                                 onSubmit={async (
                                     values 
-                                ) => {
+                                ) => {  
+                                        setLoadReduction(true);
                                         setReduction((red) => (null));
                                         console.log(values);
                                         const data = {
@@ -236,8 +269,10 @@ const Cart: FC = () => {
                                         } else {
                                             alert('Unknown promo code');
                                         }
+                                        setLoadReduction(false);
                                     }).catch(function (error: any) {
                                             console.log(error); 
+                                            setLoadReduction(false);
                                     });
                                     }}
                                 >
@@ -251,9 +286,11 @@ const Cart: FC = () => {
                                                 name="promoCode"  autoComplete="promoCode" 
                                                     onChange={handleChange('promoCode')}
                                                         onBlur={handleBlur('promoCode')}
-                                                            value={values.promoCode} />	
+                                                            value={values.promoCode ?? ''} />	
                                         <button type="submit" disabled={ (!dirty && !isValid) }
-                                         className="button" name="apply_coupon" value="Apply coupon">Apply coupon</button>
+                                         className="button" name="apply_coupon" value="Apply coupon">{
+                                            loadReduction && <i className="fas fa-spinner fa-spin"></i>
+                                         } Apply coupon</button>
 
                                     </Form>
             )}
@@ -276,7 +313,8 @@ const Cart: FC = () => {
                                         state: '',
                                         city: '',
                                         postalCode: '',
-                                        addressLine1: ''
+                                        addressLine1: '',
+                                        saveAddress: false
                                 }}
 
                                 validationSchema={
@@ -297,10 +335,12 @@ const Cart: FC = () => {
                                         addressLine1: yup 
                                             .string()
                                             .required(`${'Ce champ est obligatoire'}`),
+                                        saveAddress: yup 
+                                            .boolean()
 
                                     })
                                 }
-                                // innerRef={formRef}
+                                innerRef={shippingAddressFormRef}
                                 onSubmit={async (
                                     values 
                                 ) => {
@@ -310,7 +350,7 @@ const Cart: FC = () => {
                                         const data = {
                                             recipientAddress:  values,
                                             basket: store.products.map(
-                                                (prd) => {
+                                                (prd:any) => {
                                                     return {
                                                         prodId: prd.product?.id,
                                                         qte: prd.qty
@@ -323,7 +363,7 @@ const Cart: FC = () => {
                                         cartService.getShippingCosts(data).then(async function (response: any) {
                                             console.log(response); 
                                             if (response.data.statut === 200) {
-
+                                                setShippingAddress((add: any) => JSON.stringify(values));
                                                 setShippingOptions(response.data.data.fedex);
                                                 // setReduction(() => (response.data.data.reduction))
                                             } else {
@@ -432,6 +472,14 @@ const Cart: FC = () => {
                                         }
 
                                 </div>
+
+                                <br />
+                                    <label>
+                                        <Field type="checkbox" name="saveAddress" />
+                                        Save delivery address
+                                    </label>
+                                <br />
+                                <br />
                                 
                                 <p><button disabled={ !isValid && !dirty } type="submit" name="calc_shipping" value="1"
                                  className="button"> {
@@ -459,12 +507,12 @@ const Cart: FC = () => {
                                  className="button">Retour</button>
                 <br/>
                 <br/>
-                <p>Voici les options de livraison qui s'offrent à vous selon l'adresse fournie</p>
+                <p>Here are the delivery options available to you depending on the address provided</p>
 
                 <Formik
                                 initialValues={ 
                                     {
-                                        cost: ''
+                                        cost: null
                                 }}
 
                                 validationSchema={
@@ -492,8 +540,18 @@ const Cart: FC = () => {
                                         {
                                             Object.keys(shippingOptions ?? {}).map(
                                                 (key) => shippingOptions !== null ? <label>
-                                                <Field type="radio" name="cost" value={shippingOptions[key]  } />
-                                                { key } : <PriceUnitBox price={ shippingOptions[key]   } />
+                                                <Field onClick={ (e: any) => {
+                                                    console.log(e.target.value);
+                                                    const cost  = e.target.value;
+
+                                                    console.log(cost);
+
+                                                    if ( cost !== undefined && cost !== null && cost !== '') {
+                                                        setShippingCost( Number(cost) ?? null );
+                                                    }
+
+                                                }} type="radio" name="cost" value={ toString(shippingOptions[key]) } />
+                                                { key.replaceAll("_", " ") } : <PriceUnitBox price={ shippingOptions[key]   } />
                                             </label> : <></>
                                             )
                                             
@@ -541,7 +599,7 @@ const Cart: FC = () => {
                             <th>Shipping</th>
                             <td data-title="Shipping">
                                 {
-                                    shippingCost === null ? 
+                                    shippingCost === 0 ? 
                                     <p>Set an shipping adress so that we can calculate delivery fees</p>
                                     : 
                                     <p>
@@ -563,7 +621,10 @@ const Cart: FC = () => {
                                 <tr className="order-total">
                                     <th>Total</th>
                                     <td data-title="Total"><strong><span className="woocs_special_price_code"><span className="woocommerce-Price-amount amount">
-                                        <bdi> <PriceUnitBox price={ reduction !== null ? storeTotal - Number(reduction) : storeTotal } /></bdi></span></span></strong> </td>
+                                        <bdi> 
+                                            <PriceUnitBox price={ 
+                                                reduction !== null ? (storeTotal+shippingCost) - Number(reduction) :
+                                                 (storeTotal+shippingCost) } /></bdi></span></span></strong> </td>
                                 </tr>
 
                                 
@@ -573,25 +634,57 @@ const Cart: FC = () => {
                         <button onClick={() => {
 
                             if (user !== null && user !== undefined) {
-                                navigate('/cart/checkout');
-                                // setLoading(true);
-                                // console.log(user);
-                                // cartService.initializeBasketId({
-                                //     "idClient": user?.id
-                                // }).then(async function (response: any) {
-                                //     console.log(response); 
-                                //     setLoading(false);
-                                // })
-                                // .catch(function (error: any) {
-                                //     console.log(error); 
-                                // });
-                                // 
+
+                                if (storeTotal > 0) {
+
+                                    if (shippingCost !== undefined && shippingCost !== null && shippingCost !== '') {
+                                        dispatch( setShippingCosts( shippingCost ) );  
+                                    }
+    
+                                    if (reduction !== undefined && reduction !== null && reduction !== '') {
+                                        dispatch( setReductions( reduction ) );  
+                                    }
+
+                                    if (shippingAddress !== undefined && shippingAddress !== null && shippingAddress !== '') {
+                                        dispatch(  setCurrentShippingAddress( shippingAddress ) );  
+                                    }
+
+                                    let shippingMethod = null;
+                                     Object.keys(shippingOptions ?? {}).map(
+                                        (key) => {
+                                            if (shippingOptions !== null) {
+                                                if ( shippingOptions[key] === shippingCost ) {
+                                                    shippingMethod = key;
+                                                }
+                                            }
+                                    });
+
+                                    if (shippingMethod !== null) {
+                                        window.localStorage.setItem(
+                                            '_shipping_method',
+                                            shippingMethod
+                                        );
+                                    }
+
+                                    if (promoCodeFormRef.current !== null) {
+                                        window.localStorage.setItem(
+                                            '_promotion_code',
+                                            promoCodeFormRef.current.values.promoCode ?? ''
+                                        );
+                                    }
+    
+                                    navigate('/cart/checkout');
+
+                                } else {
+                                    alert("An error occured, if error persist please try to reload the page"); 
+                                }
+ 
                             } else {
                                 alert("Please, you must login first");
                                 navigate('/myaccount');
                             }
 
-                        }} className="checkout-button button alt wc-forward">
+                        }} className="checkout-button button alt wc-forward"  disabled={ storeTotal === 0 || shippingCost === 0 } >
                             Proceed to checkout  
                                {
                                 loading && <i className="fa fa-circle-o-notch fa-spin fa-1x fa-fw"></i>

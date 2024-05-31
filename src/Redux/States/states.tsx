@@ -3,7 +3,10 @@ import StoreArticle from "../../Models/StoreArticle";
  
  export interface StoreState {
     products: Array<StoreArticle>,
-    basketId: number | null
+    basketId: number | null,
+    reduction: number | null,
+    shippingCost: number | null,
+    currentShippingAddress: string | null
 }
 
 export interface UserState {

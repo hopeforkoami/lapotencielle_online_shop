@@ -6,7 +6,7 @@ import {
 import { useAppDispatch, useAppSelector } from '../Hooks/customSelector'; 
 import { setUser } from '../Redux/Reducers/userReducer';
 import { RootState } from '../Redux/store';
-import { updateProducts } from '../Redux/Reducers/storeReducer';
+import { updateProducts,  setShippingCosts, setReductions, setCurrentShippingAddress  } from '../Redux/Reducers/storeReducer';
 import { setUnit } from '../Redux/Reducers/productPriceReducer';
 
 
@@ -34,6 +34,22 @@ const Main: FC = () => {
             if (storeProducts !== null) { 
                 dispatch( updateProducts( JSON.parse(storeProducts) ) );
             }
+
+            let _store_reduction = window.localStorage.getItem('_store_reduction');
+            if (_store_reduction !== null) { 
+                dispatch( setReductions(Number( _store_reduction )) );
+            }
+
+            let _store_shipping_cost = window.localStorage.getItem('_store_shipping_cost');
+            if (_store_shipping_cost !== null) { 
+                dispatch( setShippingCosts(Number( _store_shipping_cost )) );
+            }
+
+            let _store_current_shipping_address = window.localStorage.getItem('_store_current_shipping_address');
+            if (_store_current_shipping_address !== null) { 
+                dispatch( setCurrentShippingAddress( _store_current_shipping_address ) );
+            }
+
         }, []
     )
 

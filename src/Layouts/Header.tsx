@@ -48,19 +48,27 @@ const Header: FC<{  }> = (  ) => {
         
         serach_input?.addEventListener("keyup", async (event)=> {
 
+             
+
             if (event.keyCode === 13 || event.key === "Enter") {
                 event.preventDefault();
             }
 
             const eventTarget: any = event?.target;
+
+            console.log('Search str');
+            console.log(eventTarget.value);
  
+           if (eventTarget.value !== null && eventTarget.value !== '') {
             await allService.searchByBarcodeOrName(  eventTarget.value  ).then(async function (response: any) {
                 console.log(response); 
-                setProductSearchResults(response?.data);
+                setProductSearchResults((d) => ([]));
+                setProductSearchResults((d) => response?.data);
             })
               .catch(function (error: any) {
                 console.log(error); 
             });
+           }
             
            
         });   
@@ -156,7 +164,7 @@ const Header: FC<{  }> = (  ) => {
         return (      
             < > 
     <div id="header-outer" data-has-menu="true" data-has-buttons="yes" data-header-button_style="default" data-using-pr-menu="false" data-mobile-fixed="1" data-ptnm="false" data-lhe="animated_underline" data-user-set-bg="#ffffff" data-format="centered-menu-bottom-bar" data-menu-bottom-bar-align="center" data-permanent-transparent="false" data-megamenu-rt="1" data-remove-fixed="1" data-header-resize="0" data-cart="true" data-transparency-option="0" data-box-shadow="large" data-shrink-num="6" data-using-secondary="0" data-using-logo="1" data-logo-height="100" data-m-logo-height="70" data-padding="28" data-full-width="true" data-condense="false">
-        { productSearchResults.length > 0 ? <div id="aws-search-result-1" className="aws-search-result" style={{ width: '289px', top: '104px', left: '20px' }}>
+        { productSearchResults.length > 0 && <div id="aws-search-result-1" className="aws-search-result" style={{ width: '289px', top: '104px', left: '20px' }}>
                     <ul>
                         {
                            productSearchResults.map(
@@ -180,7 +188,7 @@ const Header: FC<{  }> = (  ) => {
                         
                         <li className="aws_result_item aws_search_more"><a href="#">Voir tous les résultats</a></li>
                     </ul>
-                </div> : <></>
+                </div> 
         }
         <div id="search-outer" className="nectar">
           <div id="search">
@@ -376,7 +384,7 @@ const Header: FC<{  }> = (  ) => {
     {
         user !== null ? 
         <div className="user-account-btn " >
-            <img id='user-photo' className='user-photo user-account-btn' src="/assets/images/user.png" alt="" /> 
+            <img style={{ cursor: 'pointer' }} id='user-photo' className='user-photo user-account-btn' src="/assets/images/user.png" alt="" /> 
             <span className="screen-reader-text">
                    account </span>
             <div id="myDropdown" className="dropdown-content">

@@ -52,6 +52,8 @@ const Product: FC = () => {
     const productQtyInitial: number = 0;
     let [ productQty, setProductQty ] = useState(productQtyInitial);
 
+    let [ showIngrediants, setShowIngrediants ] = useState(false);
+
     const getProduct = (id: any) => {
         setLoading(true);
 		productService.getProduct(  Number(id)  ).then(async function (response: any) {
@@ -323,6 +325,41 @@ const Product: FC = () => {
         </TabList>
 
         <TabPanel>
+        <div id="fws_630b9736c789b" data-column-margin="default" data-midnight="dark" className="wpb_row vc_row-fluid vc_row  " 
+        style={{ paddingTop: '0px', paddingBottom: '0px' }}>
+<div className="row-bg-wrap" data-bg-animation="none" data-bg-overlay="false"><div className="inner-wrap">
+    <div className="row-bg"> </div></div></div>
+<div className="row_col_wrap_12 col span_12 dark left">
+    <div className='imgDescImg'>
+        { product !== null && <img src={ Utils._mediaUrl + product.galerie.galerieContent[0] } alt="" /> }
+    </div>
+    {/* <div className="vc_col-sm-6 wpb_column column_container vc_column_container col no-extra-padding inherit_tablet inherit_phone " data-padding-pos="all" data-has-bg-color="false" data-bg-color="" data-bg-opacity="1" data-animation="" data-delay="0">
+		<div className="vc_column-inner">
+			<div className="wpb_wrapper">
+				<div className="img-with-aniamtion-wrap " data-max-width="100%" data-max-width-mobile="default" data-shadow="none" data-animation="fade-in">
+      <div className="inner">
+        <div className="hover-wrap" style={{ opacity: '1' }}> 
+          <div className="hover-wrap-inner img-loaded">
+            { product !== null && <img className="img-with-animation  animated-in" data-delay="0"
+             height="1000" width="776" data-animation="fade-in" 
+             data-nectar-img-src={ Utils._mediaUrl + product.galerie.galerieContent[0] }
+             src={ Utils._mediaUrl + product.galerie.galerieContent[0] } alt="" 
+             sizes="(min-width: 1450px) 75vw, (min-width: 1000px) 85vw, 100vw" style={{ height: '507.781px', width: '394.038px' }} 
+             srcSet="./wp-content/uploads/2022/01/radianceduo1-1629471455.jpg 776w, ./wp-content/uploads/2022/01/radianceduo1-1629471455-300x387.jpg 300w, ./wp-content/uploads/2022/01/radianceduo1-1629471455-600x773.jpg 600w,
+              ./wp-content/uploads/2022/01/radianceduo1-1629471455-233x300.jpg 233w, 
+              ./wp-content/uploads/2022/01/radianceduo1-1629471455-768x990.jpg 768w" /> }
+          </div>
+        </div>
+      </div>
+    </div>
+			</div> 
+		</div>
+	</div> */}
+	<div className="imgDesc" 
+    data-padding-pos="all" data-has-bg-color="false" data-bg-color="" data-bg-opacity="1" data-animation="" data-delay="0">
+		<div className="vc_column-inner">
+			<div className="wpb_wrapper">
+
             <div className="wpb_text_column wpb_content_element ">
                 <div className="wpb_wrapper">
                     {
@@ -338,6 +375,12 @@ const Product: FC = () => {
                     
                 </div>
             </div>
+
+            </div> 
+		</div>
+	</div> 
+</div>
+</div>
         </TabPanel>
         <TabPanel>
                 <table className="woocommerce-product-attributes shop_attributes">
@@ -530,7 +573,75 @@ const Product: FC = () => {
 		</ul>
 
 	</section> */}
+<div id="fws_630b9740c888d" data-column-margin="default" data-midnight="dark" className="wpb_row vc_row-fluid vc_row  woocommerce_show_hide" 
+style={{ paddingTop: '0px', paddingBottom: '0px' }}>
+<div className="row-bg-wrap" data-bg-animation="none" data-bg-overlay="false"><div className="inner-wrap"><div className="row-bg"></div></div></div>
+<div className="row_col_wrap_12 col span_12 dark left">
+	<div className="vc_col-sm-12 wpb_column column_container vc_column_container col no-extra-padding inherit_tablet inherit_phone " data-padding-pos="all" data-has-bg-color="false" data-bg-color="" data-bg-opacity="1" data-animation="" data-delay="0">
+		<div className="vc_column-inner">
+			<div className="wpb_wrapper">
+				<div className="toggles " data-starting="default" data-style="default">
+                    <div className="toggle default" data-inner-wrap="true">
+                { !showIngrediants ? <h3 onClick={() => {
+                    setShowIngrediants((e) => !showIngrediants)
+                    }} ><a  className="">READ FULL INGREDIENT</a></h3>
+                    :
+                    <h3><a onClick={() => {
+                        setShowIngrediants((e) => !showIngrediants)
+                        }}  className="open">Hide</a></h3>
+                }
+ 
+{ showIngrediants && <div ><div className="inner-toggle-wrap">
+    <div className="wpb_text_column wpb_content_element ">
+        <div className="wpb_wrapper">
+            {
+                product !== null ? 
+                <>
+                        {
+                            product.ingredNamesArray.map(
+                                (ing: any) => 
+                                    <h3 style={{ display: 'inline-block', margin: '2px' }} ><a  className="">
+                                        {
+                                            ing
+                                        }
+                                        </a>
+                                    </h3>
+                            )
+                        }
+                </>:
+                <></>
+            }
+        </div>
+    </div>
+    </div>
+</div> }
 
+</div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			</div> 
+		</div>
+	</div> 
+</div>
+</div>
 
 <div className="clear"></div>
 	<section className="related products">

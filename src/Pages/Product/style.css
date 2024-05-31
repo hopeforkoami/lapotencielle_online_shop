@@ -197,3 +197,14 @@ ul li {
     display: flex;
     flex-wrap: wrap;
 }
+
+.imgDescImg {
+  width: 33% !important;
+  display: inline-block !important;
+}
+
+.imgDesc {
+  width: 66% !important;
+  display: inline-block !important;
+  padding: 8px;
+}
