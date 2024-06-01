@@ -95,7 +95,7 @@ const Checkout: FC = () => {
     let [ showBillingForm, setShowBillingForm ] = useState('false');
 
     const orderIdInit: any = null;
-    let [ orderId, setOrderId ] = useState(orderIdInit);
+    let [ orderId, setOrderId ] = useState('');
 
     const getStoreTotal = () => {
         let strTtl = 0;
@@ -104,7 +104,7 @@ const Checkout: FC = () => {
                 strTtl += ( (Number(row.product?.capitalUnitaireProduit) + Number(row.product?.interetUnitaireProduit)) * row.qty );
             }
         );
-        setStoreTotal( strTtl );
+        setStoreTotal( t  => (strTtl));
     }
 
     const getShippings = () => {
@@ -381,7 +381,7 @@ const Checkout: FC = () => {
         const addProducts = await addProductToBasket(venteInitialize.data?.data.idVente.toString());
         console.log(addProducts);
 
-        const paypalOrder = await createPaypalOrder();
+        // const paypalOrder = await createPaypalOrder();
 
 
         const order = {
@@ -402,9 +402,10 @@ const Checkout: FC = () => {
 
         return cartService.createOrder(order).then(async function (response: any) {
             console.log("ORDER ID")
-            console.log(response.data?.data.orderId); 
-            setOrderId((id: any) => response.data?.data.orderId );
-            return paypalOrder?.id;
+            console.log(response.data); 
+            window.localStorage.setItem('_paypal_payment_id', response.data?.data.orderId);
+            setOrderId(e => (response.data?.data.paypalOrder.id));
+            return response.data?.data.paypalOrder.id;
         })
         .catch(function (error: any) {
             console.log(error); 
@@ -413,8 +414,9 @@ const Checkout: FC = () => {
     
     const onApprove: any = (data: any) => {
         console.log('Order on approve');
+        const order_id = window.localStorage.getItem('_paypal_payment_id');
         return cartService.checkPayment({
-            'orderId': orderId.toString()
+            'orderId': order_id
         }).then(async function (response: any) {
             console.log(response);  
             return;
@@ -979,9 +981,10 @@ const Checkout: FC = () => {
 			<th>Total</th>
 			<td><strong><span className="woocs_special_price_code">
                <span className="woocommerce-Price-amount amount"><bdi> 
-               <PriceUnitBox price={ reduction !== null ? 
+               { storeDetails !== null && <PriceUnitBox price={ reduction !== null ? 
                ( (storeTotal+(shippingCost ?? 0)) +  ((storeTotal+(shippingCost ?? 0)) * (Number(storeDetails?.taxeBoutique) / 100)) ) - Number(reduction) :
-               ( (storeTotal+(shippingCost ?? 0)) +  ((storeTotal+(shippingCost ?? 0)) * (Number(storeDetails?.taxeBoutique) / 100)) ) } /> </bdi></span></span></strong> </td>
+               ( (storeTotal+(shippingCost ?? 0)) +  ((storeTotal+(shippingCost ?? 0)) * (Number(storeDetails?.taxeBoutique) / 100)) ) } /> }
+               </bdi></span></span></strong> </td>
 		</tr>
 
 		
