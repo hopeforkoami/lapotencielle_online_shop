@@ -72,7 +72,25 @@ const Products: FC = () => {
             } break;
             case "HAIR CARE":
                 return "#ffffff!important";
-                break;        
+                break; 
+            case "BODY LOTION":
+                return "#090909";
+                break;
+            case "BODY CREAM": 
+                return "#090909";
+                break;
+            case "BODY CREAM BUTTER": 
+                return "#090909";
+                break;
+            case "BODY SCRUB": 
+                return "#090909";
+                break;
+            case "BODY OIL": 
+                return "#090909";
+                break;
+            case "BODY BALM": 
+                return "#090909";
+                break;      
             default:
                 return "white!important";
                 break;
