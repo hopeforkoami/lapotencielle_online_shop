@@ -20,6 +20,10 @@ export default class CartService {
         return await axiosInstance.post('/basket/initialize',  data);
     }
 
+    public payerOrder = async (data: Record<string, any>) => {
+        return await axiosInstance.get('/order/payer'+ `?orderId=${data['orderId']}` + `&paymentId=${data['paymentId']}`);
+    }
+
     public getShippings =  async () => {
         return await axiosInstance.get('/shipingService/list');
     }

@@ -23,6 +23,7 @@ import { RootState } from '../../Redux/store';
 
 import { PayPalScriptProvider, PayPalButtons, usePayPalHostedFields, usePayPalScriptReducer } from "@paypal/react-paypal-js";
 
+ 
 
 import PriceUnitBox from '../../Components/PriceUnitBox';
 
@@ -62,6 +63,7 @@ const Checkout: FC = () => {
     let location = useLocation();
     const store = useAppSelector((state) => state.store)
     const dispatch = useAppDispatch();
+    let navigate = useNavigate();
 
     const checkOutDataFormRef = useRef< FormikProps< CheckoutData >>(null);
 
@@ -372,77 +374,121 @@ const Checkout: FC = () => {
     }
 
 
-    const  createOrder: any = async (data: any) => {
 
-        console.log('Order on creation');
-        const venteInitialize: any = await initializeVente();
-        console.log(venteInitialize);
-
-        const addProducts = await addProductToBasket(venteInitialize.data?.data.idVente.toString());
-        console.log(addProducts);
-
-        // const paypalOrder = await createPaypalOrder();
+    const onCreateOrder = (data: any,actions: any) => {
+        return new Promise(async (resolve:(value: string) => any, reject) => {
 
 
-        const order = {
-            ...checkOutDataFormRef.current?.values,
-            shippingCountry: (countries.all.filter((c:any, index: number) => c.alpha2 === shippingAddress?.countryCode ))[0]?.name, 
-            shippingCity: shippingAddress?.city, 
-            shippingState: shippingAddress?.state, 
-            shippingZip: shippingAddress?.postalCode, 
-            shippingAdrLine1: shippingAddress?.addressLine1, 
-            idVente: venteInitialize.data?.data.idVente.toString(),
-            shippingServiceID: shippingMethod, 
-            paymentMethodID: 3, 
-            shippingFees: shippingCost, 
-            taxesFees:  ((storeTotal+(shippingCost ?? 0)) * (Number(storeDetails?.taxeBoutique) / 100)), 
-            reductionMontant: reduction ?? 0, 
-            promoCode: promotionCode,
-        }
-
-        return cartService.createOrder(order).then(async function (response: any) {
-            console.log("ORDER ID")
-            console.log(response.data); 
-            window.localStorage.setItem('_paypal_payment_id', response.data?.data.orderId);
-            setOrderId(e => (response.data?.data.paypalOrder.id));
-            return response.data?.data.paypalOrder.id;
-        })
-        .catch(function (error: any) {
-            console.log(error); 
-        });
-    }
+            console.log('Order on creation');
+            const venteInitialize: any = await initializeVente();
+            console.log(venteInitialize);
     
-    const onApprove: any = (data: any) => {
-        console.log('Order on approve');
-        const order_id = window.localStorage.getItem('_paypal_payment_id');
-        return cartService.checkPayment({
-            'orderId': order_id
-        }).then(async function (response: any) {
-            console.log(response);  
-            return;
-        })
-        .catch(function (error: any) {
-            console.log(error); 
-        });
-     }
-
-     const SubmitPayment = () => {
-        const { cardFields } = usePayPalHostedFields();
+            const addProducts = await addProductToBasket(venteInitialize.data?.data.idVente.toString());
+            console.log(addProducts);
     
-        function submitHandler() {
-            if (typeof cardFields?.submit !== "function") return; // validate that `submit()` exists before using it
+            // const paypalOrder = await createPaypalOrder();
     
-            cardFields
-                .submit()
-                .then(() => {
-                    // submit successful
-                })
-                .catch(() => {
-                    // submission error
+    
+            const order = {
+                ...checkOutDataFormRef.current?.values,
+                shippingCountry: (countries.all.filter((c:any, index: number) => c.alpha2 === shippingAddress?.countryCode ))[0]?.name, 
+                shippingCity: shippingAddress?.city, 
+                shippingState: shippingAddress?.state, 
+                shippingZip: shippingAddress?.postalCode, 
+                shippingAdrLine1: shippingAddress?.addressLine1, 
+                idVente: venteInitialize.data?.data.idVente.toString(),
+                shippingServiceID: shippingMethod, 
+                paymentMethodID: 3, 
+                shippingFees: shippingCost, 
+                taxesFees:  ((storeTotal+(shippingCost ?? 0)) * (Number(storeDetails?.taxeBoutique) / 100)), 
+                reductionMontant: reduction ?? 0, 
+                promoCode: promotionCode,
+            }
+    
+            cartService.createOrder(order).then(async function (response: any) {
+                console.log("ORDER ID")
+                console.log(response.data); 
+                window.localStorage.setItem('_order_id', response.data?.data.orderId);
+                
+                const order: any = actions.order.create({
+                    purchase_units: [
+                        {
+                            reference_id: response.data?.data.orderId,
+                            amount: {
+                                value: ( reduction !== null ? 
+                                    ( (storeTotal+(shippingCost ?? 0)) +  ((storeTotal+(shippingCost ?? 0)) * (Number(storeDetails?.taxeBoutique) / 100)) ) - Number(reduction) :
+                                    ( (storeTotal+(shippingCost ?? 0)) +  ((storeTotal+(shippingCost ?? 0)) * (Number(storeDetails?.taxeBoutique) / 100)) ) ).toFixed(2),
+                            },
+                        },
+                    ],
                 });
-        }
-        return <button onClick={submitHandler}>Pay</button>;
-    };
+
+                console.log(order);
+                const order_copy = order;
+                order_copy.then(
+                    (val:any) => { 
+                        if (order !== null && order !== '') {
+                            window.localStorage.setItem('_paypal_order_id', val);
+                            resolve(order);
+    
+                        }
+
+                    }
+                )
+            })
+            .catch(function (error: any) {
+                console.log(error); 
+            });
+
+             
+
+        });
+        
+    }
+
+    const onApproveOrder = (data: any,actions: any) => {
+
+        let order_id = window.localStorage.getItem('_order_id'); 
+
+        let paypal_order_id = window.localStorage.getItem('_paypal_order_id'); 
+
+        return new Promise((resolve:(value: void) => any, reject) => { 
+
+            return actions.order.capture().then((details: any) => {
+                    const name = details.payer.name.given_name;
+
+                    const data = {
+                        orderId: order_id, paymentId: paypal_order_id
+                    };
+
+                    cartService.payerOrder(data).then(async function (response: any) {
+
+                        window.localStorage.removeItem('_store_shipping_cost');
+                        window.localStorage.removeItem('_order_id');
+                        window.localStorage.removeItem('_store_products');
+                        window.localStorage.removeItem('_promotion_code');
+                        window.localStorage.removeItem('_store_current_shipping_address');
+                        window.localStorage.removeItem('_paypal_payment_id');
+                        window.localStorage.removeItem('_shipping_method');
+                        window.localStorage.removeItem('_paypal_order_id');
+                         
+                        alert(`${name} Votre commande a été bien enrégistrée.`);
+
+                        navigate('/client/orders');
+
+                    })
+                    .catch(function (error: any) {
+                        console.log(error); 
+                    });
+        
+
+            });
+                    
+
+        });
+  
+    }
+ 
     
 
     return (
@@ -898,7 +944,7 @@ const Checkout: FC = () => {
 	<tbody>
 					{
                         store.products.map(
-                            (row) => <tr className="cart_item">
+                            (row: any) => <tr className="cart_item">
                                     <td className="product-name">
                                         {row.product.libProduit}&nbsp;						 
                                         <strong className="product-quantity">×&nbsp;{ row.qty }</strong>											
@@ -999,17 +1045,14 @@ const Checkout: FC = () => {
 
 	<label htmlFor="payment_method_ppcp-gateway">
 		PayPal 	</label>
-        <PayPalScriptProvider options={{
-             "client-id": "AQnwfOiBDcktqMInwGzwOa8_Yj57L0FmDOOLXydK091A_PVxTDeNs06D7PXfYJxoWz-E6E0lK9Oxnj8b",
-             "currency": "USD", "components": "buttons"}}>
-
+        <PayPalScriptProvider options={{ clientId: "AQnwfOiBDcktqMInwGzwOa8_Yj57L0FmDOOLXydK091A_PVxTDeNs06D7PXfYJxoWz-E6E0lK9Oxnj8b",
+            currency: "USD", components: "buttons"  }}> 
             {/* {usePayPalScriptReducer()[0].isPending ? <i className="fa fa-circle-o-notch fa-spin fa-2x fa-fw"></i>: null} */}
             <PayPalButtons disabled={( !isValid && !dirty ) || !storeDetails }
-                createOrder={createOrder}
-                onApprove={onApprove}
+                createOrder={ onCreateOrder }
+                onApprove={ onApproveOrder  }
                 style={{ layout: "horizontal" }}
-             />
-
+             /> 
         </PayPalScriptProvider>
 		<div className="payment_box payment_method_ppcp-gateway">
 			<p  onClick={() => { console.log(values); }} >Pay via PayPal.</p>
