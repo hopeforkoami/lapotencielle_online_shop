@@ -1,6 +1,7 @@
 import { FC, useEffect, useState } from 'react'; 
 import {
-    Outlet
+    Outlet,
+    useNavigate
 } from "react-router-dom";
 import ClientService from '../service';
 import DataTable from 'react-data-table-component';
@@ -14,6 +15,8 @@ import Moment from 'react-moment';
 const Order: FC = () => {  
 
     const user = useAppSelector((state: RootState) => state.users.user );
+
+    const navigate = useNavigate();
 
     const clientService = new ClientService();
     let [ loading, setLoading ] = useState(false);
@@ -44,12 +47,18 @@ const Order: FC = () => {
             name: 'Options' ,
             selector: (row: any) => (
                 <div className='btn-list'>
-                    <button type="button" onClick={event => {
-                       //  navigate('/product/edit/'+row.id.toString());
+                    <button type="button" name="add-to-cart" value="278" onClick={event => {
+                        navigate('/client/orders/'+row.id.toString());
+                     }} className="single_add_to_cart_button button alt">
+                        Details
+                    </button>
+
+                    {/* <button type="button" onClick={event => {
+                        navigate('/client/orders/'+row.id.toString());
                      }}
                         className="btn waves-effect waves-light btn-success"> 
                               Détails
-                    </button>
+                    </button> */}
                     {/* <button type="button" onClick={event => {  }}
                         className="btn waves-effect waves-light btn-danger"> 
                                 <span className="" style={{ fontSize: "1em" }} >
@@ -65,8 +74,9 @@ const Order: FC = () => {
 
         clientService.getOrders(Number(user.id)).then(async function (response: any) {
             console.log(response);  
-            setOrders(response.data?.data); 
+            setOrders(response.data); 
         })
+
         .catch(function (error: any) {
             console.log(error); 
         });

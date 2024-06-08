@@ -10,4 +10,9 @@ export default class ClientService {
         return await axiosInstance.get('/order/list' + `?idClient=${id.toString()}`);
     }
 
+    public getOrder =  async (id: Number) => {
+        return await axiosInstance.get('/order/details' + `?id=${id.toString()}`);
+    }
+    
+
 }

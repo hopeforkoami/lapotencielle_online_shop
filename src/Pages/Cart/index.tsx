@@ -90,7 +90,7 @@ const Cart: FC = () => {
                 strTtl += ( (Number(row.product?.capitalUnitaireProduit) + Number(row.product?.interetUnitaireProduit)) * row.qty );
             }
         );
-        setStoreTotal( (total) => (strTtl) );
+        setStoreTotal( strTtl );
     }
 
     useEffect(() => {   
@@ -304,9 +304,126 @@ const Cart: FC = () => {
                             }
 						</div>
 
-                        <div   style={{ zIndex: 1, maxWidth: '55%' }}>
+                        
+                        </div>
+                    </div> 
+                     
+                    <div style={{ display: 'flex', flexFlow: 'row', justifyContent: 'flex-end' }}>
+                        <div className="cart-collaterals">
+                            <div className="cart_totals ">
+
+                            
+                            <h2>Cart totals</h2>
+
+                            <table cellSpacing="0" className="shop_table shop_table_responsive">
+
+                                <tbody>
+                                    <tr className="cart-subtotal">
+                                        <th>Subtotal</th>
+                                        <td data-title="Subtotal"><span className="woocs_special_price_code">
+                                        <span className="woocommerce-Price-amount amount"><bdi> <PriceUnitBox price={storeTotal} /> </bdi></span></span></td>
+                                    </tr>
+                                    <tr className="woocommerce-shipping-totals shipping">
+                            <th>Shipping</th>
+                            <td data-title="Shipping">
+                                {
+                                    shippingCost === 0 ? 
+                                    <p>Set an shipping adress so that we can calculate delivery fees</p>
+                                    : 
+                                    <p>
+                                        <b> <PriceUnitBox price={shippingCost} /> </b>
+                                    </p>
+                                }
+
+<div    >
                             <label htmlFor="coupon_code">Shipping address :</label> 
-                            { showShppingForm && shippingOptions === null && <Formik 
+                           
+
+
+
+        {
+            shippingOptions !== null && 
+            <>
+                <br/>
+                <br/>
+                <button onClick={() => {
+                    setShippingOptions(null);
+                }} style={{ float: "left" }} type="button" name="calc_shipping" value="1"
+                                 className="button">Retour</button>
+                <br/>
+                <br/>
+                <p>Here are the delivery options available to you depending on the address provided</p>
+
+                <Formik
+                                initialValues={ 
+                                    {
+                                        cost: null
+                                }}
+
+                                validationSchema={
+                                    yup.object().shape({
+                                        
+                                        cost: yup 
+                                            .string()
+                                            .required(`${'Ce champ est obligatoire'}`)
+                                    })
+                                }
+                                innerRef={shippingOptionsFormRef}
+                                onSubmit={async (
+                                    values 
+                                ) => {
+                                         
+                                    }}
+                                >
+
+                                {({ dirty, errors, touched, isValid, handleChange, handleBlur, handleSubmit, values }) => (
+                                    <Form >
+
+                <div className="form-group col-md-12"> <br/>
+
+                                    <div role="group" aria-labelledby="my-radio-group">
+                                        {
+                                            Object.keys(shippingOptions ?? {}).map(
+                                                (key) => shippingOptions !== null ? <label>
+                                                <Field onClick={ (e: any) => {
+                                                    console.log(e.target.value);
+                                                    const cost  = e.target.value;
+
+                                                    console.log(cost);
+
+                                                    if ( cost !== undefined && cost !== null && cost !== '') {
+                                                        setShippingCost( Number(cost) ?? null );
+                                                    }
+
+                                                }} type="radio" name="cost" value={ toString(shippingOptions[key]) } />
+                                                { key.replaceAll("_", " ") } : <PriceUnitBox price={ shippingOptions[key]   } />
+                                            </label> : <></>
+                                            )
+                                            
+                                            // .forEach(function(key, index) {
+                                            //     shippingOptions[key] *= 2;
+                                            //     return <label>
+                                            //     <Field type="radio" name="status" value="new" />
+                                            //     Je suis un nouveau membre
+                                            // </label>
+                                            // });
+                                        }
+                                        
+                                        <br/>
+                                     
+                                    </div>
+ 
+                                </div>
+
+                                </Form>
+            )}
+        </Formik> 
+            </>
+        }
+
+                        </div>
+
+{ showShppingForm && shippingOptions === null && <Formik 
                                 initialValues={ 
                                     {
                                         countryCode: '',
@@ -493,119 +610,6 @@ const Cart: FC = () => {
                             </Form>
             )}
         </Formik> }
-
-
-
-        {
-            shippingOptions !== null && 
-            <>
-                <br/>
-                <br/>
-                <button onClick={() => {
-                    setShippingOptions(null);
-                }} style={{ float: "left" }} type="button" name="calc_shipping" value="1"
-                                 className="button">Retour</button>
-                <br/>
-                <br/>
-                <p>Here are the delivery options available to you depending on the address provided</p>
-
-                <Formik
-                                initialValues={ 
-                                    {
-                                        cost: null
-                                }}
-
-                                validationSchema={
-                                    yup.object().shape({
-                                        
-                                        cost: yup 
-                                            .string()
-                                            .required(`${'Ce champ est obligatoire'}`)
-                                    })
-                                }
-                                innerRef={shippingOptionsFormRef}
-                                onSubmit={async (
-                                    values 
-                                ) => {
-                                         
-                                    }}
-                                >
-
-                                {({ dirty, errors, touched, isValid, handleChange, handleBlur, handleSubmit, values }) => (
-                                    <Form >
-
-                <div className="form-group col-md-12"> <br/>
-
-                                    <div role="group" aria-labelledby="my-radio-group">
-                                        {
-                                            Object.keys(shippingOptions ?? {}).map(
-                                                (key) => shippingOptions !== null ? <label>
-                                                <Field onClick={ (e: any) => {
-                                                    console.log(e.target.value);
-                                                    const cost  = e.target.value;
-
-                                                    console.log(cost);
-
-                                                    if ( cost !== undefined && cost !== null && cost !== '') {
-                                                        setShippingCost( Number(cost) ?? null );
-                                                    }
-
-                                                }} type="radio" name="cost" value={ toString(shippingOptions[key]) } />
-                                                { key.replaceAll("_", " ") } : <PriceUnitBox price={ shippingOptions[key]   } />
-                                            </label> : <></>
-                                            )
-                                            
-                                            // .forEach(function(key, index) {
-                                            //     shippingOptions[key] *= 2;
-                                            //     return <label>
-                                            //     <Field type="radio" name="status" value="new" />
-                                            //     Je suis un nouveau membre
-                                            // </label>
-                                            // });
-                                        }
-                                        
-                                        <br/>
-                                     
-                                    </div>
- 
-                                </div>
-
-                                </Form>
-            )}
-        </Formik> 
-            </>
-        }
-
-                        </div>
-                        </div>
-                    </div> 
-                     
-                    <div style={{ display: 'flex', flexFlow: 'row', justifyContent: 'flex-end' }}>
-                        <div className="cart-collaterals">
-                            <div className="cart_totals ">
-
-                            
-                            <h2>Cart totals</h2>
-
-                            <table cellSpacing="0" className="shop_table shop_table_responsive">
-
-                                <tbody>
-                                    <tr className="cart-subtotal">
-                                        <th>Subtotal</th>
-                                        <td data-title="Subtotal"><span className="woocs_special_price_code">
-                                        <span className="woocommerce-Price-amount amount"><bdi> <PriceUnitBox price={storeTotal} /> </bdi></span></span></td>
-                                    </tr>
-                                    <tr className="woocommerce-shipping-totals shipping">
-                            <th>Shipping</th>
-                            <td data-title="Shipping">
-                                {
-                                    shippingCost === 0 ? 
-                                    <p>Set an shipping adress so that we can calculate delivery fees</p>
-                                    : 
-                                    <p>
-                                        <b> <PriceUnitBox price={shippingCost} /> </b>
-                                    </p>
-                                }
                              
 
                             </td>

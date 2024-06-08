@@ -45,6 +45,7 @@ import Order from './Pages/Client/Order';
 import Download from './Pages/Client/Download';
 import Adress from './Pages/Client/Adress';
 import Account from './Pages/Client/Account';
+import OrderDetails from './Pages/Client/Order/details';
 
 // A wrapper for <Route> that redirects to the login
 // screen if you're not yet authenticated.
@@ -103,7 +104,8 @@ function App() {
               {/* Client */}
               <Route path="client" element={<ProtectedRoute  outlet={ <Client />} />} >
                 <Route index element={<ProtectedRoute  outlet={ <Dashboard />} />} />
-                <Route path="orders" element={<ProtectedRoute  outlet={ <Order />} />} /> 
+                <Route path="orders" element={<ProtectedRoute  outlet={ <Order />} />} />
+                <Route path="orders/:id" element={<ProtectedRoute  outlet={ <OrderDetails />} />} /> 
                 <Route path="downloads" element={<ProtectedRoute  outlet={ <Download />} />} /> 
                 <Route path="adresses" element={<ProtectedRoute  outlet={ <Adress />} />} /> 
                 <Route path="account-details" element={<ProtectedRoute  outlet={ <Account />} />} /> 

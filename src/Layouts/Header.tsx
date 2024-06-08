@@ -399,7 +399,13 @@ const Header: FC<{  }> = (  ) => {
                         <Link to="/client/orders">My orders</Link>
                     </li>
                     <li>
-                        <a href="#">Log-out</a>
+                        <Link onClick={() => {  
+                            const response = window.confirm("Are you Sure to log-out ?");
+                            if (response) {
+                                window.localStorage.removeItem('__user');
+                                window.location.reload(); 
+                            }
+                        }} to="#">  Log-out  </Link>
                     </li>
                 </ul>
                 

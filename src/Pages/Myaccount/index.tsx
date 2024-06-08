@@ -175,6 +175,7 @@ const Myaccount: FC = () => {
                                     <button  type="submit" className="woocommerce-button button woocommerce-form-login__submit" 
                                     name="login" value="Log in">Log in</button>
                                 </p>
+                                
                                 <p className="woocommerce-LostPassword lost_password">
                                     <a href="#">Forgot your Password?</a>
                                 </p>
@@ -319,7 +320,7 @@ const Myaccount: FC = () => {
                                     {({ dirty, errors, touched, isValid, handleChange, handleBlur, handleSubmit, values }) => (
                                     <Form  className="woocommerce-form woocommerce-form-register register">
 
-                                    <p className="form-row form-row-wide">
+                                    {/* <p className="form-row form-row-wide">
                                         <label htmlFor="reg_billing_first_name">Firstname<span className="required">*</span></label>
                                         <input type="text" 
                                         className={`input-text  ${ errors.prenomClient && touched.prenomClient ? "input-format-error":"input-format"}`} name="prenomClient" 
@@ -348,10 +349,10 @@ const Myaccount: FC = () => {
                                                 { errors.middleNameClient && touched.middleNameClient && errors.middleNameClient }
                                             </small> 
                                         }
-                                    </p>
+                                    </p> */}
 
                                     <p className="form-row form-row-wide">
-                                        <label htmlFor="reg_billing_first_name">Lastname<span className="required">*</span></label>
+                                        <label htmlFor="reg_billing_first_name">Name<span className="required">*</span></label>
                                         <input type="text" className={`input-text  ${ errors.nomClient &&
                                              touched.nomClient ? "input-format-error":"input-format"}`} name="nomClient" 
                                         id="nomClient" onChange={handleChange('nomClient')}
@@ -367,7 +368,7 @@ const Myaccount: FC = () => {
                                     </p>
 
                                     <p className="form-row form-row-wide">
-                                        <label htmlFor="reg_billing_first_name">Email<span className="required">*</span></label>
+                                        <label htmlFor="reg_billing_first_name">Email address<span className="required">*</span></label>
                                         <input type="email" 
                                         className={`input-text  ${ errors.email && touched.email ? "input-format-error":"input-format"}`} name="email" 
                                         id="email" onChange={handleChange('email')}
@@ -379,6 +380,8 @@ const Myaccount: FC = () => {
                                             </small> 
                                         }
                                     </p>
+
+                                    {/* 
 
                                     <p className="form-row form-row-wide">
                                         <label htmlFor="reg_billing_first_name">Contact<span className="required">*</span></label>
@@ -464,10 +467,10 @@ const Myaccount: FC = () => {
                                         }
                                     </p> 
 
-                                    <b style={{ color: "white", textDecoration: "underline" }}>Login informations</b>
+                                    <b style={{ color: "white", textDecoration: "underline" }}>Login informations</b> */}
                                 
                                     <p className="form-row form-row-wide">
-                                        <label htmlFor="reg_billing_first_name">Login<span className="required">*</span></label>
+                                        <label htmlFor="reg_billing_first_name">Username<span className="required">*</span></label>
                                         <input type="text" 
                                         className={`input-text  ${ errors.login && touched.login ?
                                              "input-format-error":"input-format"}`} name="login" 
