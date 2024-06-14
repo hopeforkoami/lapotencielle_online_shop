@@ -14,5 +14,8 @@ export default class ProductService {
         });
     }
 
+    public addReview = (data: Record<string, any>) => {
+        return axiosInstance.post('/product/review/add', data );
+    }
 
 }

@@ -21,6 +21,8 @@ import { addProduct } from '../../Redux/Reducers/storeReducer';
 import Footer from '../../Layouts/Footer';
 import { RootState } from '../../Redux/store';
 
+import { Rating } from 'react-simple-star-rating';
+
 import PriceUnitBox from '../../Components/PriceUnitBox';
 
 interface ProductForm {
@@ -29,16 +31,26 @@ interface ProductForm {
 }
 
 
+interface RatingReviewFormData {
+    nbStar: number;
+    message: string ;
+    name: string;
+    email: string
+}
+
+
 const Product: FC = () => {  
     let { id } = useParams(); 
     let location = useLocation();
 
     const formRef = useRef< FormikProps< ProductForm >>(null);
+    const ratingReviewFormRef = useRef< FormikProps< RatingReviewFormData >>(null);
 
     let navigate = useNavigate();
     const store = useAppSelector((state) => state.store)
     const dispatch = useAppDispatch(); 
     const unit = useAppSelector((state: RootState ) => state.units.unit );
+    const user = useAppSelector((state: RootState) => state.users.user );
 
     const productService = new ProductService();
 
@@ -47,10 +59,13 @@ const Product: FC = () => {
     const [ product, setProduct ] = useState(initialProduct);
     const [ groupName, setGroupName ] = useState("");
     const [ loading, setLoading  ] = useState(false);
+    const [ reviewLoading, setReviewLoading  ] = useState(false);
     const initialProductImages: any = [];
     const [ productImages, setProductImages ] = useState(initialProductImages);
     const productQtyInitial: number = 0;
     let [ productQty, setProductQty ] = useState(productQtyInitial);
+
+    const [rating, setRating] = useState(0);
 
     let [ showIngrediants, setShowIngrediants ] = useState(false);
 
@@ -126,7 +141,16 @@ const Product: FC = () => {
         };
 
         return compar % 3 === 0 ;
+    } 
+
+    // Catch Rating value
+    const handleRating = (rate: number) => {
+      console.log(rate);
     }
+    // Optinal callback functions
+    const onPointerEnter = () => {}
+    const onPointerLeave = () => {}
+    const onPointerMove = (value: number, index: number) => {}
 
     return (
         <> 
@@ -135,7 +159,7 @@ const Product: FC = () => {
                     <b>Chargement...</b>
                 </h2>
             </div>
-        :
+        : product !== null ?
        		<div id="ajax-content-wrap">
 		<div className="breadcrumb">
 			<span><span><a href="/">Home</a> / 
@@ -188,8 +212,13 @@ const Product: FC = () => {
 <span className="woocommerce-Price-amount amount"><bdi><span className="woocommerce-Price-currencySymbol"></span>
 <PriceUnitBox price={ Number(product?.capitalUnitaireProduit) + Number(product?.interetUnitaireProduit)  } /></bdi></span></span></p>
 <div className="woocommerce-product-details__short-description">
-	<p><strong>Size: 12 oz. | Skin Type: Normal to Dry Skin/ Mature/ sensitive</strong></p>
-<p><strong>HYDRATE &#8211; NOURISH &#8211; BRIGTHEN</strong></p>
+	<p><strong>Size: 12 oz. | {product?.skynType}</strong></p>
+<p><strong> 
+    {
+        JSON.parse(product.tags).map(
+            (tag: string, id: number) => tag.toUpperCase() + ' - ' 
+        )
+    } </strong></p>
 <p>  { product?.descriptionProduit }  </p>
 </div>
 
@@ -391,7 +420,166 @@ const Product: FC = () => {
                 </table>
         </TabPanel>
         <TabPanel>
-            <h2>On progress</h2>
+        <div className="woocommerce-Tabs-panel woocommerce-Tabs-panel--reviews panel entry-content wc-tab" id="tab-reviews" role="tabpanel" aria-labelledby="tab-title-reviews"  >
+				<div id="reviews" className="woocommerce-Reviews">
+	<div id="comments">
+		<h2 className="woocommerce-Reviews-title">
+			Reviews		</h2>
+
+					<p className="woocommerce-noreviews">There are no reviews yet.</p>
+			</div>
+
+			<div id="review_form_wrapper">
+			<div id="review_form">
+					<div id="respond" className="comment-respond">
+		<span style={{  fontSize: '40px', lineHeight: '50px' }} id="reply-title" className="comment-reply-title">
+            Be the first to review “{ product?.libProduit  }” 
+            <small><a rel="nofollow" id="cancel-comment-reply-link" 
+            href="/product/orange-vanilla-luxurious-natural-body-oil/#respond" style={{ display: 'none' }}>Cancel reply</a></small>
+            </span>
+            <Formik
+        initialValues={ 
+            {
+                nbStar: 0,
+                message:  '',
+                name: '',
+                email: ''
+        }}
+
+        validationSchema={
+            yup.object().shape({
+                 
+                nbStar: yup 
+                    .number(),
+                message: yup
+                    .string()
+                    .required(`${'Ce champ est obligatoire'}`),
+                name: yup
+                    .string()
+                    .required(`${'Ce champ est obligatoire'}`),
+                email: yup
+                    .string()
+                    .email("Email non valide")
+                    .required(`${'Ce champ est obligatoire'}`)
+            })
+        } 
+        innerRef={ratingReviewFormRef}
+        onSubmit={async (
+            values, actions
+          ) => {
+                    console.log(user);
+                    setReviewLoading(true);
+                    productService.addReview( { ...values, clientId: user?.id, productId: product?.id } ).then(async function (response: any) {
+                        console.log(response);
+                        
+                        actions.resetForm({values: {
+                            nbStar: 0,
+                            message:  '',
+                            name: '',
+                            email: ''
+                        }});
+
+                        setRating(0);
+
+                        alert('Your review is well saved, thanks for your time.');
+
+                        setReviewLoading(false);
+                        // setLoading(false);
+                    })
+                      .catch(function (error: any) {
+                        console.log(error);
+                        setReviewLoading(false); 
+                    });
+
+                 
+            }}
+        >
+            {({ dirty, errors, touched, isValid, handleChange, handleBlur, handleSubmit, values }) => (
+            <Form id="commentform" className="comment-form">
+
+            <p className="comment-notes"><span id="email-notes">Your email address will not be published.</span> 
+            <span className="required-field-message">Required fields are marked <span className="required">*</span></span>
+            </p><div className="comment-form-rating">
+                <label htmlFor="rating">Your rating&nbsp;<span className="required">*</span></label>
+                <br />
+                            <Rating
+                                initialValue={rating}
+                                fillColor={'black'}
+                                onClick={(rating: number) => { 
+                                    if (ratingReviewFormRef.current !== null) {
+                                        setRating(rating);
+                                        ratingReviewFormRef.current.values.nbStar = rating;
+                                    }
+                                 }}
+                                onPointerEnter={onPointerEnter}
+                                onPointerLeave={onPointerLeave}
+                                onPointerMove={onPointerMove}
+                                /* Available Props */
+                            />
+                        {/* <p className="stars">						
+                            <span>							
+                                <a className="star-1" href="#">1</a>							
+                                <a className="star-2" href="#">2</a>							
+                                <a className="star-3" href="#">3</a>							
+                                <a className="star-4" href="#">4</a>							
+                                <a className="star-5" href="#">5</a>						
+                            </span>					
+                        </p> */}
+                        {/* <select name="rating" id="rating" style={{ display: 'none' }}>
+                                <option value="">Rate…</option>
+                                <option value="5">Perfect</option>
+                                <option value="4">Good</option>
+                                <option value="3">Average</option>
+                                <option value="2">Not that bad</option>
+                                <option value="1">Very poor</option>
+                        </select> */}
+                    </div>
+                    <p className="comment-form-comment">
+                        <label htmlFor="comment">Your review&nbsp;<span className='required'>*</span>
+                        </label>
+                        <textarea   
+                             name="message"
+                            onChange={handleChange('message')}
+                            onBlur={handleBlur('message')} value={values.message}
+                          id="comment"   cols={45} rows={3} required ></textarea>
+                    </p>
+                    <p style={{ width: '48%', maxWidth: '48%', display: 'inline-block' }} className="comment-form-author">
+                        <label htmlFor="author">Name&nbsp;<span className="required">*</span></label>
+                        <input  name="name"
+                            onChange={handleChange('name')}
+                            onBlur={handleBlur('name')} id="author" type="text" value={values.name} size={ 30 } required  />
+                    </p>
+                    <p style={{ width: '4%', maxWidth: '4%', display: 'inline-block' }}></p>
+                    <p style={{ width: '48%', maxWidth: '48%', display: 'inline-block' }} className="comment-form-email">
+                        <label htmlFor="email">Email&nbsp;<span className="required">*</span></label>
+                        <input name="email"
+                            onChange={handleChange('email')}
+                            onBlur={handleBlur('email')} id="email"  type="email" value={values.email} size={30} required  />
+                    </p>
+                    <p className="comment-form-cookies-consent">
+                        <input id="wp-comment-cookies-consent" name="wp-comment-cookies-consent" type="checkbox" value="yes" /> 
+                        <label htmlFor="wp-comment-cookies-consent">
+                            Save my name, email, and website in this browser for the next time I comment.
+                        </label>
+                    </p>
+                    <p className="form-submit">
+                        <button name="submit" type="submit" id="submit" className="submit" value="Submit" >
+                            Submit
+                            {
+                             reviewLoading && <i className="fa fa-circle-o-notch fa-spin fa-1x fa-fw"></i>
+                            }
+                        </button> 
+                        {/* <input type="hidden" name="comment_post_ID" value="287" id="comment_post_ID" />
+                    <input type="hidden" name="comment_parent" id="comment_parent" value="0" /> */}
+</p> </Form>
+            )}
+        </Formik>	</div> 
+				</div>
+		</div>
+	
+	<div className="clear"></div>
+</div>
+			</div>
         </TabPanel>
     </Tabs>
 
@@ -668,7 +856,7 @@ style={{ paddingTop: '0px', paddingBottom: '0px' }}>
     <Footer />
                 {/* Footer  */}
             </div>
-    </div> }
+    </div> : <></> }
     </> 
     );
 }
