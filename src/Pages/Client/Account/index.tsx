@@ -33,6 +33,10 @@ const Account: FC = () => {
    
     let [ loading, setLoading ] = useState(false);  
 
+    const clientInit: any  = null;
+    let [ client, setClient ] = useState(clientInit);
+    let [ clientLoading, setClientLoading ] = useState(false);
+
     let [
         showOldPassword, setShowOldPassword
     ] = useState(false);
@@ -53,10 +57,38 @@ const Account: FC = () => {
     let [
         message, setMessage
     ] = useState(null);
+
+    const getClient = () => {
+
+        setClientLoading(true);
+
+        clientService.getClient( user?.id ).then(async function (response: any) {
+            console.log(response); 
+            if (response.status === 200) {
+               setClient((client: any) => response.data);
+               setClientLoading(false);
+            } else {
+                setMessage(() => response.data.message);
+                setClientLoading(false);
+            }
+        })
+          .catch(function (error: any) {
+            console.log(error); 
+            setClientLoading(false);
+        });
+
+    }
+
+    useEffect(
+        () => {
+            getClient();
+        }, []
+    );
    
     
     return (
-        <div className='woocommerce-account'>
+        <>
+        { clientLoading || client === null ? <h4><b>Loading...</b></h4> : <div className='woocommerce-account'>
         <div id="ajax-content-wrap">
             <br />
                 {/* <div className="breadcrumb">
@@ -196,7 +228,11 @@ const Account: FC = () => {
                             
                             <p className="form-row"> 
                                 <button  type="submit" className="woocommerce-button button woocommerce-form-login__submit" 
-                                name="login" value="Log in">Change password</button>
+                                name="login" value="Log in">Change password
+                                {
+                                    loading && <i style={{color: "black" }} className="fa fa-circle-o-notch fa-spin fa-1x fa-fw"></i>
+                                }
+                                </button>
                             </p>
                             
                             {/* <p className="woocommerce-LostPassword lost_password">
@@ -213,24 +249,30 @@ const Account: FC = () => {
                     <div className="u-column2 col-2">
 
                         <h2>Personnal info</h2>
-                        <Formik
+                         <Formik
                             initialValues={ 
+                                client !== null && client !== "" ? 
                                 {
+                                    ...client,
+                                    '2faActivated': client.twofa,
+                                    email: client.emailClient
+                                } :
+                                 {
                                     nomClient: '',
                                     middleNameClient:  '',
                                     prenomClient: '',
-                                    billAddress: '',
+                                    // billAddress: '',
                                     contactClient: '',
                                     newsletter: '',
                                     '2faActivated': false,
                                     email: '',
-                                    paysClient: '',
-                                    login: '',
-                                    password: '',
-                                    passwordConfirmation: '',                                       
-                                    town: '',
-                                    street: '',
-                                    bp: ''
+                                    // paysClient: '',
+                                    // login: '',
+                                    // password: '',
+                                    // passwordConfirmation: '',                                       
+                                    // town: '',
+                                    // street: '',
+                                    // bp: ''
                             }}
 
                             validationSchema={
@@ -262,7 +304,7 @@ const Account: FC = () => {
                                             clientService.verifyEmail(value ?? '')
                                             .then((res) => { 
                                                 console.log(res);
-                                                return  res.data.data.usable;
+                                                return !res.data.data.usable ?  value === client?.emailClient ? true : res.data.data.usable : res.data.data.usable;
                                             })
                                             .catch((e) => {
                                                 console.log(e);
@@ -314,29 +356,33 @@ const Account: FC = () => {
 
                                     console.log(values);
 
-                                    setLoading(true);
-                                    values.billAddress = values.paysClient + ',' + values.town + ',' + 
-                                    values.street + ',' + values.bp;
+                                    setLoading(true); 
 
-                                    // myaccountService.register(values).then(async function (response: any) {
-                                    //         console.log(response); 
-                                    //     if (response.data.statut === 200) {
-                                    //         alert('You are well registered !');
-                                    //         console.log('Logged user');
-                                    //         dispatch( setUser( response.data.data?.client ) );
-
-                                    //         window.localStorage.setItem(
-                                    //             '__user',
-                                    //             JSON.stringify(response.data.data?.client )
-                                    //         );
-            
-                                    //         setLoading(false); 
-            
-                                    //         window.location.href = "/";
-                                    //     } 
-                                    // }).catch(function (error: any) {
-                                    //         console.log(error); 
-                                    // });
+                                    clientService.updateClient(
+                                        {   
+                                            id: user?.id,
+                                            nomClient: values.nomClient,
+                                            middleNameClient:  values.middleNameClient,
+                                            prenomClient: values.prenomClient, 
+                                            contactClient: values.contactClient,
+                                            newsletter: values.newsletter,
+                                            '2faActivated': values['2faActivated'],
+                                            email: values.email
+                                        }
+                                    ).then(async function (response: any) {
+                                            console.log(response); 
+                                        if (response.data === 'success') {
+                                            alert('Information updated successfully!'); 
+                                            getClient();
+                                            setLoading(false);
+                                        } else {
+                                            setMessage(() => response.data.message);
+                                            setLoading(false);
+                                        }   
+                                    }).catch(function (error: any) {
+                                            console.log(error); 
+                                            setLoading(false); 
+                                    });
                                      
                                 }}
                             >
@@ -352,7 +398,7 @@ const Account: FC = () => {
                                         value={values.prenomClient} />
                                     { errors.prenomClient && touched.prenomClient && errors.prenomClient && 
                                         <small id="validationServer05Feedback" className="invalid-feedback">
-                                            { errors.prenomClient && touched.prenomClient && errors.prenomClient }
+                                            { errors.prenomClient.toString() }
                                         </small> 
                                     }
                                 </p>
@@ -369,7 +415,7 @@ const Account: FC = () => {
                                     { 
                                         errors.middleNameClient && touched.middleNameClient && errors.middleNameClient && 
                                         <small id="validationServer05Feedback" className="invalid-feedback">
-                                            { errors.middleNameClient && touched.middleNameClient && errors.middleNameClient }
+                                            { errors.middleNameClient.toString() }
                                         </small> 
                                     }
                                 </p>
@@ -385,7 +431,7 @@ const Account: FC = () => {
                                     { 
                                         errors.nomClient && touched.nomClient && errors.nomClient && 
                                         <small id="validationServer05Feedback" className="invalid-feedback">
-                                            { errors.nomClient && touched.nomClient && errors.nomClient }
+                                            { errors.nomClient.toString() }
                                         </small> 
                                     }
                                 </p>
@@ -399,7 +445,7 @@ const Account: FC = () => {
                                         value={values.email} />
                                     { errors.email && touched.email && errors.email && 
                                         <small id="validationServer05Feedback" className="invalid-feedback">
-                                            { errors.email && touched.email && errors.email }
+                                            { errors.email.toString() }
                                         </small> 
                                     }
                                 </p>
@@ -416,7 +462,7 @@ const Account: FC = () => {
                                         value={values.contactClient} />
                                     { errors.contactClient && touched.contactClient && errors.contactClient && 
                                         <small id="validationServer05Feedback" className="invalid-feedback">
-                                            { errors.contactClient && touched.contactClient && errors.contactClient }
+                                            { errors.contactClient.toString() }
                                         </small> 
                                     }
                                 </p>
@@ -550,27 +596,29 @@ const Account: FC = () => {
                                     </p>
                                     <div className="woocommerce-privacy-policy-text">
                                         <p>*note: Password must be 12 character long with use of special character.</p>
-                                    </div>
-                                    <label style={{ color: "white " }}>
+                                    </div> 
+                                */}
+
+                                <label style={{ color: "white " }}>
                                         <Field type="checkbox"  onChange={handleChange('newsletter')}
                                             onBlur={handleBlur('newsletter')} name="newsletter" />
                                         Subscribe to the newsletter
-                                    </label> 
+                                </label> 
 
-                                    <label style={{ color: "white " }}>
+                                <label style={{ color: "white " }}>
                                         <Field type="checkbox"  onChange={handleChange('2faActivated')}
                                             onBlur={handleBlur('2faActivated')}  name="2faActivated" />
                                         Enable two-factor authentication
-                                    </label>
-                                */}
+                                </label>
 
-                            <p className="woocommerce-form-row form-row">
-                                <button disabled={ (!dirty && !isValid) }  type="submit" className="woocommerce-Button woocommerce-button 
-                                button woocommerce-form-register__submit" name="register" 
-                                value="Register">Change information</button>
-                            </p>
+                                <p className="woocommerce-form-row form-row">
+                                    <button disabled={ (!dirty && !isValid) }  type="submit" className="woocommerce-Button woocommerce-button 
+                                    button woocommerce-form-register__submit" name="register" 
+                                    value="Register">Change information{
+                                        loading && <i style={{color: "black" }} className="fa fa-circle-o-notch fa-spin fa-1x fa-fw"></i>
+                                    }</button>
+                                </p> 
 
-                            
                             </Form>
                         )}
                     </Formik>
@@ -591,7 +639,8 @@ const Account: FC = () => {
                         
                 </div> */}
                 </div>
-    </div>
+    </div> }
+    </>
     );
 }
 

@@ -34,11 +34,16 @@ const PriceUnitBox: FC<{ price: any }> = ( { price} ) => {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 
+    const isNumber = (n: any) => {
+        return typeof n === 'number' && isFinite(n);
+    }
+
 
     useEffect(
         () => {
 
-            console.log('unit changing')
+            console.log('unit changing');
+            console.log(priceCopy);
 
             if (defaultUnit !== unit) { 
                 // getRateOfExchnge();
@@ -55,7 +60,7 @@ const PriceUnitBox: FC<{ price: any }> = ( { price} ) => {
             
                     const response = await fetch(`https://lapotnewapi2.nogdevhouse.com/api/currency/usdrate?currency=${ unit.toLowerCase() }`, requestOptions);
                     const data = await response.json();
-            
+                     
             
                     if(data?.data.length > 0) {
             
@@ -84,11 +89,16 @@ const PriceUnitBox: FC<{ price: any }> = ( { price} ) => {
         () => {
 
             console.log('unitialisaion');
+ 
+            console.log(priceCopy);
 
             let rate: any = window.localStorage.getItem('_exchange_rate');
-            rate = Number(rate);
+            
 
             if (unit !== '$' && unit !== 'USD' && ( rate === null || rate === undefined || rate === '') ) {
+
+                rate = Number(rate);
+
                 (async function anyNameFunction(){ 
 
                     var myHeaders = new Headers();
@@ -102,7 +112,7 @@ const PriceUnitBox: FC<{ price: any }> = ( { price} ) => {
             
                     const response = await fetch(`https://lapotnewapi2.nogdevhouse.com/api/currency/usdrate?currency=${ unit.toLowerCase() }`, requestOptions);
                     const data = await response.json();
-             
+               
             
                     if(data?.data.length > 0) {
             
@@ -118,10 +128,10 @@ const PriceUnitBox: FC<{ price: any }> = ( { price} ) => {
                 })();
             } else {
                 setDefaultUnit(current => unit );
-                // console.log(data?.data[0].exchangeRate);
-                // console.log('New price');
-                // console.log(Number(price) * Number(data?.data[0].exchangeRate));
-                setPriceCopy( priecopy => Number((Number(price) * Number(rate)).toFixed(2)) );
+                if (isNumber(rate)) {
+                    setPriceCopy( priecopy => Number((Number(price) * Number(rate)).toFixed(2)) );
+                }
+                
             }
         }, []
     )
@@ -131,9 +141,11 @@ const PriceUnitBox: FC<{ price: any }> = ( { price} ) => {
             setPriceCopy(Number(price));
 
             let rate: any = window.localStorage.getItem('_exchange_rate');
-            rate = Number(rate);
-
+           
             if (unit !== '$' && unit !== 'USD' && ( rate === null || rate === undefined || rate === '') ) {
+
+                rate = Number(rate);
+
                 (async function anyNameFunction(){ 
 
                     var myHeaders = new Headers();
@@ -147,8 +159,7 @@ const PriceUnitBox: FC<{ price: any }> = ( { price} ) => {
             
                     const response = await fetch(`https://lapotnewapi2.nogdevhouse.com/api/currency/usdrate?currency=${ unit.toLowerCase() }`, requestOptions);
                     const data = await response.json();
-             
-            
+                   
                     if(data?.data.length > 0) {
             
                         // console.log("Unit change");
@@ -163,10 +174,9 @@ const PriceUnitBox: FC<{ price: any }> = ( { price} ) => {
                 })();
             } else {
                 setDefaultUnit(current => unit );
-                // console.log(data?.data[0].exchangeRate);
-                // console.log('New price');
-                // console.log(Number(price) * Number(data?.data[0].exchangeRate));
-                setPriceCopy( priecopy => Number((Number(price) * Number(rate)).toFixed(2)) );
+                if (isNumber(rate)) {
+                    setPriceCopy( priecopy => Number((Number(price) * Number(rate)).toFixed(2)) );
+                }
             }
 
         }, 

@@ -69,6 +69,7 @@ const ProductBox: FC<{ product: any, productListLength: number }> = ( {product, 
                                     <div className="hover-wrap-inner">
                                         <Link to={ '/product/' + product.id }
                                             target="_self" className="img-loaded ">
+                                                
                                             <img className="img-with-animation skip-lazy nectar-lazy animated-in loaded" data-delay="0"
                                                 height="1000" width="776" data-animation="fade-in"  
                                                 data-nectar-img-src={Utils._mediaUrl + product?.image }
@@ -76,6 +77,12 @@ const ProductBox: FC<{ product: any, productListLength: number }> = ( {product, 
                                                 alt=""
                                                 srcSet={Utils._mediaUrl + product?.image}
                                             sizes="(min-width: 1450px) 75vw, (min-width: 1000px) 85vw, 100vw" />
+
+                                            <img loading="lazy" decoding="async" className="img-with-animation skip-lazy hover_show nectar-lazy
+                                             animated-in loaded" data-delay="0" height="1000" width="776" data-animation="fade-in" 
+                                             src={Utils._mediaUrl + product?.image2 } alt="" sizes="(min-width: 1450px) 75vw, 
+                                             (min-width: 1000px) 85vw, 100vw" srcSet={Utils._mediaUrl + product?.image2 } />
+
                                         </Link>
                                     </div>
                                 </div>

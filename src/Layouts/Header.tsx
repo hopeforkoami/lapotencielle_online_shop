@@ -248,7 +248,7 @@ const Header: FC<{  }> = (  ) => {
                                  
                                   {
                                     countries !== null ? countries.all.map((c:any, index: number) => 
-                                    <option value={ c.alpha2  } selected={ c.alpha2 === 'US' }  label={c.name}>
+                                    <option key={index} value={ c.alpha2  } selected={ c.alpha2 === 'US' }  label={c.name}>
                                          {c.name}</option>)
                                     : <></>
                                   }

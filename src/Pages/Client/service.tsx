@@ -30,4 +30,29 @@ export default class ClientService {
         return axiosInstance.post('/client/passwordUpdate',  data);
     }
 
+    public getClient =  async (id: Number) => {
+        return await axiosInstance.get('/client/details' + `?id=${id.toString()}`);
+    }
+
+    public updateClient =  async  (data: Record<string, any>) => {
+        return axiosInstance.post('/client/update',  data);
+    }
+
+    public getAdresses =  async (id: Number) => {
+        return await axiosInstance.get('/client/adresses' + `?idClient=${id.toString()}`);
+    }
+
+    public updateAddress =  async  (data: Record<string, any>) => {
+        return axiosInstance.put('/client/updadresse',  data);
+    }
+
+    public addAddress =  async  (data: Record<string, any>) => {
+        return axiosInstance.post('/adresse/add',  data);
+    }
+
+    public deleteAddress =  async (id: Number) => {
+        return await axiosInstance.delete('/client/deladresses' + `?idClientAdresse=${id.toString()}`);
+
+    }
+
 }

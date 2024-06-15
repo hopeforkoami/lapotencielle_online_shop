@@ -14,3 +14,27 @@
         width: 100% !important;
     }
 }
+
+.address-block {
+    max-height: 300px;
+    width: 30%;
+    /* border: 2px black solid; */
+    border-radius: 8px;
+    display: inline-block;
+    margin: 2px;
+    padding: 2px;
+    padding-top: 3.5px;
+    padding-bottom: 3.5px;
+}
+
+.address-info { 
+    width: 98%;
+    border: 2px black solid;
+    padding: 1px;
+    margin: 0 auto;
+    border-radius: 8px;
+}
+
+.btn-list {
+    float: right;
+}

@@ -215,9 +215,9 @@ const Product: FC = () => {
 	<p><strong>Size: 12 oz. | {product?.skynType}</strong></p>
 <p><strong> 
     {
-        JSON.parse(product.tags).map(
+        product.tags !== null ? JSON.parse(product.tags).length > 0 ? JSON.parse(product.tags).map(
             (tag: string, id: number) => tag.toUpperCase() + ' - ' 
-        )
+        ) : <></> : <></>
     } </strong></p>
 <p>  { product?.descriptionProduit }  </p>
 </div>
