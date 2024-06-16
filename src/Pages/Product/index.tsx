@@ -183,7 +183,8 @@ const Product: FC = () => {
 <div className="span_5 col single-product-main-image">
 <div className="woocommerce-product-gallery woocommerce-product-gallery--with-images woocommerce-product-gallery--columns-4 images" data-columns="4" style={{ opacity: 1, transition: 'opacity .25s ease-in-out' }}>
 	{ productImages.length > 0 ? <figure className="woocommerce-product-gallery__wrapper">
-        <ImageGallery items={ productImages } />
+        <ImageGallery items={ productImages }
+          showNav={false} autoPlay={ true } />
 		{/* <div data-thumb={ Utils._mediaUrl + product?.image }
         data-thumb-alt="" className="woocommerce-product-gallery__image">
             <a href={ Utils._mediaUrl + product?.image } >
@@ -785,15 +786,15 @@ style={{ paddingTop: '0px', paddingBottom: '0px' }}>
             {
                 product !== null ? 
                 <>
-                        {
+                        INGREDIENT: {
                             product.ingredNamesArray.map(
                                 (ing: any) => 
-                                    <h3 style={{ display: 'inline-block', margin: '2px' }} ><a  className="">
+                                    <span style={{ display: 'inline-block', margin: '2px' }} ><a  className="">
                                         {
-                                            ing
+                                            ing + ', '
                                         }
                                         </a>
-                                    </h3>
+                                    </span>
                             )
                         }
                 </>:

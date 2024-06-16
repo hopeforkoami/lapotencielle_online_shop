@@ -533,11 +533,11 @@ const Myaccount: FC = () => {
                                          Subscribe to the newsletter
                                     </label>
 
-                                    <label style={{ color: "white " }}>
+                                    {/* <label style={{ color: "white " }}>
                                         <Field type="checkbox"  onChange={handleChange('2faActivated')}
                                               onBlur={handleBlur('2faActivated')}  name="2faActivated" />
                                          Enable two-factor authentication
-                                    </label>
+                                    </label> */}
 
                                 <p className="woocommerce-form-row form-row">
                                     {/* <input type="hidden" id="woocommerce-register-nonce" 

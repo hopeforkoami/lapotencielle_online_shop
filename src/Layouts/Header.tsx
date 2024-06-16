@@ -15,6 +15,7 @@ import { setUnit } from '../Redux/Reducers/productPriceReducer';
 import '../country-flags-master/dist/country-flag.css'
 import AllService from '../Pages/service';
 import PriceUnitBox from '../Components/PriceUnitBox';
+import { removeProduct } from '../Redux/Reducers/storeReducer';
 const CountryFlag = require( '../country-flags-master/dist/country-flag.js');
 
 var countries        = require('country-data-list').countries ;
@@ -43,7 +44,46 @@ const Header: FC<{  }> = (  ) => {
 
     let [ flag, setFlag ] = useState(flagInit);
 
+    let cartDrop = document.getElementById('cartDropdown');
+
+    let initialTotal: number = 0;
+    let [ storeTotal, setStoreTotal ] = useState(initialTotal);
+
+    const getStoreTotal = () => {
+        let strTtl = 0;
+        store.products.forEach(
+            (row: any) => {
+                strTtl += ( (Number(row.product?.capitalUnitaireProduit) + Number(row.product?.interetUnitaireProduit)) * row.qty );
+            }
+        );
+        setStoreTotal( (e) => strTtl );
+    }
+
+
+    useEffect(() => {
+        getStoreTotal();
+    }, [store.products])
+
+    useEffect(() => {
+        if (cartDrop !== null) {
+
+            cartDrop?.addEventListener("mouseover", (event: any) => { 
+                event.preventDefault();
+                document.getElementById('cartDropdown')?.classList.add('show-dropdown');
+            }); 
+
+            cartDrop?.addEventListener("mouseout", (event: any) => { 
+                event.preventDefault();
+                document.getElementById('cartDropdown')?.classList.remove('show-dropdown'); 
+            }); 
+
+        }
+    }, [cartDrop])
+
     useEffect(() => { 
+
+        getStoreTotal();
+        
         let serach_input = window.document.getElementById('630b971a47893');
         
         serach_input?.addEventListener("keyup", async (event)=> {
@@ -86,12 +126,8 @@ const Header: FC<{  }> = (  ) => {
 
             const userPhoto = document.getElementById("user-photo");
 
-            console.log('Dow ready');
-            console.log(userPhoto);
-
             userPhoto?.addEventListener("click", (event)=> {
-                console.log(event);
-                document.getElementById('myDropdown')?.classList.toggle("show");
+                document.getElementById('myDropdown')?.classList.toggle("show-dropdown");
             }); 
 
             window.onclick = function(event) {
@@ -101,10 +137,39 @@ const Header: FC<{  }> = (  ) => {
                 var i;
                 for (i = 0; i < dropdowns.length; i++) {
                     var openDropdown = dropdowns[i];
-                    if (openDropdown.classList.contains('show')) {
-                    openDropdown.classList.remove('show');
+                    if (openDropdown.classList.contains('show-dropdown')) {
+                    openDropdown.classList.remove('show-dropdown');
                     }
                 }
+                }
+            } 
+
+
+            const cartDropdown = document.getElementById("cart-dropdown-icon");
+ 
+            
+            cartDropdown?.addEventListener("mouseover", (event: any) => {
+                event.preventDefault();
+                document.getElementById('cartDropdown')?.classList.add('show-dropdown');
+            }); 
+
+            cartDropdown?.addEventListener("mouseout", (event: any) => {
+                event.preventDefault();
+                document.getElementById('cartDropdown')?.classList.remove('show-dropdown'); 
+            }); 
+
+            window.onclick = function(event) {
+                let targets: any = event.target; 
+                if (!targets?.matches('.cart-dropdown-icon') &&
+                    !targets?.matches('.icon-salient-cart')) {
+                    var dropdowns = document.getElementsByClassName("cartDropdown-content");
+                    var i;
+                    for (i = 0; i < dropdowns.length; i++) {
+                        var openDropdown = dropdowns[i];
+                        if (openDropdown.classList.contains('show-dropdown')) {
+                        openDropdown.classList.remove('show-dropdown');
+                        }
+                    }
                 }
             } 
 
@@ -384,7 +449,8 @@ const Header: FC<{  }> = (  ) => {
     {
         user !== null ? 
         <div className="user-account-btn " >
-            <img style={{ cursor: 'pointer' }} id='user-photo' className='user-photo user-account-btn' src="/assets/images/user.png" alt="" /> 
+            <img style={{ cursor: 'pointer' }} id='user-photo' className='user-photo user-account-btn' 
+            src="/assets/images/user.png" alt="" /> 
             <span className="screen-reader-text">
                    account </span>
             <div id="myDropdown" className="dropdown-content">
@@ -417,22 +483,76 @@ const Header: FC<{  }> = (  ) => {
         <span className="screen-reader-text">
                    account </span></Link>
     } 
-    </div>  </li> <li className="nectar-woo-cart">
+    </div>  </li> 
+    <li className="nectar-woo-cart">
               <div className="cart-outer" data-user-set-ocm="off" data-cart-style="dropdown">
                   <div className="cart-menu-wrap">
                       <div className="cart-menu">
-                          <a className="cart-contents" href="/cart"><div className="cart-icon-wrap">
-  <i className="icon-salient-cart" aria-hidden="true"></i> <div className="cart-wrap"><span>{ store.products.length } </span></div> </div></a>
+                          <a id="cart-dropdown-icon"  className="cart-contents cart-dropdown-icon" ><div className="cart-icon-wrap">
+                            <i className="icon-salient-cart" aria-hidden="true"></i> <div className="cart-wrap"><span>{ store.products.length } 
+                                </span></div> </div></a>
+
+                                <div id="cartDropdown" className="cartDropdown-content">
+                                <div className="widget"  >
+                                    <h5> <b>Cart</b> </h5>
+                                { store.products.length > 0 ? <div className="">
+
+                <ul style={{ width: "100%" }} className="woocommerce-mini-cart cart_list product_list_widget " >
+                    {
+                        store.products.map(
+                            (row: any) => <li style={{ width: "100%" }} className="woocommerce-mini-cart-item mini_cart_item">
+                                <span onClick={(event: any) => {
+                                    event.preventDefault();
+                                    dispatch( removeProduct( row ) );
+                                }} style={{ position: 'absolute', left: '1px', top: '1px', cursor: 'pointer', fontSize: '20px' }} 
+                                className="remove remove_from_cart_button" aria-label="Remove this item">×</span>											
+                                <Link to={ '/product/' + row.product.id } >
+                                        <img style={{ width: '50px', height: '50px', float: 'left'  }} 
+                                        src={ Utils._mediaUrl + row.product?.image } 
+                                        alt=""  decoding="async" loading="lazy"  />
+                                        <span style={{ fontSize: '19px' }}> { row.product.libProduit } </span> </Link>
+                                <span>{row.qty} × <span className="woocs_special_price_code"> <PriceUnitBox price={ (Number(row.product?.capitalUnitaireProduit) + Number(row.product?.interetUnitaireProduit) ) } />
+                                    </span></span>				
+                            </li>   
+                        )
+                    }
+                   
+                </ul>
+
+<p className='woocommerce-mini-cart__total total' >
+    <strong>Subtotal: </strong> <span className="woocs_special_price_code"> <PriceUnitBox price={  storeTotal  } /></span>	</p>
+
+
+<p className="woocommerce-mini-cart__buttons buttons">
+    <button style={{ display: 'inline-block', backgroundColor: 'black' }} onClick={() => { 
+        navigate('/cart');
+     }} className='button hover-cart-btn'>
+        View cart
+    </button>
+    <button style={{ display: 'inline-block', backgroundColor: 'black' }} onClick={() => { 
+        navigate('/cart');
+     }} className='button hover-cart-btn'>
+        Checkout
+    </button>
+    {/* <a href="https://www.lapotencielle.com/cart/" className="button wc-forward"></a>
+    <a href="https://www.lapotencielle.com/checkout/" className="button checkout wc-forward"></a> */}
+</p>
+
+</div> :<p> <b> No products in the card </b> </p> } </div>
+                                </div>
+
                       </div>
                   </div>
   
-                                      <div className="cart-notification">
-                          <span className="item-name"></span> was successfully added to your cart.					</div>
+                                      {/* <div className="cart-notification">
+                          <span className="item-name"></span> was successfully added to your cart.					</div> */}
                   
-                  <div className="widget woocommerce widget_shopping_cart">
+                  {/* <div className="widget woocommerce widget_shopping_cart">
   <h2 className="widgettitle">Cart</h2>
   <div className="widget_shopping_cart_content"></div>
-  </div>
+  </div> */}
+ 
+
               </div>
   
               </li>

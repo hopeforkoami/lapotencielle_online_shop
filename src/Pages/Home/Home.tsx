@@ -690,7 +690,7 @@ className="wpb_row vc_row-fluid vc_row inner_row   right_padding_80px left_paddi
       <div className="inner">
         <div className="hover-wrap"> 
           <div className="hover-wrap-inner">
-		  	<Link to="/products/BATH-AND-BODY/bath body" target="_self" className="">
+		  	<Link to="/products/BATH-AND-BODY/bath" target="_self" className="">
               <img className="img-with-animation skip-lazy slider_image_q nectar-lazy" data-delay="0" height="1080" width="1080" data-animation="fade-in" data-nectar-img-src="https://www.lapotencielle.com/wp-content/uploads/2022/01/1626458771-1_1.png" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%201080%201080'%2F%3E" alt="" data-nectar-img-srcset="https://www.lapotencielle.com/wp-content/uploads/2022/01/1626458771-1_1.png 1080w, https://www.lapotencielle.com/wp-content/uploads/2022/01/1626458771-1_1-300x300.png 300w, https://www.lapotencielle.com/wp-content/uploads/2022/01/1626458771-1_1-150x150.png 150w, https://www.lapotencielle.com/wp-content/uploads/2022/01/1626458771-1_1-600x600.png 600w, https://www.lapotencielle.com/wp-content/uploads/2022/01/1626458771-1_1-1024x1024.png 1024w, https://www.lapotencielle.com/wp-content/uploads/2022/01/1626458771-1_1-768x768.png 768w, https://www.lapotencielle.com/wp-content/uploads/2022/01/1626458771-1_1-100x100.png 100w, https://www.lapotencielle.com/wp-content/uploads/2022/01/1626458771-1_1-140x140.png 140w, https://www.lapotencielle.com/wp-content/uploads/2022/01/1626458771-1_1-500x500.png 500w, https://www.lapotencielle.com/wp-content/uploads/2022/01/1626458771-1_1-350x350.png 350w, https://www.lapotencielle.com/wp-content/uploads/2022/01/1626458771-1_1-1000x1000.png 1000w, https://www.lapotencielle.com/wp-content/uploads/2022/01/1626458771-1_1-800x800.png 800w" sizes="(min-width: 1450px) 75vw, (min-width: 1000px) 85vw, 100vw" />
             </Link>
           </div>
@@ -699,7 +699,7 @@ className="wpb_row vc_row-fluid vc_row inner_row   right_padding_80px left_paddi
       </div>
 <div className="wpb_text_column wpb_content_element " >
 	<div className="wpb_wrapper">
-		<p><Link to="/products/BATH-AND-BODY/bath body" >BATH AND BODY</Link></p>
+		<p><Link to="/products/BATH-AND-BODY/bath" >BATH AND BODY</Link></p>
 	</div>
 </div>
 

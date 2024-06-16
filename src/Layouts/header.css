@@ -46,11 +46,73 @@ iframe {
 /* Change color of dropdown links on hover */
 .dropdown-content ul li:hover {background-color: #fff;}
 
-/* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
-.show {display:block;}
+
 
 .user-photo {
   width: 40px !important;
   height: 40px !important;
   border-radius: 50%;
 }
+
+
+/* Dropdown Content (Hidden by Default) */
+.cart-icon-div {
+  width: 40px !important;
+  height: 40px !important;
+}
+
+.cartDropdown-content {
+  display: none;
+  position: absolute;
+  right: -1px;
+  top: 150%; 
+  background-color: #ffffff;
+  padding: 5px;
+  width: 400px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 100;
+  height: auto;
+}
+
+/* Links inside the dropdown */
+/* .cartDropdown-content ul li {
+  color: black;
+  min-width: 160px;
+  padding: 2px;
+  text-decoration: none;
+  display: block;
+  font-family: Segoe_UI !important;
+}
+.cartDropdown-content>ul>li>a { 
+  width: 100% !important; 
+  text-align: justify !important;
+  font-family: Segoe_UI !important;
+}  */
+/* Change color of dropdown links on hover */
+.cartDropdown-content ul li:hover {background-color: #fff;}
+
+/* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+.show-dropdown {display:block !important;}
+
+.hover-cart-btn  {
+    background-color: #333333;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    background-image: none;
+    text-shadow: none;
+    -webkit-text-shadow: none;
+    border: none;
+    background-repeat: no-repeat;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 12px;
+    line-height: 12px;
+    padding: 10px 10px;
+    position: relative;
+    text-align: center;
+    text-transform: capitalize;
+    font-weight: normal;
+    transition: all 0.25s ease 0s;
+    margin: 2px;
+} 
