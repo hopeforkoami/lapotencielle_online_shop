@@ -34,3 +34,14 @@
     color: red !important;
     text-align: center;
 }
+
+.woocommerce-password-strength.short {
+    background-color: #f1adad;
+    border-color: #e35b5b;
+}
+.woocommerce-password-strength {
+    text-align: center;
+    font-weight: 600;
+    padding: 3px .5em;
+    font-size: 1em;
+}

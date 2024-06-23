@@ -21,6 +21,9 @@ import AllService from '../service';
 /** import customised css for the home */
 import './Home.css';
 
+import { Formik, Field, Form, FormikProps } from 'formik'
+import * as yup from 'yup';
+
 
 const Home: FC<{  }> = (  ) => { 
 
@@ -29,6 +32,8 @@ const Home: FC<{  }> = (  ) => {
 	const [ comingSoonProducts, setComingSoonProducts ] = useState([]);
 	const [ newsExclusiveProducts, setNewsExclusiveProducts ] = useState([]);
 	const [ bestSellerProducts, setBestSellerProducts ] = useState([]);
+
+	const [ loading, setLoading ] = useState(false);
 
 	const getAllProducts = () => {
 		allService.getAllProducts().then(async function (response: any) {
@@ -100,12 +105,22 @@ const Home: FC<{  }> = (  ) => {
             <div  className="vc_col-sm-12 wpb_column column_container vc_column_container col no-extra-padding inherit_tablet inherit_phone "  data-padding-pos="all" data-has-bg-color="false" data-bg-color="" data-bg-opacity="1" data-animation="" data-delay="0" >
                 <div className="vc_column-inner" >
                     <div className="wpb_wrapper"> 
-                    <div  data-transition="slide" data-overall_style="classic" data-flexible-height="true" data-animate-in-effect="none" data-fullscreen="false" data-button-sizing="regular" data-button-styling="btn_with_count" data-autorotate="5000" data-parallax="false" data-parallax-disable-mobile="" data-caption-trans="fade_in_from_bottom" data-parallax-style="bg_only" data-bg-animation="none" data-full-width="true" className="nectar-slider-wrap " id="nectar-slider-instance-1"><div className="swiper-container"  data-tho="auto" data-tco="auto" data-pho="auto" data-pco="auto" data-loop="true" data-height="600" data-min-height="" data-arrows="false" data-bullets="true" data-bullet_style="scale" data-bullet_position="bottom" data-desktop-swipe="true" data-settings=""> <div className="swiper-wrapper"><div className="swiper-slide" data-desktop-content-width="auto" data-tablet-content-width="auto" data-bg-alignment="center" data-color-scheme="light" data-x-pos="left" data-y-pos="middle" ><div className="slide-bg-wrap"><div className="image-bg" 
-                    style={{ backgroundImage: "url(./assets/wp-content/uploads/2022/01/s1-1635172963.jpg)" }} > &nbsp; </div></div><div className="video-texture "> <span className="ie-fix"></span> </div><a href="our-orange-and-vanilla-products/index.html" className="entire-slide-link"> <span className="ie-fix"></span> </a></div> <div className="swiper-slide" data-desktop-content-width="auto" data-tablet-content-width="auto" data-bg-alignment="center" data-color-scheme="light" data-x-pos="left" data-y-pos="middle" ><div className="slide-bg-wrap"><div className="image-bg" 
-                    style={{ backgroundImage: "url(./assets/wp-content/uploads/2022/01/s2-1635172995.jpg)" }}> &nbsp; </div></div><div className="video-texture "> <span className="ie-fix"></span> </div><a href="our-gifts-sets-collection/index.html" className="entire-slide-link"> <span className="ie-fix"></span> </a></div> <div className="swiper-slide" data-desktop-content-width="auto" data-tablet-content-width="auto" data-bg-alignment="center" data-color-scheme="light" data-x-pos="left" data-y-pos="middle" ><div className="slide-bg-wrap"><div className="image-bg" 
-                    style={{ backgroundImage: "url(./assets/wp-content/uploads/2022/01/s3-1635173041.jpg)" }}> &nbsp; </div></div><div className="video-texture "> <span className="ie-fix"></span> </div><a href="our-duo-collection/index.html" className="entire-slide-link"> <span className="ie-fix"></span> </a></div> 
-                    <div className="swiper-slide" data-desktop-content-width="auto" data-tablet-content-width="auto" data-bg-alignment="center" data-color-scheme="light" data-x-pos="left" data-y-pos="middle" ><div className="slide-bg-wrap"><div className="image-bg" style={{ backgroundImage: "url(./assets/wp-content/uploads/2022/01/s4-1635173075.jpg)" }} > &nbsp; </div></div><div className="video-texture "> <span className="ie-fix"></span> </div><a href="our-lily-and-lavender-products/index.html" className="entire-slide-link"> <span className="ie-fix"></span> </a></div>  <div className="swiper-slide" data-desktop-content-width="auto" data-tablet-content-width="auto" data-bg-alignment="center" data-color-scheme="light" data-x-pos="left" data-y-pos="middle" ><div className="slide-bg-wrap"><div className="image-bg"
-                    style={{ backgroundImage: "url(./assets/wp-content/uploads/2022/01/s5-1635173135.jpg)" }} > &nbsp; </div></div><div className="video-texture "> <span className="ie-fix"></span> </div><a href="our-lily-and-lavender-products/index.html" className="entire-slide-link"> <span className="ie-fix"></span> </a></div> <div className="swiper-slide" data-desktop-content-width="auto" data-tablet-content-width="auto" data-bg-alignment="center" data-color-scheme="light" data-x-pos="left" data-y-pos="middle" ><div className="slide-bg-wrap"><div className="image-bg" 
+                    <div  data-transition="slide" data-overall_style="classic" data-flexible-height="true" 
+					data-animate-in-effect="none" data-fullscreen="false" data-button-sizing="regular" 
+					data-button-styling="btn_with_count" data-autorotate="5000" data-parallax="false" 
+					data-parallax-disable-mobile="" data-caption-trans="fade_in_from_bottom" 
+					data-parallax-style="bg_only" data-bg-animation="none" data-full-width="true" 
+					className="nectar-slider-wrap " id="nectar-slider-instance-1">
+						<div className="swiper-container"  data-tho="auto" data-tco="auto" data-pho="auto" 
+						data-pco="auto" data-loop="true" data-height="600" data-min-height="" 
+						data-arrows="false" data-bullets="true" data-bullet_style="scale" 
+						data-bullet_position="bottom" data-desktop-swipe="true" data-settings=""> 
+						<div className="swiper-wrapper"><div className="swiper-slide" data-desktop-content-width="auto" data-tablet-content-width="auto" data-bg-alignment="center" data-color-scheme="light" data-x-pos="left" data-y-pos="middle" ><div className="slide-bg-wrap"><div className="image-bg" 
+                    style={{ backgroundImage: "url(./assets/wp-content/uploads/2022/01/s1-1635172963.jpg)" }} > &nbsp; </div></div><div className="video-texture "> <span className="ie-fix"></span> </div><Link to="products/OUR-ORANGE-AND-VANILLA-PRODUCTS/orange" className="entire-slide-link"> <span className="ie-fix"></span> </Link></div> <div className="swiper-slide" data-desktop-content-width="auto" data-tablet-content-width="auto" data-bg-alignment="center" data-color-scheme="light" data-x-pos="left" data-y-pos="middle" ><div className="slide-bg-wrap"><div className="image-bg" 
+                    style={{ backgroundImage: "url(./assets/wp-content/uploads/2022/01/s2-1635172995.jpg)" }}> &nbsp; </div></div><div className="video-texture "> <span className="ie-fix"></span> </div><Link to="/kits/OUR-GIFTS-AND-SETS-COLLECTION/gifts" className="entire-slide-link"> <span className="ie-fix"></span> </Link></div> <div className="swiper-slide" data-desktop-content-width="auto" data-tablet-content-width="auto" data-bg-alignment="center" data-color-scheme="light" data-x-pos="left" data-y-pos="middle" ><div className="slide-bg-wrap"><div className="image-bg" 
+                    style={{ backgroundImage: "url(./assets/wp-content/uploads/2022/01/s3-1635173041.jpg)" }}> &nbsp; </div></div><div className="video-texture "> <span className="ie-fix"></span> </div><Link to="/kits/OUR-DUO-COLLECTION/duo" className="entire-slide-link"> <span className="ie-fix"></span> </Link></div> 
+                    <div className="swiper-slide" data-desktop-content-width="auto" data-tablet-content-width="auto" data-bg-alignment="center" data-color-scheme="light" data-x-pos="left" data-y-pos="middle" ><div className="slide-bg-wrap"><div className="image-bg" style={{ backgroundImage: "url(./assets/wp-content/uploads/2022/01/s4-1635173075.jpg)" }} > &nbsp; </div></div><div className="video-texture "> <span className="ie-fix"></span> </div><Link to="/products/OUR-LILY-AND-LAVENDER-PRODUCTS/lavender" className="entire-slide-link"> <span className="ie-fix"></span> </Link></div>  <div className="swiper-slide" data-desktop-content-width="auto" data-tablet-content-width="auto" data-bg-alignment="center" data-color-scheme="light" data-x-pos="left" data-y-pos="middle" ><div className="slide-bg-wrap"><div className="image-bg"
+                    style={{ backgroundImage: "url(./assets/wp-content/uploads/2022/01/s5-1635173135.jpg)" }} > &nbsp; </div></div><div className="video-texture "> <span className="ie-fix"></span> </div><Link to="/products/OUR-LILY-AND-LAVENDER-PRODUCTS/lavender" className="entire-slide-link"> <span className="ie-fix"></span> </Link></div> <div className="swiper-slide" data-desktop-content-width="auto" data-tablet-content-width="auto" data-bg-alignment="center" data-color-scheme="light" data-x-pos="left" data-y-pos="middle" ><div className="slide-bg-wrap"><div className="image-bg" 
                     style={{ backgroundImage: "url(./assets/wp-content/uploads/2022/01/6-3-1635173208.png)" }}> &nbsp; </div></div><div className="video-texture "> <span className="ie-fix"></span> </div></div>  </div><div className="container normal-container slider-pagination-wrap"><div className="slider-pagination"></div></div><div className="nectar-slider-loading "> 
                     <span className="loading-icon none">  </span> </div> </div> 
                             </div>
@@ -1045,7 +1060,8 @@ right_padding_80px left_padding_80px "   ><div className="row-bg-wrap">
 	<div className="row_col_wrap_12_inner col span_12  center">
 	
 		{
-			bestSellerProducts.slice(0,4).map((product, id) => <ProductBox key={id} productListLength={4} product={product}  /> )
+			bestSellerProducts.slice(0,4).map((product, id) => <ProductBox key={id} 
+			productListLength={4} animated={false} product={product}  /> )
 		}
 	
 	</div>
@@ -1399,11 +1415,56 @@ NEWSLETTER</li>
 	<div className="wpb_widgetised_column wpb_content_element">
 		<div id="sidebar" data-nectar-ss="" className="wpb_wrapper">
 			<div id="newsletterwidgetminimal-4" className="widget widget_newsletterwidgetminimal"><h4>Get latest news, offers and discounts.</h4><div className="tnp tnp-widget-minimal">
-		<form className="tnp-form" action="#" method="post">
+			<Formik
+                                initialValues={ 
+                                    {
+                                        email: ''
+                                }}
+
+                                validationSchema={
+                                    yup.object().shape({
+                                        
+                                        email: yup 
+                                            .string()
+                                            .email('Invalid email')
+                                            .required(`${'This field is required'}`) 
+                                    })
+                                }
+                                // innerRef={promoCodeFormRef}
+                                onSubmit={async (
+                                    values 
+                                ) => {  
+                                        setLoading(true);
+                                        allService.subscribeToNewsletter(values).then(async function(response: any) {
+                                            // console.log(response); 
+                                        if (response.data.statut === 200) {
+                                            alert('Thank you for subscription')
+                                        } else {
+                                            alert('An error please try again');
+                                        }
+                                        setLoading(false);
+                                    }).catch(function (error: any) {
+                                            console.log(error); 
+                                            setLoading(false);
+                                    });
+                                }}
+                                >
+                                    {({ dirty, errors, touched, isValid, handleChange, handleBlur, handleSubmit, values }) => (
+                                    <Form  className="tnp-form" action="#" method="post">
 			{/* <input type="hidden" name="nr" value="widget-minimal"/> */}
-			<input className="tnp-email" type="email" required name="ne"   placeholder="your email" />
-			<input className="tnp-submit" type="submit" value="Subscribe" />
-		</form></div></div>
+				<input type="email" required name="ne" 
+				  placeholder="your email"  className={`tnp-email  ${ errors.email && touched.email ?
+					 "sub-input-error":""}`} 
+				  id="email" onChange={handleChange('email')}
+				  onBlur={handleBlur('email')}
+					  value={values.email} />
+				<button  disabled={ !isValid && !dirty }  className="tnp-submit" type="submit" >
+				{ loading && <i className="fas fa-spinner fa-spin"></i>
+                  } Subscribe
+				</button>
+			</Form>
+            )}
+        </Formik></div></div>
 		</div> 
 	</div> 
 		</div> 

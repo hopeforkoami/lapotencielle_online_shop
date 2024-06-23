@@ -30,4 +30,9 @@ export default class AllService {
         return await axiosInstance.get(`/product/filter/keyword?keyWord=${searchStr}`);
     }
 
+    public subscribeToNewsletter =  async (data: Record<string, any>) => {
+        return await axiosInstance.post('/news/suscribe', data);
+    }
+
+
 }

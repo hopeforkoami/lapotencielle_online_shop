@@ -13,7 +13,7 @@ interface ProductBoxProps {
     productListLength: number
 }
   
-const ProductBox: FC<{ product: any, productListLength: number }> = ( {product, productListLength} ) => {
+const ProductBox: FC<{ product: any, productListLength: number, animated?: boolean }> = ( {product, productListLength, animated = true} ) => {
 
     
       
@@ -78,10 +78,10 @@ const ProductBox: FC<{ product: any, productListLength: number }> = ( {product, 
                                                 srcSet={Utils._mediaUrl + product?.image}
                                             sizes="(min-width: 1450px) 75vw, (min-width: 1000px) 85vw, 100vw" />
 
-                                            <img loading="lazy" decoding="async" className="img-with-animation skip-lazy hover_show nectar-lazy
+                                            { animated && <img loading="lazy" decoding="async" className="img-with-animation skip-lazy hover_show nectar-lazy
                                              animated-in loaded" data-delay="0" height="1000" width="776" data-animation="fade-in" 
                                              src={Utils._mediaUrl + product?.image2 } alt="" sizes="(min-width: 1450px) 75vw, 
-                                             (min-width: 1000px) 85vw, 100vw" srcSet={Utils._mediaUrl + product?.image2 } />
+                                             (min-width: 1000px) 85vw, 100vw" srcSet={Utils._mediaUrl + product?.image2 } /> }
 
                                         </Link>
                                     </div>

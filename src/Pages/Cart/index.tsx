@@ -123,13 +123,13 @@ const Cart: FC = () => {
         {
             name: ` `,
             selector: (row: any) => 
-            <img width={150} height={150} style={{ height: '120px', width: '100px' }}
-            src={ Utils._mediaUrl + row.product?.image } alt="" /> ,
+            <Link to={'/product/'+row.product.id} ><img width={150} height={150} style={{ height: '120px', width: '100px' }}
+            src={ Utils._mediaUrl + row.product?.image } alt="" /></Link> ,
         },
         {
             name: `Product`,
-            selector: (row: any) => row.product.libProduit ,
-        },
+            selector: (row: any) => row.product.libProduit 
+        }, 
         {
             name: `Price`,
             selector: (row: any) => <>
@@ -180,16 +180,15 @@ const Cart: FC = () => {
             ( (Number(row.product?.capitalUnitaireProduit) + Number(row.product?.interetUnitaireProduit)) * row.qty ) } />  </b> </>,
         },
         {
-            name: `Actions`,
+            name: ` `,
             selector: (row: any) => <>
-            
-                    <button onClick={() => {
+
+                    <i onClick={() => {
                         dispatch( removeProduct( row ) )
-                    }} className='button button-danger'>
-                        Delete
-                    </button>
+                    }}  className="fa fa-times" aria-hidden="true"></i>
+            
                 </>
-            },
+        }
 
     ];
 
@@ -220,7 +219,13 @@ const Cart: FC = () => {
             <div className="wpb_text_column wpb_content_element ">
                 <div className="wpb_wrapper">
                     <div className="woocommerce">
-                        <div className="woocommerce-notices-wrapper"></div>
+                    { store.products.length > 0 &&  <div className="woocommerce-notices-wrapper">
+	<div className="woocommerce-message" >
+		<Link to={'/product/'+ store.products[store.products.length -1].product.id} 
+        tabIndex={1} className="button wc-forward">
+            Continue shopping</Link> { store.products[store.products.length -1].product.libProduit } 
+            has been added to your cart.	</div>
+    </div> }
                         {
                             store.products.length > 0 ?
                             <><DataTable
@@ -231,12 +236,81 @@ const Cart: FC = () => {
                                             progressPending={loading}
                                             pagination
                                         />  
+
+
                     <div style={{ display: 'flex', flexFlow: 'row', justifyContent: 'space-between', height: '120px'  }}>
                         <div style={{ display: 'flex', flexFlow: 'column' }}>
- 
-                        <div className="coupon">
+
+                        
+
+                        <Formik
+                                initialValues={ 
+                                    {
+                                        promoCode: ''
+                                }}
+
+                                validationSchema={
+                                    yup.object().shape({
+                                        
+                                        promoCode: yup 
+                                            .string()
+                                            .required(`${'Ce champ est obligatoire'}`)
+                                    })
+                                }
+                                innerRef={promoCodeFormRef}
+                                onSubmit={async (
+                                    values 
+                                ) => {  
+                                        setLoadReduction(true);
+                                        setReduction((red) => (null));
+                                        console.log(values);
+                                        const data = {
+                                            ...values,
+                                            montantBasket: storeTotal
+                                        }
+                                        cartService.getPromoCodeReduction(data).then(async function (response: any) {
+                                            console.log(response); 
+                                        if (response.data.statut === 200) {
+                                             setReduction(() => (response.data.data.reduction))
+                                        } else {
+                                            alert('Unknown promo code');
+                                        }
+                                        setLoadReduction(false);
+                                    }).catch(function (error: any) {
+                                            console.log(error); 
+                                            setLoadReduction(false);
+                                    });
+                                    }}
+                                >
+                                    {({ dirty, errors, touched, isValid, handleChange, handleBlur, handleSubmit, values }) => (
+                                    <Form  >
+
+<div className="coupon">
 							<label htmlFor="coupon_code">Coupon:</label> 
-                            <div  style={{ display: 'flex', flexFlow: 'row ', justifyContent: 'space-between' }}>
+                            <input type="text" name="coupon_code" 
+                            id="coupon_code" placeholder="Coupon code" className={`input-text ${ errors.promoCode && touched.promoCode ? "input-format-error":""}`}
+                             autoComplete="promoCode" 
+                                onChange={handleChange('promoCode')}
+                                    onBlur={handleBlur('promoCode')}
+                                        value={values.promoCode ?? ''} />
+                             <button type="submit" className="button" name="apply_coupon" 
+                             value="Apply coupon">{
+                                loadReduction && <i className="fas fa-spinner fa-spin"></i>
+                             } Apply coupon</button>
+													</div>
+
+                                    </Form>
+                                    )}
+                                    </Formik>
+
+                                    <br/> 
+                            {
+                                reduction !== null && <p style={{ fontWeight: 'bold' }}>Congratulations you have <PriceUnitBox price={reduction} /> benefit</p>
+                            }
+ 
+                        {/* <div className="coupon">
+							<label htmlFor="coupon_code">Coupon:</label> 
+                            <span><div  style={{ display: 'flex', flexFlow: 'row ', justifyContent: 'space-between' }}>
                             <Formik
                                 initialValues={ 
                                     {
@@ -279,8 +353,8 @@ const Cart: FC = () => {
                                     {({ dirty, errors, touched, isValid, handleChange, handleBlur, handleSubmit, values }) => (
                                     <Form  className="woocommerce-form woocommerce-form-login login" >
 
-                                        {/* <input type="text" name="coupon_code" className="input-text" id="coupon_code" value="" 
-                                         />  */}
+                                        <input type="text" name="coupon_code" className="input-text" id="coupon_code" value="" 
+                                         />  
                                          <input type="text" placeholder="Coupon code" id="coupon_code"
                                             className={`input-text ${ errors.promoCode && touched.promoCode ? "input-format-error":""}`}
                                                 name="promoCode"  autoComplete="promoCode" 
@@ -297,12 +371,12 @@ const Cart: FC = () => {
         </Formik>
 
                                    
-                            </div>
+                            </div></span>
                             <br/> 
                             {
                                 reduction !== null && <p style={{ fontWeight: 'bold' }}>Congratulations you have <PriceUnitBox price={reduction} /> benefit</p>
                             }
-						</div>
+						</div> */}
 
                         
                         </div>

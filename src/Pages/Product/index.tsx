@@ -156,7 +156,7 @@ const Product: FC = () => {
         <> 
         { loading ? <div style={{ marginTop: '1.5em' }}>
                 <h2 >
-                    <b>Chargement...</b>
+                    <b></b>
                 </h2>
             </div>
         : product !== null ?
@@ -264,7 +264,7 @@ const Product: FC = () => {
             <Form className="cart" >
                 {/* <form > */}
                                         
-                        <label id="Terms_of_use_Return_Policy">
+                        <label style={{ fontSize: '20px !important' }} id="Terms_of_use_Return_Policy">
                         I Agree <Field type="checkbox"
                                         className={`form-control 
                                         ${ errors.acceptTerms && touched.acceptTerms ? "is-invalid":""}`}

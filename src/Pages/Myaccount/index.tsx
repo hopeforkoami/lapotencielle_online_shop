@@ -46,6 +46,86 @@ const Myaccount: FC = () => {
         message, setMessage
     ] = useState(null);
 
+    let [
+        passwordStrengthMessage, setPasswordStrengthMessage
+    ] = useState(null);
+
+    const checkPasswordStrength = (password: string) => {
+        // Create an object to store the criteria that the password needs to meet
+        const criteria = {
+          length: false,
+          uppercase: false,
+          lowercase: false,
+          number: false,
+          specialChar: false,
+        };
+      
+        // Check if the password meets each criteria
+        if (password.length >= 8) {
+          criteria.length = true;
+        }
+      
+        if (/[A-Z]/.test(password)) {
+          criteria.uppercase = true;
+        }
+      
+        if (/[a-z]/.test(password)) {
+          criteria.lowercase = true;
+        }
+      
+        if (/\d/.test(password)) {
+          criteria.number = true;
+        }
+      
+        if (/^(?=.*[!@#\$%\^&\*])(?=.{12,})/.test(password)) {
+          criteria.specialChar = true;
+        }
+      
+        // Calculate the number of criteria met
+        const numCriteriaMet = Object.values(criteria).filter(Boolean).length;
+      
+        // Return the strength of the password based on the number of criteria met
+        switch (numCriteriaMet) {
+          case 1:
+            return 'Weak';
+          case 2:
+            return 'Medium';
+          case 3:
+            return 'Medium';
+          case 4:
+            return 'Medium';
+          case 5:
+            return 'Strong';
+          default:
+            return 'Invalid password';
+        }
+    }
+
+    const getPasswordFeedbackStyle = (feedbakck: string) => {
+        if (feedbakck === 'Invalid password') {
+            return {
+                display: 'none' }
+        } else if ( feedbakck === 'Weak' ) {
+
+            return {
+                backgroundColor: '#f1adad',
+                borderColor: '#e35b5b'
+            }
+        } else if ( feedbakck === 'Medium' ) {
+
+            return {
+                backgroundColor: '#ffe399',
+                borderColor: '#ffc733'
+            }
+        } else if ( feedbakck === 'Strong' ) {
+
+            return {
+                backgroundColor: '#c1e1b9',
+                borderColor: '#83c373'
+            }
+        }
+    }
+
     return (
         <div className='woocommerce-account'>
             <div id="ajax-content-wrap">
@@ -82,10 +162,10 @@ const Myaccount: FC = () => {
                                         
                                         login: yup 
                                             .string()
-                                            .required(`${'Ce champ est obligatoire'}`),
+                                            .required(`${'This field is required'}`),
                                         password: yup
                                             .string()
-                                            .required(`${'Ce champ est obligatoire'}`)
+                                            .required(`${'This field is required'}`)
                                     })
                                 }
                                 // innerRef={formRef}
@@ -215,26 +295,26 @@ const Myaccount: FC = () => {
 
                                         nomClient: yup 
                                             .string()
-                                            .required(`${'Ce champ est obligatoire'}`),
+                                            .required(`${'This field is required'}`),
                                         middleNameClient:  yup 
                                             .string() ,
                                         prenomClient: yup 
                                             .string()
-                                            .required(`${'Ce champ est obligatoire'}`),
+                                            .required(`${'This field is required'}`),
                                         billAddress: yup 
                                             .string(),
                                         contactClient: yup 
                                             .string()
-                                            .required(`${'Ce champ est obligatoire'}`),
+                                            .required(`${'This field is required'}`),
                                         newsletter:  yup 
                                             .string()
-                                            .required(`${'Ce champ est obligatoire'}`),
+                                            .required(`${'This field is required'}`),
                                         '2faActivated': yup 
                                             .boolean(),
                                         email: yup 
                                             .string()
                                             .email('Mail non valide')
-                                            .required(`${'Ce champ est obligatoire'}`)
+                                            .required(`${'This field is required'}`)
                                             .test('checkEmailUnique', "Email already used", async value =>
                                                 myaccountService.verifyEmail(value ?? '')
                                                 .then((res) => { 
@@ -248,10 +328,10 @@ const Myaccount: FC = () => {
                                             ),
                                         paysClient: yup 
                                             .string()
-                                            .required(`${'Ce champ est obligatoire'}`),
+                                            .required(`${'This field is required'}`),
                                         login: yup 
                                             .string()
-                                            .required(`${'Ce champ est obligatoire'}`)
+                                            .required(`${'This field is required'}`)
                                             .test('checkLoginUnique', "Login already used", async value =>
                                                 myaccountService.verifyLogin(value ?? '')
                                                 .then((res) => { 
@@ -265,23 +345,23 @@ const Myaccount: FC = () => {
                                             ),
                                         password: yup
                                             .string()
-                                            .required(`${'Ce champ est obligatoire'}`)
+                                            .required(`${'This field is required'}`)
                                             .matches(
                                                 /^(?=.*[!@#\$%\^&\*])(?=.{12,})/,
-                                                `${"Le mot de passe doit comporter 12 caractères avec l'utilisation d'un caractère spécial"}`
+                                                `${"Hint: The password should be at least twelve characters long. To make it stronger, use upper and lower case letters, numbers, and symbols like ! \" ? $ % ^ & )."}`
                                             ),
                                         passwordConfirmation: yup.string()
                                             .oneOf([yup.ref('password'), null], 'Passwords must match')
-                                            .required(`${'Ce champ est obligatoire'}`),
+                                            .required(`${'This field is required'}`),
                                         town: yup
                                             .string()
-                                            .required(`${'Ce champ est obligatoire'}`),
+                                            .required(`${'This field is required'}`),
                                         street: yup
                                             .string()
-                                            .required(`${'Ce champ est obligatoire'}`),
+                                            .required(`${'This field is required'}`),
                                         bp: yup
                                             .string()
-                                            .required(`${'Ce champ est obligatoire'}`),
+                                            .required(`${'This field is required'}`),
                                     })
                                 }
                                 // innerRef={formRef}
@@ -494,8 +574,15 @@ const Myaccount: FC = () => {
                                             value={values.password} /><span 
                                             onClick={() => setShowPassword(() => !showPassword) }
                                              className="show-password-input"></span></span>
+
+                                        {
+                                            checkPasswordStrength(values.password) && <div 
+                                            className={`woocommerce-password-strength `} style={ getPasswordFeedbackStyle(checkPasswordStrength(values.password)) } 
+                                            aria-live="polite">{ checkPasswordStrength(values.password) }{ ( checkPasswordStrength(values.password) === 'Weak' || checkPasswordStrength(values.password) === 'Medium'  ) && '- Please enter a stronger password.'  }</div>
+                                        }
+                                        
                                         { errors.password && touched.password && errors.password && 
-                                            <small id="validationServer05Feedback" className="invalid-feedback">
+                                            <small id="validationServer05Feedback" >
                                                 { errors.password && touched.password && errors.password }
                                             </small> 
                                         }

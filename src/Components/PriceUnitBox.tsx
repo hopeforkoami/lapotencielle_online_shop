@@ -15,7 +15,8 @@ import axios from 'axios';
 //Props interface
 interface PriceUnitBoxProps {
     product: any,
-    productListLength: number
+    productListLength: number,
+    anmimated?: boolean 
 } 
 
 const PriceUnitBox: FC<{ price: any }> = ( { price} ) => {
@@ -183,7 +184,7 @@ const PriceUnitBox: FC<{ price: any }> = ( { price} ) => {
         [price]
     )
     return ( 
-        <>{ unit } {numberWithCommas(priceCopy)}</>
+        <><b style={{ fontSize: "15px" }}>{ unit === '$' || unit === 'USD' ? "USD : $" : unit }</b> {numberWithCommas(priceCopy)}</>
     ); 
 }
 
