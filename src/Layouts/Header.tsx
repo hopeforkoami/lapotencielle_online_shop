@@ -26,6 +26,8 @@ const Header: FC<{  }> = (  ) => {
     const user = useAppSelector((state: RootState) => state.users.user );
     const unit = useAppSelector((state: RootState) => state.units.unit );
 
+    const currentRoutes = useAppSelector((state: RootState) => state.routes.currentRoute );
+
     const allService = new AllService();
 
     let [ currency, setCurrency ] = useState('USD')
@@ -637,9 +639,16 @@ const Header: FC<{  }> = (  ) => {
                       </div>
                   
                                       <nav>
+                                      {/* current-menu-ancestor current-menu-parent current_page_parent  */}
         <ul className="sf-menu">
-            <li id="menu-item-475" className="menu-item-custom columns menu-item menu-item-type-custom 
-            menu-item-object-custom menu-item-has-children nectar-regular-menu-item megamenu nectar-megamenu-menu-item align-left width-100 sf-with-ul menu-item-475">
+            <li id="menu-item-475" className={`menu-item-custom columns menu-item menu-item-type-custom 
+            menu-item-object-custom menu-item-has-children 
+            nectar-regular-menu-item megamenu nectar-megamenu-menu-item 
+            align-left width-100 sf-with-ul menu-item-475
+             ${ currentRoutes.includes('orange') || currentRoutes.includes('lavender') 
+                || currentRoutes.includes('accessories') 
+                || currentRoutes.includes('collection') ? 'current_page_ancestor' : ''
+            }`}>
             <Link to="/products/OUR COLLECTION/collection"><span className="menu-title-text">
             OUR COLLECTION</span><span className="sf-sub-indicator"><i className="fa fa-angle-down icon-in-menu" aria-hidden="true"></i>
             </span></Link>
@@ -670,7 +679,12 @@ const Header: FC<{  }> = (  ) => {
             </li>
         </ul>
     </li>
-  <li id="menu-item-508" className="menu-item-custom text_center menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children nectar-regular-menu-item megamenu nectar-megamenu-menu-item align-left width-100 sf-with-ul menu-item-508">
+  <li id="menu-item-508" className={`menu-item-custom text_center menu-item menu-item-type-post_type 
+  menu-item-object-page menu-item-has-children nectar-regular-menu-item megamenu nectar-megamenu-menu-item 
+  align-left width-100 sf-with-ul menu-item-508 ${ currentRoutes.includes('bath') || 
+    currentRoutes.includes('body') 
+    || currentRoutes.includes('duo') ? 'current_page_ancestor' : ''
+}`}>
 <Link to="/products/BATH-AND-BODY/bath" >
     <span className="menu-title-text">BATH AND BODY</span><span className="sf-sub-indicator">
         <i className="fa fa-angle-down icon-in-menu" aria-hidden="true"></i></span></Link>
@@ -688,7 +702,11 @@ const Header: FC<{  }> = (  ) => {
   </div></Link></li>
   </ul>
   </li>
-  <li id="menu-item-519" className="menu-item-custom menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children nectar-regular-menu-item megamenu nectar-megamenu-menu-item align-left width-100 sf-with-ul menu-item-519">
+  <li id="menu-item-519" className={`menu-item-custom menu-item menu-item-type-post_type menu-item-object-page
+   menu-item-has-children nectar-regular-menu-item megamenu nectar-megamenu-menu-item align-left
+    width-100 sf-with-ul menu-item-519 ${ 
+        currentRoutes.includes('polish') || currentRoutes.includes('spa')  ? 'current_page_ancestor' : ''
+    }`}>
   <Link to="/products/HOME-SPA/spa" >
     <span className="menu-title-text">HOME SPA</span><span className="sf-sub-indicator"><i className="fa fa-angle-down icon-in-menu" aria-hidden="true"></i></span></Link>
   <ul className="sub-menu">
@@ -705,7 +723,12 @@ const Header: FC<{  }> = (  ) => {
   </div></Link></li>
   </ul>
   </li>
-  <li id="menu-item-525" className="menu-item-custom menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children nectar-regular-menu-item megamenu nectar-megamenu-menu-item align-left width-100 sf-with-ul menu-item-525">
+  <li id="menu-item-525" className={`menu-item-custom menu-item menu-item-type-post_type menu-item-object-page
+   menu-item-has-children nectar-regular-menu-item megamenu nectar-megamenu-menu-item align-left width-100
+    sf-with-ul menu-item-525 ${ 
+        currentRoutes.includes('gifts sets') || currentRoutes.includes('gifts') || currentRoutes.includes('sets') 
+        ? 'current_page_ancestor' : ''
+    }`}>
   <Link to="/products/GIFTS-AND-SETS/gifts sets" ><span className="menu-title-text">GIFTS &#038; SETS</span><span className="sf-sub-indicator"><i className="fa fa-angle-down icon-in-menu" aria-hidden="true"></i></span></Link>
   <ul className="sub-menu">
       <li id="menu-item-528" className="text_center_txt menu-item menu-item-type-post_type menu-item-object-page nectar-regular-menu-item megamenu-column-width-40 megamenu-column-padding-default menu-item-528">
@@ -722,7 +745,10 @@ const Header: FC<{  }> = (  ) => {
   </div></Link></li>
   </ul>
   </li>
-  <li id="menu-item-531" className="menu-item-custom menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children nectar-regular-menu-item megamenu nectar-megamenu-menu-item align-left width-100 sf-with-ul menu-item-531">
+  <li id="menu-item-531" className={`menu-item-custom menu-item menu-item-type-post_type menu-item-object-page
+   menu-item-has-children nectar-regular-menu-item megamenu nectar-megamenu-menu-item align-left width-100
+    sf-with-ul menu-item-531 ${ currentRoutes.includes('body care') || currentRoutes.includes('care') || currentRoutes.includes('body') ? 'current_page_ancestor' : ''
+    }`}>
   <Link to="/products/BODY-CARE/body care">
     <span className="menu-title-text">BODY CARE</span><span className="sf-sub-indicator"><i className="fa fa-angle-down icon-in-menu" aria-hidden="true"></i></span></Link>
   <ul className="sub-menu">
@@ -749,7 +775,9 @@ const Header: FC<{  }> = (  ) => {
   </div></Link></li>
   </ul>
   </li>
-  <li id="menu-item-572" className="menu-item-custom menu-item menu-item-type-post_type menu-item-object-page nectar-regular-menu-item menu-item-33">
+  <li id="menu-item-572" className={`menu-item-custom menu-item menu-item-type-post_type menu-item-object-page
+   nectar-regular-menu-item menu-item-33 ${ currentRoutes.includes('facial care') ? 'current_page_ancestor' : ''
+    }`}>
   <Link to="/products/FACIAL-CARE/facial care" >
     <span className="menu-title-text">FACIAL CARE</span>
   {/* <span className="sf-sub-indicator"><i className="fa fa-angle-down icon-in-menu" aria-hidden="true"></i></span> */}
@@ -783,14 +811,20 @@ const Header: FC<{  }> = (  ) => {
   </div></Link></li>
   </ul> */}
   </li>
-  <li id="menu-item-33" className="menu-item-custom menu-item menu-item-type-post_type menu-item-object-page nectar-regular-menu-item menu-item-33">
+  <li id="menu-item-33" className={`menu-item-custom menu-item menu-item-type-post_type menu-item-object-page 
+  nectar-regular-menu-item menu-item-33 ${ currentRoutes.includes('hair') ? 'current_page_ancestor' : ''
+  } `}>
   <Link to="/products/HAIR-CARE/hair"><span className="menu-title-text">HAIR CARE</span></Link></li>
-  <li id="menu-item-27" className="menu-item-custom menu-item menu-item-type-post_type menu-item-object-page nectar-regular-menu-item menu-item-27">
+  <li id="menu-item-27" className={`menu-item-custom menu-item menu-item-type-post_type menu-item-object-page
+   nectar-regular-menu-item menu-item-27 ${ currentRoutes.includes('about') ? 'current_page_ancestor' : ''
+   }`}>
     <Link to="/about">
         <span className="menu-title-text">ABOUT US</span>
     </Link>
     </li>
-  <li id="menu-item-30" className="menu-item-custom menu-item menu-item-type-post_type menu-item-object-page nectar-regular-menu-item menu-item-30">
+  <li id="menu-item-30" className={`menu-item-custom menu-item menu-item-type-post_type menu-item-object-page
+   nectar-regular-menu-item menu-item-30 ${ currentRoutes.includes('contact') ? 'current_page_ancestor' : ''
+   }`}>
     <Link to="/contact">
         <span className="menu-title-text">CONTACT</span>
     </Link>

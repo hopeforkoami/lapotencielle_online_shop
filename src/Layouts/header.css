@@ -116,3 +116,7 @@ iframe {
     transition: all 0.25s ease 0s;
     margin: 2px;
 } 
+
+#header-outer:not(.transparent) li.menu-item-475 > a:hover > .menu-title-text, #header-outer:not(.transparent) li.menu-item-475[class*="current"] > a > .menu-title-text {
+  color: #0a0a0a !important;
+}
