@@ -15,10 +15,10 @@ import { setUnit } from '../Redux/Reducers/productPriceReducer';
 import '../country-flags-master/dist/country-flag.css'
 import AllService from '../Pages/service';
 import PriceUnitBox from '../Components/PriceUnitBox';
-import { removeProduct } from '../Redux/Reducers/storeReducer';
+import { deleteBasketProduct, getBasketContents, removeProduct } from '../Redux/Reducers/storeReducer';
 const CountryFlag = require( '../country-flags-master/dist/country-flag.js');
 
-var countries        = require('country-data-list').countries ;
+var countries = require('country-data-list').countries ;
 
 const Header: FC<{  }> = (  ) => { 
 
@@ -82,6 +82,11 @@ const Header: FC<{  }> = (  ) => {
 
     useEffect(() => { 
 
+        dispatch( getBasketContents({ 
+            dispatch: dispatch,
+            navigate: navigate
+        }));
+
         getStoreTotal();
         
         let serach_input = window.document.getElementById('630b971a47893');
@@ -108,6 +113,8 @@ const Header: FC<{  }> = (  ) => {
               .catch(function (error: any) {
                 console.log(error); 
             });
+           } else {
+            setProductSearchResults((d) => ([]));
            }
             
            
@@ -173,6 +180,47 @@ const Header: FC<{  }> = (  ) => {
                 }
             } 
 
+            const subMenus = document.querySelectorAll('ul.sub-menu li');
+
+            for(var i =0; i <= (subMenus.length - 1); i++) {
+
+                console.log(subMenus[i]);
+
+                subMenus[i].addEventListener("click", (event: any) => {
+                    console.log("Menu is clicked");
+                    let htmlEl = event.target.parentElement;
+
+                    // classList.contains('menu-title-text')
+
+                    while( !( htmlEl.classList.contains('menu-item-custom') ) ) {
+                        htmlEl = htmlEl.parentElement;
+                    }
+
+                    console.log(htmlEl);
+                    console.log(htmlEl.querySelector('.sub-menu'));
+
+                    htmlEl.querySelector('.sub-menu').style.display = 'none'; 
+
+                });
+                
+            }
+
+            const mainMenus = document.querySelectorAll('.menu-item-custom');
+
+            for(var i =0; i <= (mainMenus.length - 1); i++) {
+
+                console.log(mainMenus[i]);
+
+                mainMenus[i].addEventListener("mouseover", (event: any) => {
+                    console.log("Menu over");
+                    let htmlEl = event.target.parentElement; 
+
+                    htmlEl.querySelector('.sub-menu').style.display = ''; 
+
+                });
+                
+            }
+
         };
 
     }, []);
@@ -229,7 +277,8 @@ const Header: FC<{  }> = (  ) => {
         return (      
             < > 
     <div id="header-outer" data-has-menu="true" data-has-buttons="yes" data-header-button_style="default" data-using-pr-menu="false" data-mobile-fixed="1" data-ptnm="false" data-lhe="animated_underline" data-user-set-bg="#ffffff" data-format="centered-menu-bottom-bar" data-menu-bottom-bar-align="center" data-permanent-transparent="false" data-megamenu-rt="1" data-remove-fixed="1" data-header-resize="0" data-cart="true" data-transparency-option="0" data-box-shadow="large" data-shrink-num="6" data-using-secondary="0" data-using-logo="1" data-logo-height="100" data-m-logo-height="70" data-padding="28" data-full-width="true" data-condense="false">
-        { productSearchResults.length > 0 && <div id="aws-search-result-1" className="aws-search-result" style={{ width: '289px', top: '104px', left: '20px' }}>
+        { productSearchResults.length > 0 && <div   className="aws-search-result"
+         style={{ width: '289px', top: '104px', left: '20px' }}>
                     <ul>
                         {
                            productSearchResults.map(
@@ -237,7 +286,7 @@ const Header: FC<{  }> = (  ) => {
                             <div className="aws_result_link">
                                 {/* <a  
                             href="https://www.lapotencielle.com/product/organic-light-whipped-body-butter-coco-mousse/"> */}
-                                <Link className="aws_result_link_top" to={ '/product/' + prd?.id } >
+                                <Link onClick={() => {  setProductSearchResults((d) => ([])); }} className="aws_result_link_top" to={ '/product/' + prd?.id } >
                                 {prd?.fullName}</Link><span className="aws_result_image">
                                     <img src={'https://lapotnewapi2files.nogdevhouse.com/images/products/'+prd?.image} /></span>
                             <span className="aws_result_content">
@@ -495,7 +544,7 @@ const Header: FC<{  }> = (  ) => {
                                 <div id="cartDropdown" className="cartDropdown-content">
                                 <div className="widget"  >
                                     <h5> <b>Cart</b> </h5>
-                                { store.products.length > 0 ? <div className="">
+                                { store.loading ? <b>Loading</b> : store.products.length > 0  ? <div className="">
 
                 <ul style={{ width: "100%" }} className="woocommerce-mini-cart cart_list product_list_widget " >
                     {
@@ -503,7 +552,14 @@ const Header: FC<{  }> = (  ) => {
                             (row: any) => <li style={{ width: "100%" }} className="woocommerce-mini-cart-item mini_cart_item">
                                 <span onClick={(event: any) => {
                                     event.preventDefault();
-                                    dispatch( removeProduct( row ) );
+                                    // dispatch( removeProduct( row ) );
+
+                                    dispatch( deleteBasketProduct({ 
+                                        idLigne: Number(row.contentLine),
+                                        dispatch: dispatch,
+                                        navigate: navigate
+                                    })  )
+
                                 }} style={{ position: 'absolute', left: '1px', top: '1px', cursor: 'pointer', fontSize: '20px' }} 
                                 className="remove remove_from_cart_button" aria-label="Remove this item">×</span>											
                                 <Link to={ '/product/' + row.product.id } >
@@ -582,7 +638,8 @@ const Header: FC<{  }> = (  ) => {
                   
                                       <nav>
         <ul className="sf-menu">
-            <li id="menu-item-475" className="columns menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children nectar-regular-menu-item megamenu nectar-megamenu-menu-item align-left width-100 sf-with-ul menu-item-475">
+            <li id="menu-item-475" className="menu-item-custom columns menu-item menu-item-type-custom 
+            menu-item-object-custom menu-item-has-children nectar-regular-menu-item megamenu nectar-megamenu-menu-item align-left width-100 sf-with-ul menu-item-475">
             <Link to="/products/OUR COLLECTION/collection"><span className="menu-title-text">
             OUR COLLECTION</span><span className="sf-sub-indicator"><i className="fa fa-angle-down icon-in-menu" aria-hidden="true"></i>
             </span></Link>
@@ -613,7 +670,7 @@ const Header: FC<{  }> = (  ) => {
             </li>
         </ul>
     </li>
-  <li id="menu-item-508" className="text_center menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children nectar-regular-menu-item megamenu nectar-megamenu-menu-item align-left width-100 sf-with-ul menu-item-508">
+  <li id="menu-item-508" className="menu-item-custom text_center menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children nectar-regular-menu-item megamenu nectar-megamenu-menu-item align-left width-100 sf-with-ul menu-item-508">
 <Link to="/products/BATH-AND-BODY/bath" >
     <span className="menu-title-text">BATH AND BODY</span><span className="sf-sub-indicator">
         <i className="fa fa-angle-down icon-in-menu" aria-hidden="true"></i></span></Link>
@@ -631,7 +688,7 @@ const Header: FC<{  }> = (  ) => {
   </div></Link></li>
   </ul>
   </li>
-  <li id="menu-item-519" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children nectar-regular-menu-item megamenu nectar-megamenu-menu-item align-left width-100 sf-with-ul menu-item-519">
+  <li id="menu-item-519" className="menu-item-custom menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children nectar-regular-menu-item megamenu nectar-megamenu-menu-item align-left width-100 sf-with-ul menu-item-519">
   <Link to="/products/HOME-SPA/spa" >
     <span className="menu-title-text">HOME SPA</span><span className="sf-sub-indicator"><i className="fa fa-angle-down icon-in-menu" aria-hidden="true"></i></span></Link>
   <ul className="sub-menu">
@@ -648,7 +705,7 @@ const Header: FC<{  }> = (  ) => {
   </div></Link></li>
   </ul>
   </li>
-  <li id="menu-item-525" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children nectar-regular-menu-item megamenu nectar-megamenu-menu-item align-left width-100 sf-with-ul menu-item-525">
+  <li id="menu-item-525" className="menu-item-custom menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children nectar-regular-menu-item megamenu nectar-megamenu-menu-item align-left width-100 sf-with-ul menu-item-525">
   <Link to="/products/GIFTS-AND-SETS/gifts sets" ><span className="menu-title-text">GIFTS &#038; SETS</span><span className="sf-sub-indicator"><i className="fa fa-angle-down icon-in-menu" aria-hidden="true"></i></span></Link>
   <ul className="sub-menu">
       <li id="menu-item-528" className="text_center_txt menu-item menu-item-type-post_type menu-item-object-page nectar-regular-menu-item megamenu-column-width-40 megamenu-column-padding-default menu-item-528">
@@ -665,7 +722,7 @@ const Header: FC<{  }> = (  ) => {
   </div></Link></li>
   </ul>
   </li>
-  <li id="menu-item-531" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children nectar-regular-menu-item megamenu nectar-megamenu-menu-item align-left width-100 sf-with-ul menu-item-531">
+  <li id="menu-item-531" className="menu-item-custom menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children nectar-regular-menu-item megamenu nectar-megamenu-menu-item align-left width-100 sf-with-ul menu-item-531">
   <Link to="/products/BODY-CARE/body care">
     <span className="menu-title-text">BODY CARE</span><span className="sf-sub-indicator"><i className="fa fa-angle-down icon-in-menu" aria-hidden="true"></i></span></Link>
   <ul className="sub-menu">
@@ -692,7 +749,7 @@ const Header: FC<{  }> = (  ) => {
   </div></Link></li>
   </ul>
   </li>
-  <li id="menu-item-572" className="menu-item menu-item-type-post_type menu-item-object-page nectar-regular-menu-item menu-item-33">
+  <li id="menu-item-572" className="menu-item-custom menu-item menu-item-type-post_type menu-item-object-page nectar-regular-menu-item menu-item-33">
   <Link to="/products/FACIAL-CARE/facial care" >
     <span className="menu-title-text">FACIAL CARE</span>
   {/* <span className="sf-sub-indicator"><i className="fa fa-angle-down icon-in-menu" aria-hidden="true"></i></span> */}
@@ -726,14 +783,14 @@ const Header: FC<{  }> = (  ) => {
   </div></Link></li>
   </ul> */}
   </li>
-  <li id="menu-item-33" className="menu-item menu-item-type-post_type menu-item-object-page nectar-regular-menu-item menu-item-33">
+  <li id="menu-item-33" className="menu-item-custom menu-item menu-item-type-post_type menu-item-object-page nectar-regular-menu-item menu-item-33">
   <Link to="/products/HAIR-CARE/hair"><span className="menu-title-text">HAIR CARE</span></Link></li>
-  <li id="menu-item-27" className="menu-item menu-item-type-post_type menu-item-object-page nectar-regular-menu-item menu-item-27">
+  <li id="menu-item-27" className="menu-item-custom menu-item menu-item-type-post_type menu-item-object-page nectar-regular-menu-item menu-item-27">
     <Link to="/about">
         <span className="menu-title-text">ABOUT US</span>
     </Link>
     </li>
-  <li id="menu-item-30" className="menu-item menu-item-type-post_type menu-item-object-page nectar-regular-menu-item menu-item-30">
+  <li id="menu-item-30" className="menu-item-custom menu-item menu-item-type-post_type menu-item-object-page nectar-regular-menu-item menu-item-30">
     <Link to="/contact">
         <span className="menu-title-text">CONTACT</span>
     </Link>

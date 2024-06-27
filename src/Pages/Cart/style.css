@@ -5,7 +5,7 @@
 }
 
 .input-error {
-    border: 1px red solid;
+    border: 1px red solid !important;
 }
 
 .invalid-feedback{
@@ -24,4 +24,4 @@
     -webkit-transition: background-size 0.55s cubic-bezier(.2,.75,.5,1);
     transition: background-size 0.55s cubic-bezier(.2,.75,.5,1);
     background-position: left bottom;
-}
+} 

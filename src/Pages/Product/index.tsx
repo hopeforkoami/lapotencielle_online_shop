@@ -17,7 +17,7 @@ import { Formik, Field, Form, FormikProps } from 'formik'
 import * as yup from 'yup';
 
 import { useAppDispatch, useAppSelector } from '../../Hooks/customSelector';
-import { addProduct } from '../../Redux/Reducers/storeReducer';
+import { addProduct, addProductToBasket } from '../../Redux/Reducers/storeReducer';
 import Footer from '../../Layouts/Footer';
 import { RootState } from '../../Redux/store';
 
@@ -249,10 +249,17 @@ const Product: FC = () => {
                 if (values.acceptTerms) {
 
                     if (values.productQty >= 1) {
-                        dispatch( addProduct( { product: product, qty: values.productQty } ) );
-                        navigate('/cart');
+                        // addProduct( { product: product, qty: values.productQty } ) 
+                        dispatch( addProductToBasket({
+                            idClient: user?.id,
+                            product: product,
+                            qty: Number(values.productQty),
+                            dispatch: dispatch,
+                            navigate: navigate
+                        }) );
+                        
                     } else {
-
+                        alert("At least one product must be 1");
                     }
 
                 } else {
@@ -328,7 +335,11 @@ const Product: FC = () => {
                         </div>
                     <br />
                     <button type="submit" name="add-to-cart" value="278"
-                    className="single_add_to_cart_button button alt">Add to cart</button>
+                    className="single_add_to_cart_button button alt">Add to cart
+                        { 
+                            store.loading && <i className="fa fa-circle-o-notch fa-spin fa-1x fa-fw"></i>
+                        }
+                    </button>
 
                 {/* </form> */}
             </Form>
@@ -346,6 +357,8 @@ const Product: FC = () => {
 	</div>
 
 	</div>
+    <br/>
+    <br/>
     <div className="after-product-summary-clear"></div>
     <Tabs selectedTabClassName={'tab-active'} >
         <TabList className={'tab-list'} >

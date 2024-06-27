@@ -15,7 +15,7 @@ import { Formik, Field, Form, FormikProps } from 'formik'
 import * as yup from 'yup';
 
 import { useAppDispatch, useAppSelector } from '../../Hooks/customSelector';
-import { addProduct, removeProduct, updateProductQty, updateProducts, setShippingCosts, setReductions, setCurrentShippingAddress } from '../../Redux/Reducers/storeReducer';
+import { addProduct, removeProduct, updateProductQty, updateProducts, setShippingCosts, setReductions, setCurrentShippingAddress, getBasketContents, deleteBasketProduct, addProductToBasket } from '../../Redux/Reducers/storeReducer';
 import Footer from '../../Layouts/Footer';
 import { RootState } from '../../Redux/store';
 import PriceUnitBox from '../../Components/PriceUnitBox';
@@ -99,6 +99,12 @@ const Cart: FC = () => {
         window.onload = function() { 
             setShowShppingForm(true);
         }
+
+        dispatch( getBasketContents({ 
+            dispatch: dispatch,
+            navigate: navigate
+        }));
+
     }, []);
 
     useEffect(() => {   
@@ -148,7 +154,16 @@ const Cart: FC = () => {
                                     qty = qty - 1;
                                 } 
                                
-                                dispatch( updateProductQty( { product: row.product, qty: qty } ) );
+                                // dispatch( updateProductQty( { product: row.product, qty: qty } ) );
+
+                                dispatch( addProductToBasket({
+                                    idClient: user?.id,
+                                    product: row.product,
+                                    qty: Number(qty),
+                                    dispatch: dispatch,
+                                    navigate: navigate,
+                                    navigateTo: false
+                                }) );
                                 
                             }} className='store-minus' style={ { backgroundColor: 'white', margin: '10px',
                              width: '25px', height: '25px', color: "black", border: '1px black solid',
@@ -162,7 +177,16 @@ const Cart: FC = () => {
                                 var qty = row.qty; 
                                 qty = qty + 1; 
                                
-                                dispatch( updateProductQty( { product: row.product, qty: qty } ) );
+                                // dispatch( updateProductQty( { product: row.product, qty: qty } ) );
+
+                                dispatch( addProductToBasket({
+                                    idClient: user?.id,
+                                    product: row.product,
+                                    qty: Number(qty),
+                                    dispatch: dispatch,
+                                    navigate: navigate,
+                                    navigateTo: false
+                                }) );
                                 
                             }} className='store-plus' style={ { backgroundColor: 'white', margin: '10px',
                              width: '25px', height: '25px', color: "black", cursor: 'pointer',
@@ -184,7 +208,11 @@ const Cart: FC = () => {
             selector: (row: any) => <>
 
                     <i onClick={() => {
-                        dispatch( removeProduct( row ) )
+                        dispatch( deleteBasketProduct({ 
+                            idLigne: Number(row.contentLine),
+                            dispatch: dispatch,
+                            navigate: navigate
+                        })  )
                     }}  className="fa fa-times" aria-hidden="true"></i>
             
                 </>
@@ -233,7 +261,7 @@ const Cart: FC = () => {
                                             className="table table-striped table-bordered"
                                             columns={columns}
                                             data={ store.products }
-                                            progressPending={loading}
+                                            progressPending={store.loading}
                                             pagination
                                         />  
 
@@ -285,19 +313,20 @@ const Cart: FC = () => {
                                     {({ dirty, errors, touched, isValid, handleChange, handleBlur, handleSubmit, values }) => (
                                     <Form  >
 
-<div className="coupon">
-							<label htmlFor="coupon_code">Coupon:</label> 
-                            <input type="text" name="coupon_code" 
-                            id="coupon_code" placeholder="Coupon code" className={`input-text ${ errors.promoCode && touched.promoCode ? "input-format-error":""}`}
-                             autoComplete="promoCode" 
-                                onChange={handleChange('promoCode')}
-                                    onBlur={handleBlur('promoCode')}
-                                        value={values.promoCode ?? ''} />
-                             <button type="submit" className="button" name="apply_coupon" 
-                             value="Apply coupon">{
-                                loadReduction && <i className="fas fa-spinner fa-spin"></i>
-                             } Apply coupon</button>
-													</div>
+                                        <div className="coupon">
+                                            <label htmlFor="coupon_code">Coupon:</label> 
+                                            <input type="text" name="coupon_code" 
+                                            id="coupon_code" placeholder="Coupon code" className={`input-text 
+                                                ${ errors.promoCode && touched.promoCode ? "input-error":""}`}
+                                            autoComplete="promoCode" 
+                                                onChange={handleChange('promoCode')}
+                                                    onBlur={handleBlur('promoCode')}
+                                                        value={values.promoCode ?? ''} />
+                                            <button type="submit" className="button" name="apply_coupon" 
+                                            value="Apply coupon">{
+                                                loadReduction && <i className="fas fa-spinner fa-spin"></i>
+                                            } Apply coupon</button>
+                                        </div>
 
                                     </Form>
                                     )}
@@ -711,7 +740,7 @@ const Cart: FC = () => {
                             <div className="wc-proceed-to-checkout">
                         <button onClick={() => {
 
-                            if (user !== null && user !== undefined) {
+                            // if (user !== null && user !== undefined) {
 
                                 if (storeTotal > 0) {
 
@@ -757,12 +786,15 @@ const Cart: FC = () => {
                                     alert("An error occured, if error persist please try to reload the page"); 
                                 }
  
-                            } else {
-                                alert("Please, you must login first");
-                                navigate('/myaccount');
-                            }
+                            // } else {
+                            //     alert("Please, you must login first");
+                            //     navigate('/myaccount');
+                            // }
 
-                        }} className="checkout-button button alt wc-forward"  disabled={ storeTotal === 0 || shippingCost === 0 } >
+                        }} className="checkout-button button alt wc-forward" style={{
+                            backgroundColor: 'black !important'
+                        }}  disabled={ storeTotal === 0 ||
+                         shippingCost === 0 } >
                             Proceed to checkout  
                                {
                                 loading && <i className="fa fa-circle-o-notch fa-spin fa-1x fa-fw"></i>
@@ -771,11 +803,15 @@ const Cart: FC = () => {
 
                         {
                             user !== null ? <></> :
-                            <Link to="/myaccount" className="checkout-button button alt wc-forward">
+                            <Link style={{
+                                backgroundColor: 'black !important'
+                            }} to="/myaccount" className="checkout-button button alt wc-forward">
                             Sign Up / Login</Link>
                         }
                         
-                        <Link to="/products/OUR-ORANGE-AND-VANILLA-PRODUCTS/orange" className="checkout-button button alt wc-forward">
+                        <Link style={{
+                            backgroundColor: 'black !important'
+                        }} to="/products/OUR-ORANGE-AND-VANILLA-PRODUCTS/orange" className="checkout-button button alt wc-forward">
                             Continue Shopping</Link>	</div>
                             
                             </div>

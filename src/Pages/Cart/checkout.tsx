@@ -23,8 +23,6 @@ import { RootState } from '../../Redux/store';
 
 import { PayPalScriptProvider, PayPalButtons, usePayPalHostedFields, usePayPalScriptReducer } from "@paypal/react-paypal-js";
 
- 
-
 import PriceUnitBox from '../../Components/PriceUnitBox';
 
 var countries = require('country-data-list').countries ;
@@ -184,7 +182,10 @@ const Checkout: FC = () => {
                 checkOutDataFormRef.current.values.deliveryState = shippingAddress?.state;
                 checkOutDataFormRef.current.values.deliveryZip = shippingAddress?.postalCode;  
                 checkOutDataFormRef.current.values.deliveryAdrLine1 = shippingAddress?.addressLine1;
+                console.log(checkOutDataFormRef.current.values);
             }
+
+            
 
         } else {
             if (checkOutDataFormRef.current !== null) {
@@ -474,7 +475,13 @@ const Checkout: FC = () => {
                          
                         alert(`${name} Votre commande a été bien enrégistrée.`);
 
-                        navigate('/client/orders');
+                        if ( user !== null && user !== undefined) {
+                            navigate('/client/orders');
+                        } else {
+                            navigate('/');
+                        }
+
+                        
 
                     })
                     .catch(function (error: any) {
@@ -568,13 +575,13 @@ const Checkout: FC = () => {
 </form> */}
 
 <div className="woocommerce-notices-wrapper"></div>
-{  user !== null && user !== undefined ?
+{/* {  user !== null && user !== undefined ? */}
 <Formik
                                 initialValues={ 
                                     {
                                         idVente: store?.basketId,
-                                        firstname: user?.prenomClient,
-                                        lastname: user?.nomClient,
+                                        firstname: user !== null ? user?.prenomClient : '',
+                                        lastname: user !== null ? user?.nomClient : '',
                                         deliveryCountry: '', 
                                         deliveryCity: '', 
                                         deliveryState: '', 
@@ -593,14 +600,29 @@ const Checkout: FC = () => {
                                         taxesFees: '', 
                                         reductionMontant: '', 
                                         promoCode: '',
-                                        email: user?.emailClient,
-                                        phone: user?.contactClient,
+                                        email: user !== null ? user?.emailClient : '',
+                                        phone: user !== null ? user?.contactClient : '',
                                         company: '',
                                         sameAddressShippingAndBilling: 'false'
                                 }}
 
                                 validationSchema={
-                                    yup.object().shape({ 
+                                    yup.object().shape({
+                                        company: yup 
+                                            .string(),
+                                        lastname: yup 
+                                            .string()
+                                            .required('This field is required'), 
+                                        firstname: yup 
+                                            .string()
+                                            .required('This field is required'), 
+                                        email: yup 
+                                            .string()
+                                            .email("Email not valid")
+                                            .required('This field is required'), 
+                                        phone: yup 
+                                            .string()
+                                            .required('This field is required'),
                                         deliveryCountry: yup 
                                             .string()
                                             .required('This field is required'),
@@ -667,6 +689,71 @@ const Checkout: FC = () => {
              onBlur={handleBlur('company')}
              value={values.company}  autoComplete="organization" /></span>
         </p>
+
+        <p className="form-row form-row-wide address-field update_totals_on_change 
+        validate-required  " id="billing_country_field" data-priority="40">
+            <label htmlFor="billing_country" className="">Country / Region&nbsp;
+                <abbr className="required" title="required">*</abbr></label>
+                <span className="woocommerce-input-wrapper">
+                    <select name="billing_country" id="billing_country" 
+                    className="country_to_state country_select select2-hidden-accessible" 
+                    autoComplete="country" data-placeholder="Select a country / region…" data-label="Country / Region" 
+                    tabIndex={-1} aria-hidden="true">
+                        <option value="">Select a country / region…</option>
+                        {
+                            countries !== null ? countries.all.map((c:any, index: number) => 
+                            <option key={index} value={ c.alpha2  } 
+                             label={c.name}>
+                                         {c.name}
+                            </option>)
+                            : <></>
+                        }
+                        {/* <option value="AF">Afghanistan</option> */}
+                        </select>
+                <span className="select2 select2-container select2-container--default" dir="ltr"
+                 style={{ width: '100%' }}><span className="selection">
+                    <span className="select2-selection select2-selection--single" aria-haspopup="true" 
+                    aria-expanded="false" tabIndex={0} aria-label="Country / Region" role="combobox">
+                {/* <span className="select2-selection__rendered" id="select2-billing_country-container" 
+                role="textbox" aria-readonly="true" title="Togo">Togo</span> */}
+                <span className="select2-selection__arrow" role="presentation"><b role="presentation"></b>
+                </span></span></span><span className="dropdown-wrapper" aria-hidden="true"></span></span>
+                <noscript><button type="submit" name="woocommerce_checkout_update_totals" 
+                value="Update country / region">Update country / region</button></noscript></span>
+        </p>
+
+        <p className="form-row address-field validate-required form-row-wide" 
+            id="billing_address_1_field" data-priority="50">
+            <label htmlFor="billing_address_1" className="">Street address&nbsp;<abbr 
+            className="required" title="required">*</abbr>
+            </label>
+            <span className="woocommerce-input-wrapper">
+            <input type="text" className="input-text " name="billing_address_1" id="billing_address_1"
+            placeholder="House number and street name"   /></span>
+        </p>
+
+        <p className="form-row address-field form-row-wide" id="billing_address_2_field" data-priority="60">
+            <label htmlFor="billing_address_2" className="screen-reader-text">Apartment, suite, unit, etc.&nbsp;
+                <span className="optional">(optional)</span></label><span className="woocommerce-input-wrapper">
+                    <input type="text" className="input-text " name="billing_address_2" 
+                    id="billing_address_2" placeholder="Apartment, suite, unit, etc. (optional)"  /></span>
+        </p>
+
+
+        <p className="form-row address-field validate-required form-row-wide" id="billing_city_field" 
+            data-priority="70" data-o_className="form-row form-row-wide address-field validate-required">
+            <label htmlFor="billing_city" className="">Town / City&nbsp;<abbr 
+            className="required" title="required">*</abbr></label><span className="woocommerce-input-wrapper">
+                <input type="text" className="input-text " name="billing_city" id="billing_city" 
+            placeholder="Town / City" /></span>
+        </p>
+
+        <p className="form-row address-field validate-required validate-postcode form-row-wide" 
+        id="billing_postcode_field" data-priority="90" data-o_className="form-row form-row-wide
+         address-field validate-required validate-postcode">
+            <label htmlFor="billing_postcode" className="">Postcode / ZIP&nbsp;<abbr className="required" title="required">*</abbr></label><span className="woocommerce-input-wrapper"><input type="text" className="input-text " name="billing_postcode" 
+        id="billing_postcode" placeholder="Postcode / ZIP"  
+         /></span></p>
 
         <p className="form-row form-row-wide validate-required validate-phone" id="billing_phone_field" data-priority="100">
             <label htmlFor="billing_phone" className="">Phone&nbsp;<abbr className="required" title="required">*</abbr>
@@ -831,7 +918,7 @@ const Checkout: FC = () => {
                                                     onBlur={handleBlur('deliveryState')} 
                                                         value={values.deliveryState} data-placeholder="State" />
 
-{ errors.deliveryState && touched.deliveryState && errors.deliveryState && 
+                                    { errors.deliveryState && touched.deliveryState && errors.deliveryState && 
                                         <small id="validationServer05Feedback" className="invalid-feedback">
                                             { errors.deliveryState && touched.deliveryState && errors.deliveryState }
                                         </small> 
@@ -1045,15 +1132,27 @@ const Checkout: FC = () => {
 
 	<label htmlFor="payment_method_ppcp-gateway">
 		PayPal 	</label>
+        { ( !isValid  || !storeDetails ) ?
+
+        <div className="wc-proceed-to-checkout">
+            <button onClick={() => {  }} className="checkout-button button alt wc-forward"  >
+                Pay 
+            </button>
+        </div>
+        :
         <PayPalScriptProvider options={{ clientId: "AQnwfOiBDcktqMInwGzwOa8_Yj57L0FmDOOLXydK091A_PVxTDeNs06D7PXfYJxoWz-E6E0lK9Oxnj8b",
             currency: "USD", components: "buttons"  }}> 
-            {/* {usePayPalScriptReducer()[0].isPending ? <i className="fa fa-circle-o-notch fa-spin fa-2x fa-fw"></i>: null} */}
-            <PayPalButtons disabled={( !isValid && !dirty ) || !storeDetails }
+           
+            <PayPalButtons disabled={ (!isValid && !dirty) || !storeDetails } 
                 createOrder={ onCreateOrder }
                 onApprove={ onApproveOrder  }
                 style={{ layout: "horizontal" }}
              /> 
+           
         </PayPalScriptProvider>
+         
+        }
+          
 		<div className="payment_box payment_method_ppcp-gateway">
 			<p  onClick={() => { console.log(values); }} >Pay via PayPal.</p>
 		</div>
@@ -1080,7 +1179,8 @@ const Checkout: FC = () => {
 	
             </Form>
             )}
-        </Formik> : <></> }
+        </Formik> 
+        {/* : <></> } */}
 
 </div>
 	</div>
@@ -1104,9 +1204,7 @@ const Checkout: FC = () => {
       <div className="inner">
         <div className="hover-wrap" style={{ opacity: 1 }} > 
           <div className="hover-wrap-inner img-loaded">
-            <img className="img-with-animation skip-lazy nectar-lazy animated-in loaded" 
-            data-delay="0" height="88" width="350" data-animation="fade-in" 
-            src="https://www.lapotencielle.com/wp-content/uploads/2022/05/paypal-cards-secure-768x193-1.png" alt="Payment Method" sizes="(min-width: 1450px) 75vw, (min-width: 1000px) 85vw, 100vw" srcSet="https://www.lapotencielle.com/wp-content/uploads/2022/05/paypal-cards-secure-768x193-1.png 350w, https://www.lapotencielle.com/wp-content/uploads/2022/05/paypal-cards-secure-768x193-1-300x75.png 300w" />
+          
           </div>
         </div>
       </div>

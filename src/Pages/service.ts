@@ -27,7 +27,7 @@ export default class AllService {
     }
 
     public searchByBarcodeOrName =  async (searchStr: string) => {
-        return await axiosInstance.get(`/product/filter/keyword?keyWord=${searchStr}`);
+        return await axiosInstance.get(`/product/search/keyword?keyWord=${searchStr}`);
     }
 
     public subscribeToNewsletter =  async (data: Record<string, any>) => {

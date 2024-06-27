@@ -6,7 +6,8 @@ import StoreArticle from "../../Models/StoreArticle";
     basketId: number | null,
     reduction: number | null,
     shippingCost: number | null,
-    currentShippingAddress: string | null
+    currentShippingAddress: string | null,
+    loading: boolean 
 }
 
 export interface UserState {
