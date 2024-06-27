@@ -467,7 +467,7 @@ const Header: FC<{  }> = (  ) => {
                               <div className="country_btn">
                                       <div style={{ marginTop:"-7px" }}
                                             className="borderfree bfx_hidden" data-block="borderfree__dropdown">
-                                            <a className="show-btn borderfree__link" >
+                                            <a className="show-btn borderfree__link" style={{ cursor: 'pointer' }}>
                                                 <div id="flag-parent-element"
                                                  className='flag-element'></div><span> { currency } </span>
                                             </a>
