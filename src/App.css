@@ -116,3 +116,12 @@
 #zoid-paypal-message-uid_cb8fb4975b_mja6mjc6mzi > iframe:nth-of-type(2) {
   display: none;
 }
+
+
+html body.page.home.page-template-default div#ajax-content-wrap li.product.type-product a.button.product_type_simple.add_to_cart_button {
+  background-color: black !important;
+}
+
+html body.page.home.page-template-default div#ajax-content-wrap li.product.type-product a.button.product_type_simple.add_to_cart_button: hover {
+  background-color: black !important;
+}

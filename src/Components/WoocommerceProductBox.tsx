@@ -36,7 +36,11 @@ const WoocommerceProductBox: FC<{ product: any, isForKit: Boolean}> = ( {product
                             <Link to={isForKit ? '/kit/' + product.id + '/forkit' : '/product/' + product.id}> { product.fullName } </Link></h2>
                 <span   className="price" >
                     <PriceUnitBox price={product?.pu} /></span> 
-                <Link to={isForKit ? '/kit/' + product.id + '/forkit' : '/product/' + product.id} data-quantity="1" className="button product_type_simple add_to_cart_button ajax_add_to_cart" data-product_id="278" data-product_sku="" aria-label="Add &ldquo;ORANGE &amp; VANILLA LUXURIOUS NATURAL BODY LOTION&rdquo; to your cart" rel="nofollow">Add to cart</Link>
+                <Link to={isForKit ? '/kit/' + product.id + '/forkit' : '/product/' + product.id} 
+                style={{ backgroundColor: 'black !important;' }}
+                data-quantity="1" className="button product_type_simple add_to_cart_button ajax_add_to_cart"
+                 data-product_id="278" data-product_sku="" aria-label="Add &ldquo;ORANGE &amp; 
+                 VANILLA LUXURIOUS NATURAL BODY LOTION&rdquo; to your cart" rel="nofollow">Add to cart</Link>
             </>
         )
 }

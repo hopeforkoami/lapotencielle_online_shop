@@ -188,9 +188,15 @@ const Products: FC = () => {
             case "OUR AGE GRACEFULLY PRODUCTS":
                 return <p>AGE GRACEFULLY is a revolutionary natural and organic luxury collection. Containing rich formulas for facial and body care, designed for people who want to keep their face and body skin healthy and glowing no matter what age they are. Each product in this collection is thoughtfully blended, with a specific natural, organic ingredient that will target each problem of aging-signs in young women and mature women. Because of its composition, this collection works well on any type of skin including, acne-prone, sensitive, and very dry skin. Using the whole AGE GRACEFULLY collection will leave your face and body youthful-looking, bright, well-hydrated, nourished, and will give you that glow that your skin deserves. This line will blow your mind away!</p>;
                 break;
+
+            case "GIFTS AND SETS": 
+                return <p>For your convenience, we put different skincare nourishment sets for you and your loved ones; find the one that meets your skin regime needs for glowing youthful skin throughout the year.</p>;
+                break;
             
-            
-        
+            case "BATH AND BODY":
+                return <p>A simple quick way to pamper and bring the glow out of your skin. These Hydrating natural organics body oils, body cream butters, body soufflé and body polish are put together to revitalize, nourish and brighten any dull and tired skin.</p>;
+                break;
+
             default:
                 return "";
                 break;
