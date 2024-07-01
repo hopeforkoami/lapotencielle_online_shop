@@ -380,12 +380,12 @@ const Checkout: FC = () => {
         return new Promise(async (resolve:(value: string) => any, reject) => {
 
 
-            console.log('Order on creation');
-            const venteInitialize: any = await initializeVente();
-            console.log(venteInitialize);
+            // console.log('Order on creation');
+            // const venteInitialize: any = await initializeVente();
+            // console.log(venteInitialize);
     
-            const addProducts = await addProductToBasket(venteInitialize.data?.data.idVente.toString());
-            console.log(addProducts);
+            // const addProducts = await addProductToBasket(venteInitialize.data?.data.idVente.toString());
+            // console.log(addProducts);
     
             // const paypalOrder = await createPaypalOrder();
     
@@ -397,7 +397,7 @@ const Checkout: FC = () => {
                 shippingState: shippingAddress?.state, 
                 shippingZip: shippingAddress?.postalCode, 
                 shippingAdrLine1: shippingAddress?.addressLine1, 
-                idVente: venteInitialize.data?.data.idVente.toString(),
+                idVente: store.basketId,
                 shippingServiceID: shippingMethod, 
                 paymentMethodID: 3, 
                 shippingFees: shippingCost, 
@@ -464,6 +464,7 @@ const Checkout: FC = () => {
 
                     cartService.payerOrder(data).then(async function (response: any) {
 
+                        window.localStorage.removeItem('_store_basket_id');
                         window.localStorage.removeItem('_store_shipping_cost');
                         window.localStorage.removeItem('_order_id');
                         window.localStorage.removeItem('_store_products');

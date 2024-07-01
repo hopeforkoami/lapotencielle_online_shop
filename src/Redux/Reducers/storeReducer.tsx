@@ -31,7 +31,7 @@ const createBasketId = createAsyncThunk(
 export const addProductToBasket = createAsyncThunk(
   'store/addProductToBasket',
   async (data: {idClient: string, product: any, qty: number, dispatch: any, navigate: any,
-    navigateTo?: boolean 
+     kit?:boolean, navigateTo?: boolean 
    }, thunkAPI) => {
     console.log('Adding product to basket');
 
@@ -39,6 +39,10 @@ export const addProductToBasket = createAsyncThunk(
 
     if (data.navigateTo === undefined) {
       data.navigateTo = true;
+    }
+
+    if (data.kit === undefined) {
+      data.kit = false;
     }
 
     data.dispatch( setStoreLoading(true) );
@@ -51,7 +55,7 @@ export const addProductToBasket = createAsyncThunk(
     console.log(basketId);
     
     if (basketId === null || basketId === '') {
-      const response = await axiosInstance.post('/basket/initialize', {});
+      const response = await axiosInstance.post('/basket/initialize', {idClient: data.idClient});
       data.dispatch( setBasketId( response.data?.data.idVente.toString() ) )
       basketId = response.data?.data.idVente.toString()
     }
@@ -59,7 +63,8 @@ export const addProductToBasket = createAsyncThunk(
     const response = await axiosInstance.post('/basket/addcontent',{
       'idPanier': basketId,
       'idProduit': data.product.id,
-      'qteVente': data.qty
+      'qteVente': data.qty,
+      'kit': data.kit
     });
     console.log(response);
     if (response.data === 'qteInssufisant') {
@@ -106,10 +111,11 @@ export const getBasketContents = createAsyncThunk(
     console.log(basketId);
     
     if (basketId === null || basketId === '') {
+      data.dispatch( setStoreLoading(false) );
       return;
     }
      
-    const response = await axiosInstance.get('/order/details' + `?id=${ basketId }` );
+    const response = await axiosInstance.get('/basket/details' + `?id=${ basketId }` );
     console.log(response);
     if (response.data ) { 
 
@@ -145,17 +151,23 @@ export const getBasketContents = createAsyncThunk(
 // First, create basketId
 export const deleteBasketProduct = createAsyncThunk(
   'store/deleteBasketProduct',
-  async (data: { idLigne: number, dispatch: any, navigate: any }, thunkAPI) => {
+  async (data: { idLigne: number, dispatch: any, navigate: any, kit?:boolean }, thunkAPI) => {
 
-    console.log('Get products from basket');
+    console.log('Delete product from basket');
+
+    if (data.kit === undefined) {
+      data.kit = false;
+    }
 
     console.log(data);
 
     data.dispatch( setStoreLoading(true) ); 
 
     const response = await axiosInstance.post('/basket/deletecontent',
-      { idLigneVente: data.idLigne } );
+      { idLigneVente: data.idLigne, kit: data.kit });
+
     console.log(response);
+    
     if (response.data ) { 
 
       console.log(response);

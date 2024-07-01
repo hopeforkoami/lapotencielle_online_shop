@@ -8,6 +8,8 @@ import productPriceReducer from './Reducers/productPriceReducer';
 // ...
 import routeReducer from './Reducers/routeReducer';
 
+import thunk from 'redux-thunk';
+
 const store = configureStore({
   reducer: { 
     store: storeReducer,

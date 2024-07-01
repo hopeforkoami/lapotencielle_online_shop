@@ -40,7 +40,7 @@ interface RatingReviewFormData {
 
 
 const Product: FC = () => {  
-    let { id } = useParams(); 
+    let { id, forKit } = useParams(); 
     let location = useLocation();
 
     const formRef = useRef< FormikProps< ProductForm >>(null);
@@ -71,14 +71,28 @@ const Product: FC = () => {
 
     const getProduct = (id: any) => {
         setLoading(true);
-		productService.getProduct(  Number(id)  ).then(async function (response: any) {
-            console.log(response);
-            setProduct(response.data);
-            setLoading(false);
-        })
-          .catch(function (error: any) {
-            console.log(error); 
-        });
+        if (forKit !== undefined && forKit !== null) {
+
+            productService.getKit(  Number(id)  ).then(async function (response: any) {
+                console.log(response);
+                setProduct(response.data);
+                setLoading(false);
+            })
+              .catch(function (error: any) {
+                console.log(error); 
+            });
+
+        } else {
+            productService.getProduct(  Number(id)  ).then(async function (response: any) {
+                console.log(response);
+                setProduct(response.data);
+                setLoading(false);
+            })
+              .catch(function (error: any) {
+                console.log(error); 
+            });
+        }
+		
 	}
 
     const getFilterByKeyword = (gamme: string) => {
@@ -107,13 +121,15 @@ const Product: FC = () => {
 
     useEffect(() => {
         if (product !== null ) {
+
             var galerie = [];
+
             galerie.push({
                 original: Utils._mediaUrl + product?.image,
                 thumbnail: Utils._mediaUrl + product?.image,
             });
 
-            if (product.galerie.galerieContent) {
+            if (product.galerie !== undefined && product.galerie !== null) {
                 product.galerie.galerieContent.forEach((prd: any) => {
                     galerie.push({
                         original: Utils._mediaUrl + prd,
@@ -216,7 +232,7 @@ const Product: FC = () => {
 	<p><strong>Size: 12 oz. | {product?.skynType}</strong></p>
 <p><strong> 
     {
-        product.tags !== null ? JSON.parse(product.tags).length > 0 ? JSON.parse(product.tags).map(
+        product?.tags !== null && product?.tags !== undefined && product?.tags !== ''  ? JSON.parse(product.tags).length > 0 ? JSON.parse(product.tags).map(
             (tag: string, id: number) => tag.toUpperCase() + ' - ' 
         ) : <></> : <></>
     } </strong></p>
@@ -255,6 +271,7 @@ const Product: FC = () => {
                             product: product,
                             qty: Number(values.productQty),
                             dispatch: dispatch,
+                            kit: forKit !== null && forKit !== undefined ? true : false,
                             navigate: navigate
                         }) );
                         
@@ -374,7 +391,9 @@ const Product: FC = () => {
     <div className="row-bg"> </div></div></div>
 <div className="row_col_wrap_12 col span_12 dark left">
     <div className='imgDescImg'>
-        { product !== null && <img src={ Utils._mediaUrl + product.galerie.galerieContent[0] } alt="" /> }
+        { product !== null ? product.galerie !== undefined &&  product.galerie !== null ?
+         <img src={ Utils._mediaUrl + product?.galerie?.galerieContent[0] } alt="" /> : 
+         <img src={ Utils._mediaUrl + product?.image } alt="" /> :<></> }
     </div>
     {/* <div className="vc_col-sm-6 wpb_column column_container vc_column_container col no-extra-padding inherit_tablet inherit_phone " data-padding-pos="all" data-has-bg-color="false" data-bg-color="" data-bg-opacity="1" data-animation="" data-delay="0">
 		<div className="vc_column-inner">
@@ -406,8 +425,8 @@ const Product: FC = () => {
             <div className="wpb_text_column wpb_content_element ">
                 <div className="wpb_wrapper">
                     {
-                        product !== null ? 
-                        product.descriptionElements.length > 0 ? product.descriptionElements.map(
+                        product !== null && product?.descriptionElements !== null && product?.descriptionElements !== undefined ? 
+                        product?.descriptionElements.length > 0 ? product?.descriptionElements.map(
                             (p: any) => <p>
                                     <strong>{p.title}: </strong>{p.textContent}
                                 </p>

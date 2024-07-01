@@ -559,7 +559,8 @@ const Header: FC<{  }> = (  ) => {
                                     dispatch( deleteBasketProduct({ 
                                         idLigne: Number(row.contentLine),
                                         dispatch: dispatch,
-                                        navigate: navigate
+                                        navigate: navigate,
+                                        kit: row.grpType !== undefined ? true : false
                                     })  )
 
                                 }} style={{ position: 'absolute', left: '1px', top: '1px', cursor: 'pointer', fontSize: '20px' }} 

@@ -79,6 +79,7 @@ function App() {
               <Route index element={<Home />} />
               <Route  path="/products/:group/:category" element={ <Products />} />
               <Route  path="/product/:id" element={ <Product />} />
+              <Route  path="/product/:id/:forKit" element={ <Product />} />
 
               <Route  path="/cart" element={ <Cart />} />
               <Route  path="/cart/checkout" element={ <Checkout />} />
@@ -86,9 +87,9 @@ function App() {
               <Route  path="/myaccount" element={ <Myaccount />} />
 
               <Route  path="/news/:title" element={ <News />} />
-              <Route  path="/kits/:group/:category" element={ <Kits />} />
-              <Route  path="/kit/:id" element={ <Kit />} />
-              <Route  path="/kit/:id" element={ <Kit />} />
+              <Route  path="/kits/:group/:category" element={ <Kits />} /> 
+              <Route  path="/kit/:id" element={ <Product />} />
+              <Route  path="/kit/:id/:forKit" element={ <Product />} />
               
               <Route  path="/about" element={ <About />} />
               <Route  path="/contact" element={ <Contact />} />

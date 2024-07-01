@@ -809,9 +809,7 @@ const Cart: FC = () => {
                             Sign Up / Login</Link>
                         }
                         
-                        <Link style={{
-                            backgroundColor: 'black !important'
-                        }} to="/products/OUR-ORANGE-AND-VANILLA-PRODUCTS/orange" className="checkout-button button alt wc-forward">
+                        <Link  to="/products/OUR-ORANGE-AND-VANILLA-PRODUCTS/orange" className="checkout-button button alt wc-forward">
                             Continue Shopping</Link>	</div>
                             
                             </div>
