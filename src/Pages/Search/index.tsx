@@ -17,15 +17,57 @@ import { useAppDispatch, useAppSelector } from '../../Hooks/customSelector';
 import { addProduct, removeProduct, updateProductQty, updateProducts } from '../../Redux/Reducers/storeReducer';
 import Footer from '../../Layouts/Footer';
 import { RootState } from '../../Redux/store';
+import AllService from '../service'; 
+import WoocommerceProductBox from '../../Components/WoocommerceProductBox';
 
 const Search: FC = () => {   
-    
+	let { keyword } = useParams();
     let location = useLocation();
     let navigate = useNavigate();
     const store = useAppSelector((state) => state.store)
     const dispatch = useAppDispatch();
     const user = useAppSelector((state: RootState) => state.users.user ); 
     const [ loading, setLoading ] = useState(false);
+
+	const allService = new AllService();  
+    const productSearchResultsInit: Array<any> = [];
+    let [ productSearchResults, setProductSearchResults ] = useState(productSearchResultsInit);
+
+	let [ loadingSearchResults, setLoadingSearchResults ] = useState(false);
+
+	const getSearchedProducts = async () => {
+		setLoadingSearchResults(true);
+		await allService.searchByBarcodeOrName(  keyword ?? ''  ).then(async function (response: any) {
+			console.log(response); 
+			setProductSearchResults((d) => ([]));
+			setProductSearchResults((d) => response?.data);
+			setLoadingSearchResults(false);
+		})
+		  .catch(function (error: any) {
+			console.log(error); 
+			setLoadingSearchResults(false);
+		});
+	}
+
+	const checkForRowBegin = (id: number) => {
+        return id % 4 === 0;
+    }
+
+	const checkForRowLast = (id: number) => {
+        if (id === 3 ) return true;
+        var compar = id;
+        while(compar > 3) {
+            compar = compar - 4
+        };
+
+        return compar % 3 === 0 ;
+    }
+
+	useEffect(
+		() => {
+			getSearchedProducts();
+		}, []
+	);
  
 
     return (
@@ -33,11 +75,14 @@ const Search: FC = () => {
 
             <div id="ajax-content-wrap">
 		        <div className="breadcrumb">
-			        <span><span><a href="./../../../../index.html">Home</a> / <span><a href="./../../index.html">OUR COLLECTION</a> / <span className="breadcrumb_last" aria-current="page">Page 4</span></span></span></span>
+			        <span><span><Link  to='/' >Home</Link> / <span>
+						<Link to=''>search { keyword }</Link></span></span></span>
                 </div>
                 <div className="container-wrap" data-midnight="dark" 
-                style={{ minHeight: "547px" }}><div className="container main-content"><div className="row"><div className="nectar-shop-header"><h1 className="page-title">Search results: “oran”&nbsp;– Page 1</h1>
-                <form style={{ float: "right", margin: '5px'  }} className="woocommerce-ordering" method="get">
+                style={{ minHeight: "547px" }}><div className="container main-content">
+				<div className="row"><div className="nectar-shop-header">
+					<h1 className="page-title">Search results: “{keyword}”&nbsp;</h1>
+                {/* <form style={{ float: "right", margin: '5px'  }} className="woocommerce-ordering" method="get">
 	<select name="orderby" className="orderby" aria-label="Shop order">
 					<option value="relevance">Relevance</option>
 					<option value="popularity" selected={true}>Sort by popularity</option>
@@ -48,35 +93,54 @@ const Search: FC = () => {
 			</select>
 	<input type="hidden" name="paged" value="1"/>
 	<input type="hidden" name="s" value="oran"/><input type="hidden" name="post_type" value="product"/><input type="hidden" name="type_aws" 
-    value="true"/></form>
-<p style={{ float: "right"  }} className="woocommerce-result-count">
-	Showing 1–12 of 28 results</p>
-<nav className="woocommerce-breadcrumb" ><span><a href="https://www.lapotencielle.com">Home</a></span> <i className="fa fa-angle-right"></i> <span><a href="https://www.lapotencielle.com/our-collection/">OUR COLLECTION</a></span> <i className="fa fa-angle-right"></i> <span><a href="/?orderby=popularity&amp;s=oran&amp;post_type=product&amp;type_aws=true">Search results for “oran”</a></span> <i className="fa fa-angle-right"></i> <span>Page 1</span></nav></div><header className="woocommerce-products-header">
-	
-	</header>
-<div className="woocommerce-notices-wrapper"></div><ul className="products columns-4">
-<li className="product type-product post-296 status-publish first instock product_cat-uncategorized product_cat-gifts-sets product_cat-our-gifts-sets-collection has-post-thumbnail taxable shipping-taxable purchasable product-type-simple">
-	<div className="pinterest-for-woocommerce-image-wrapper"><a className="PIN_1714010845690_button_pin PIN_1714010845690_save" href="https://www.pinterest.com/pin/create/button/?guid=w4mZaXp6PGBK-1&amp;url=https%3A%2F%2Fwww.lapotencielle.com%2Fproduct%2Forange-vanilla-luxurious-natural-skincare-whole-line-set%2F&amp;media=https%3A%2F%2Fwww.lapotencielle.com%2Fwp-content%2Fuploads%2F2022%2F01%2Fset1-1631293531.jpg&amp;description=ORANGE%20" data-pin-log="button_pinit" data-pin-href="https://www.pinterest.com/pin/create/button/?guid=w4mZaXp6PGBK-1&amp;url=https%3A%2F%2Fwww.lapotencielle.com%2Fproduct%2Forange-vanilla-luxurious-natural-skincare-whole-line-set%2F&amp;media=https%3A%2F%2Fwww.lapotencielle.com%2Fwp-content%2Fuploads%2F2022%2F01%2Fset1-1631293531.jpg&amp;description=ORANGE%20">Enregistrer</a></div>	   <div className="product-wrap">
-			<a href="https://www.lapotencielle.com/product/orange-vanilla-luxurious-natural-skincare-whole-line-set/" className="img-loaded">
-                <img width="300" height="387" src="https://www.lapotencielle.com/wp-content/uploads/2022/01/set1-1631293531-300x387.jpg" 
-                className="attachment-woocommerce_thumbnail size-woocommerce_thumbnail nectar-lazy loaded" alt="" 
-                decoding="async" sizes="(max-width: 300px) 100vw, 300px" 
-                srcSet="https://www.lapotencielle.com/wp-content/uploads/2022/01/set1-1631293531-300x387.jpg 300w, https://www.lapotencielle.com/wp-content/uploads/2022/01/set1-1631293531-600x773.jpg 600w, https://www.lapotencielle.com/wp-content/uploads/2022/01/set1-1631293531-233x300.jpg 233w, https://www.lapotencielle.com/wp-content/uploads/2022/01/set1-1631293531-768x990.jpg 768w, https://www.lapotencielle.com/wp-content/uploads/2022/01/set1-1631293531.jpg 776w"/></a>
-			<div className="product-add-to-cart" data-nectar-quickview="true"><a href="?add-to-cart=296" data-quantity="1" className="button product_type_simple add_to_cart_button ajax_add_to_cart" data-product_id="296" data-product_sku="" aria-label="Add to cart: “ORANGE &amp; VANILLA LUXURIOUS NATURAL SKINCARE WHOLE LINE SET”" aria-describedby="" rel="nofollow">Add to cart</a><a className="nectar_quick_view no-ajaxy button" data-product-id="296"> <i className="normal icon-salient-m-eye"></i>
-	    <span>Quick View</span></a></div>		   </div>
-		<h2 className="woocommerce-loop-product__title"><a href="https://www.lapotencielle.com/product/orange-vanilla-luxurious-natural-skincare-whole-line-set/">ORANGE &amp; VANILLA LUXURIOUS NATURAL SKINCARE WHOLE LINE SET</a></h2>
-	<span className="price"><span className="woocs_price_code" data-product-id="296">USD : <span className="woocommerce-Price-amount amount"><bdi><span className="woocommerce-Price-currencySymbol">$</span>359.00</bdi></span></span></span>
-<a href="?add-to-cart=296" data-quantity="1" className="button product_type_simple add_to_cart_button ajax_add_to_cart" data-product_id="296" data-product_sku="" aria-label="Add to cart: “ORANGE &amp; VANILLA LUXURIOUS NATURAL SKINCARE WHOLE LINE SET”" aria-describedby="" rel="nofollow">Add to cart</a></li>
+    value="true"/></form> */}
+{/* <p style={{ float: "right"  }} className="woocommerce-result-count">
+	Showing 1–12 of 28 results</p> */}
+<nav className="woocommerce-breadcrumb" ><span><Link to='/'>Home</Link></span> 
+<i className="fa fa-angle-right"></i> 
+<span><Link to=''>Search results for “{keyword}”</Link></span> 
+<i className="fa fa-angle-right"></i> </nav></div>
+<header className="woocommerce-products-header"> </header>
+<div className="woocommerce-notices-wrapper"></div>
 
-</ul>
-<nav className="woocommerce-pagination">
+
+<div className="woocommerce columns-4">
+{
+            loadingSearchResults ?
+            <div>
+                {/* <h2 >
+                    <b>Chargement...</b>
+                </h2> */}
+            </div>
+            :
+            productSearchResults.length > 0 ?
+            <ul className="products columns-4">
+
+            {
+                productSearchResults.map((product, id) =>  
+                    <li className={`product type-product post-278 status-publish instock product_cat-body-care product_cat-body-lotion product_cat-uncategorized product_cat-our-orange-and-vanilla-products has-post-thumbnail taxable shipping-taxable purchasable product-type-simple ${ 
+						checkForRowBegin(id) ? 'first' : checkForRowLast(id) ? 'last' : '' }`}>
+                        <WoocommerceProductBox isForKit={false}
+                        key={id} product={product}  />
+                    </li>
+                )
+            }
+                
+            </ul>
+            :
+            <h2>
+                No Product found for your search
+            </h2>
+        }
+</div>
+{/* <nav className="woocommerce-pagination">
 	<ul className="page-numbers">
 	<li><span aria-current="page" className="page-numbers current">1</span></li>
 	<li><a className="page-numbers" href="https://www.lapotencielle.com/page/2/?orderby=popularity&amp;s=oran&amp;post_type=product&amp;type_aws=true">2</a></li>
 	<li><a className="page-numbers" href="https://www.lapotencielle.com/page/3/?orderby=popularity&amp;s=oran&amp;post_type=product&amp;type_aws=true">3</a></li>
 	<li><a className="next page-numbers" href="https://www.lapotencielle.com/page/2/?orderby=popularity&amp;s=oran&amp;post_type=product&amp;type_aws=true">Next</a></li>
 </ul>
-</nav>
+</nav> */}
 
 </div></div></div> 
             </div>

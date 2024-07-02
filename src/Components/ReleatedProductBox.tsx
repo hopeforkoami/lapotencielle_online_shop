@@ -25,16 +25,17 @@ const ReleatedProductBox: FC<{ product: any }> = ( {product} ) => {
                 data-nectar-img-srcset="./wp-content/uploads/2022/01/paris3-1634761393-300x387.jpg 300w, ./wp-content/uploads/2022/01/paris3-1634761393-600x773.jpg 600w, ./wp-content/uploads/2022/01/paris3-1634761393-233x300.jpg 233w, ./wp-content/uploads/2022/01/paris3-1634761393-768x990.jpg 768w, ./wp-content/uploads/2022/01/paris3-1634761393.jpg 776w" 
                 data-nectar-img-src={ Utils._mediaUrl + product?.image } />
                 </Link>
-			<div className="product-add-to-cart" data-nectar-quickview="true">
-            <Link to={'/product/' + product.id} data-quantity="1" className="button product_type_simple" data-product_id="264" data-product_sku="" aria-label="Read more about &ldquo;SUNSET IN PARIS CREAMY MOIST BODY POLISH SCRUB&rdquo;" rel="nofollow">Add to cart</Link>
-            <Link to={'/product/' + product.id} className="nectar_quick_view no-ajaxy button" > <i className="normal icon-salient-m-eye"></i>
-	    <span>Quick View</span></Link>
-</div>		   </div>
-		<h2 className="woocommerce-loop-product__title"><a href="./../sunset-in-paris-creamy-moist-body-polish-scrub/index.html">SUNSET IN PARIS CREAMY MOIST BODY POLISH SCRUB</a></h2>
-	<span className="price" style={ { textAlign: "center", fontWeight: "bold" } } >
-        <PriceUnitBox price={product?.pu} /></span> <br/>
-        <br/>
-    <Link to={'/product/' + product.id} data-quantity="1" className="button product_type_simple" data-product_id="264" data-product_sku="" aria-label="Read more about &ldquo;SUNSET IN PARIS CREAMY MOIST BODY POLISH SCRUB&rdquo;" rel="nofollow">Add to cart</Link>
+                <div className="product-add-to-cart" data-nectar-quickview="true">
+                    <Link to={'/product/' + product.id} data-quantity="1" className="button product_type_simple" data-product_id="264" data-product_sku="" aria-label="Read more about &ldquo;SUNSET IN PARIS CREAMY MOIST BODY POLISH SCRUB&rdquo;" rel="nofollow">Add to cart</Link>
+                    <Link to={'/product/' + product.id} className="nectar_quick_view no-ajaxy button" > <i className="normal icon-salient-m-eye"></i>
+                    <span>Quick View</span></Link>
+                </div>		   
+            </div>
+		    <h2 className="woocommerce-loop-product__title"><a href="./../sunset-in-paris-creamy-moist-body-polish-scrub/index.html">SUNSET IN PARIS CREAMY MOIST BODY POLISH SCRUB</a></h2>
+	            <span className="price" style={ { textAlign: "center", fontWeight: "bold" } } >
+                <PriceUnitBox price={product?.pu} /></span> <br/>
+                <br/>
+                <Link to={'/product/' + product.id} data-quantity="1" className="button product_type_simple" data-product_id="264" data-product_sku="" aria-label="Read more about &ldquo;SUNSET IN PARIS CREAMY MOIST BODY POLISH SCRUB&rdquo;" rel="nofollow">Add to cart</Link>
 
                 {/* <div className="product-wrap">
                 <Link to={'/product/' + product.id}>

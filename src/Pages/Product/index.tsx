@@ -99,7 +99,8 @@ const Product: FC = () => {
         // setLoading(true);
 		productService.getFilterByKeyword( { "keyWord": gamme } ).then(async function (response: any) {
             console.log(response);
-            setProducts(response.data);
+            const relatedProducts = response.data.filter((prod: any) => Number(prod.id) !== Number(product.id) )
+            setProducts(relatedProducts);
             // setLoading(false);
         })
           .catch(function (error: any) {
@@ -367,10 +368,17 @@ const Product: FC = () => {
 <div className="ppc-button-wrapper"><div id="ppc-button"></div></div>
 <div className="product_meta">
     <br />
-	<span className="posted_in">Categories: { product?.categorie?.desccat }</span>
+	<span className="posted_in">Categories: <Link className='cat-link' to={ '/search/' + product?.type?.libType } rel="tag"> 
+        { product?.type?.libType } </Link>, <Link className='cat-link' 
+        to={ '/search/' + product?.gamme?.libGamme } rel="tag"> 
+        {product?.gamme?.libGamme } </Link>, <Link className='cat-link' to={ '/search/' + product?.categorie?.libcat } rel="tag"> 
+        { product?.categorie?.libcat } </Link> </span>
 	
 	
 </div>
+
+ 
+
 	</div>
 
 	</div>
@@ -869,17 +877,22 @@ style={{ paddingTop: '0px', paddingBottom: '0px' }}>
 
 					<h2>Related products</h2>
 				
-		<ul className='' style={{ listStyleType: 'none', listStyle: 'none', display: 'flex', flexFlow: 'row wrap', justifyContent: 'space-between' }} 
+		<ul className='related_products' style={{ 
+            listStyleType: 'none !important', 
+            listStyle: 'none !important', 
+            display: 'flex', 
+            flexFlow: 'row wrap',
+            justifyContent: 'start' }} 
         >
-        {
+            {
 
                 products.map((product, id) =>  
-                    <li style={{ width: '24%' }}  className={`product type-product post-264 status-publish outofstock product_cat-uncategorized product_cat-body-care product_cat-body-scrub product_cat-in-paris-body-creme-souffle-products has-post-thumbnail taxable shipping-taxable purchasable product-type-simple `}>
+                    <li style={{ width: '24%', marginBottom: "35px" }}  className={`product type-product post-264 status-publish outofstock product_cat-uncategorized product_cat-body-care product_cat-body-scrub product_cat-in-paris-body-creme-souffle-products has-post-thumbnail taxable shipping-taxable purchasable product-type-simple `}>
                         <ReleatedProductBox
-                        key={id} product={product}  />
+                            key={id} product={product} />
                     </li>
                 )
-        }
+            }
 		</ul>
 
 	</section>

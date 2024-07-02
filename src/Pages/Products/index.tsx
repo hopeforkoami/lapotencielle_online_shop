@@ -284,9 +284,9 @@ const Products: FC = () => {
 		{
             loading ?
             <div>
-                <h2 >
+                {/* <h2 >
                     <b>Chargement...</b>
-                </h2>
+                </h2> */}
             </div>
             :
             products.length > 0 ?

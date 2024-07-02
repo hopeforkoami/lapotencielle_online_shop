@@ -100,7 +100,7 @@ function App() {
               <Route  path="/return-policy" element={ <ReturnPolicy/>} />
               <Route  path="/legal-disclaimer" element={ <Legal/>} />
 
-              <Route  path="/search" element={ <Search />} />
+              <Route  path="/search/:keyword" element={ <Search />} />
 
               {/* Client */}
               <Route path="client" element={<ProtectedRoute  outlet={ <Client />} />} >

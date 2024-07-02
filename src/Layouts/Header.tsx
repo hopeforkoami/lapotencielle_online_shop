@@ -51,6 +51,8 @@ const Header: FC<{  }> = (  ) => {
     let initialTotal: number = 0;
     let [ storeTotal, setStoreTotal ] = useState(initialTotal);
 
+    let [ searchStr, setSearchStr ] = useState('');
+
     const getStoreTotal = () => {
         let strTtl = 0;
         store.products.forEach(
@@ -95,27 +97,38 @@ const Header: FC<{  }> = (  ) => {
         
         serach_input?.addEventListener("keyup", async (event)=> {
 
+
+           
+
              
 
             if (event.keyCode === 13 || event.key === "Enter") {
                 event.preventDefault();
             }
 
-            const eventTarget: any = event?.target;
+            const eventTarget: any = event?.target; 
 
-            console.log('Search str');
-            console.log(eventTarget.value);
+            let element = document.querySelector('.aws-search-result')  as HTMLElement;
  
            if (eventTarget.value !== null && eventTarget.value !== '') {
-            await allService.searchByBarcodeOrName(  eventTarget.value  ).then(async function (response: any) {
-                console.log(response); 
-                setProductSearchResults((d) => ([]));
-                setProductSearchResults((d) => response?.data);
-            })
-              .catch(function (error: any) {
-                console.log(error); 
-            });
-           } else {
+ 
+                if (element !== null) { 
+                    element.style.display = 'block';
+                }
+
+                setSearchStr(eventTarget.value);
+                await allService.searchByBarcodeOrName(  eventTarget.value  ).then(async function (response: any) {
+                    console.log(response); 
+                    setProductSearchResults((d) => ([]));
+                    setProductSearchResults((d) => response?.data);
+                })
+                .catch(function (error: any) {
+                    console.log(error); 
+                });
+           } else { 
+                if (element !== null) { 
+                    element.style.display = 'none';
+                }
             setProductSearchResults((d) => ([]));
            }
             
@@ -288,7 +301,8 @@ const Header: FC<{  }> = (  ) => {
                             <div className="aws_result_link">
                                 {/* <a  
                             href="https://www.lapotencielle.com/product/organic-light-whipped-body-butter-coco-mousse/"> */}
-                                <Link onClick={() => {  setProductSearchResults((d) => ([])); }} className="aws_result_link_top" to={ '/product/' + prd?.id } >
+                                <Link onClick={() => {  setProductSearchResults((d) => ([])); }}
+                                 className="aws_result_link_top" to={ '/product/' + prd?.id } >
                                 {prd?.fullName}</Link><span className="aws_result_image">
                                     <img src={'https://lapotnewapi2files.nogdevhouse.com/images/products/'+prd?.image} /></span>
                             <span className="aws_result_content">
@@ -302,7 +316,16 @@ const Header: FC<{  }> = (  ) => {
                            ) 
                         }
                         
-                        <li className="aws_result_item aws_search_more"><a href="#">Voir tous les résultats</a></li>
+                        <li onClick={() => {
+                            let element = document.querySelector('.aws-search-result')  as HTMLElement;
+                            console.log(element);
+                            if (element !== null) {
+                                
+                                element.style.display = 'none';
+                            }
+                        }} className="aws_result_item aws_search_more">
+                            <Link to={ '/search/' + searchStr }>
+                        View all results</Link></li>
                     </ul>
                 </div> 
         }
@@ -434,7 +457,8 @@ const Header: FC<{  }> = (  ) => {
           ) => {
                 console.log(values);
                if (values.searchStr !== null  && values.searchStr !== '') {
-                    navigate( '/products/' + 'SEARCH-'+ values.searchStr.toUpperCase() + '/' + values.searchStr.toLowerCase() );
+                    // navigate( '/products/' + 'SEARCH-'+ values.searchStr.toUpperCase() + '/' + values.searchStr.toLowerCase() );
+                    navigate( '/search/' + values.searchStr );
                     values.searchStr = '';
                }
             }}
