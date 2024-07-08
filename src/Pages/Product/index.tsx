@@ -255,7 +255,7 @@ const Product: FC = () => {
                     .required(`${'You must accept the terms and conditions'}`),
                 productQty: yup
                     .number()
-                    .required(`${'Ce champ est obligatoire'}`)
+                    .required(`${'This field is required'}`)
             })
         }
         innerRef={formRef}
@@ -494,14 +494,14 @@ const Product: FC = () => {
                     .number(),
                 message: yup
                     .string()
-                    .required(`${'Ce champ est obligatoire'}`),
+                    .required(`${'This field is required'}`),
                 name: yup
                     .string()
-                    .required(`${'Ce champ est obligatoire'}`),
+                    .required(`${'This field is required'}`),
                 email: yup
                     .string()
                     .email("Email non valide")
-                    .required(`${'Ce champ est obligatoire'}`)
+                    .required(`${'This field is required'}`)
             })
         } 
         innerRef={ratingReviewFormRef}

@@ -194,19 +194,19 @@ const Adress: FC = () => {
                                         
                                         countryCode: yup 
                                             .string()
-                                            .required(`${'Ce champ est obligatoire'}`),
+                                            .required(`${'This field is required'}`),
                                         state: yup 
                                             .string()
-                                            .required(`${'Ce champ est obligatoire'}`),
+                                            .required(`${'This field is required'}`),
                                         city: yup 
                                             .string()
-                                            .required(`${'Ce champ est obligatoire'}`),
+                                            .required(`${'This field is required'}`),
                                         postalCode: yup 
                                             .string()
-                                            .required(`${'Ce champ est obligatoire'}`),
+                                            .required(`${'This field is required'}`),
                                         addressLine1: yup 
                                             .string()
-                                            .required(`${'Ce champ est obligatoire'}`),
+                                            .required(`${'This field is required'}`),
                                         saveAddress: yup 
                                             .boolean()
 

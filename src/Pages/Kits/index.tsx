@@ -241,7 +241,7 @@ const Kits: FC = () => {
 		{
             loading ?
             <h2>
-                <b>Chargement...</b>
+                <b></b>
             </h2> :
             products.length > 0 ?
             <ul className="products columns-4">

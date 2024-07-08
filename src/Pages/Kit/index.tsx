@@ -108,7 +108,7 @@ const Kit: FC = () => {
         <> 
         { loading ? <div style={{ marginTop: '1.5em' }}>
                 <h2 >
-                    <b>Chargement...</b>
+                    <b> </b>
                 </h2>
             </div> :
        		<div id="ajax-content-wrap">
@@ -182,7 +182,7 @@ const Kit: FC = () => {
                     .required(`${'You must accept the terms and conditions'}`),
                 productQty: yup
                     .number()
-                    .required(`${'Ce champ est obligatoire'}`)
+                    .required(`${'This field is required'}`)
             })
         }
         // innerRef={formRef}

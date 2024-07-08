@@ -129,11 +129,11 @@ const Myaccount: FC = () => {
     return (
         <div className='woocommerce-account'>
             <div id="ajax-content-wrap">
-                <br />
-		            {/* <div className="breadcrumb">
+                {/* <br /> */}
+		            <div style={{ marginTop: '30px' }} className="breadcrumb">
 			            <span><span><a href="/">Home</a></span> / 
                         <span className="breadcrumb_last" aria-current="page">My account</span></span>
-                    </div> */}
+                    </div>
                     <br />
                     <div className="container-wrap" style={{ minHeight: '566px' }}>
                         <div className="container main-content">

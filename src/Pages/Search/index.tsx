@@ -109,7 +109,7 @@ const Search: FC = () => {
             loadingSearchResults ?
             <div>
                 {/* <h2 >
-                    <b>Chargement...</b>
+                    <b></b>
                 </h2> */}
             </div>
             :

@@ -1437,16 +1437,17 @@ NEWSLETTER</li>
                                         setLoading(true);
                                         allService.subscribeToNewsletter(values).then(async function(response: any) {
                                             // console.log(response); 
-                                        if (response.data.statut === 200) {
-                                            alert('Thank you for subscription')
-                                        } else {
-                                            alert('An error please try again');
-                                        }
-                                        setLoading(false);
-                                    }).catch(function (error: any) {
-                                            console.log(error); 
-                                            setLoading(false);
-                                    });
+											if (response.data.statut === 200) {
+												alert('Thank you for subscription')
+											} else {
+												alert('An error please try again');
+											}
+											setLoading(false);
+											
+										}).catch(function (error: any) {
+												console.log(error); 
+												setLoading(false);
+										});
                                 }}
                                 >
                                     {({ dirty, errors, touched, isValid, handleChange, handleBlur, handleSubmit, values }) => (

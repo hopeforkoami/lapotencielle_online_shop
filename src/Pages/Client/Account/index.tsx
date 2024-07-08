@@ -123,17 +123,17 @@ const Account: FC = () => {
                                     
                                     old_password: yup
                                     .string()
-                                    .required(`${'Ce champ est obligatoire'}`),
+                                    .required(`${'This field is required'}`),
                                 password: yup
                                     .string()
-                                    .required(`${'Ce champ est obligatoire'}`)
+                                    .required(`${'This field is required'}`)
                                     .matches(
                                         /^(?=.*[!@#\$%\^&\*])(?=.{12,})/,
                                         `${"Le mot de passe doit comporter 12 caractères avec l'utilisation d'un caractère spécial"}`
                                     ),
                                 passwordConfirmation: yup.string()
                                     .oneOf([yup.ref('password'), null], 'Passwords must match')
-                                    .required(`${'Ce champ est obligatoire'}`)
+                                    .required(`${'This field is required'}`)
                                 })
                             }
                             // innerRef={formRef}
@@ -280,26 +280,26 @@ const Account: FC = () => {
 
                                     nomClient: yup 
                                         .string()
-                                        .required(`${'Ce champ est obligatoire'}`),
+                                        .required(`${'This field is required'}`),
                                     middleNameClient:  yup 
                                         .string() ,
                                     prenomClient: yup 
                                         .string()
-                                        .required(`${'Ce champ est obligatoire'}`),
+                                        .required(`${'This field is required'}`),
                                     // billAddress: yup 
                                     //     .string(),
                                     contactClient: yup 
                                         .string()
-                                        .required(`${'Ce champ est obligatoire'}`),
+                                        .required(`${'This field is required'}`),
                                     // newsletter:  yup 
                                     //     .string()
-                                    //     .required(`${'Ce champ est obligatoire'}`),
+                                    //     .required(`${'This field is required'}`),
                                     // '2faActivated': yup 
                                     //     .boolean(),
                                     email: yup 
                                         .string()
                                         .email('Mail non valide')
-                                        .required(`${'Ce champ est obligatoire'}`)
+                                        .required(`${'This field is required'}`)
                                         .test('checkEmailUnique', "Email already used", async value =>
                                             clientService.verifyEmail(value ?? '')
                                             .then((res) => { 
@@ -313,10 +313,10 @@ const Account: FC = () => {
                                         ),
                                     // paysClient: yup 
                                     //     .string()
-                                    //     .required(`${'Ce champ est obligatoire'}`),
+                                    //     .required(`${'This field is required'}`),
                                     // login: yup 
                                     //     .string()
-                                    //     .required(`${'Ce champ est obligatoire'}`)
+                                    //     .required(`${'This field is required'}`)
                                     //     .test('checkLoginUnique', "Login already used", async value =>
                                     //         clientService.verifyLogin(value ?? '')
                                     //         .then((res) => { 
@@ -330,23 +330,23 @@ const Account: FC = () => {
                                     //     ),
                                     // password: yup
                                     //     .string()
-                                    //     .required(`${'Ce champ est obligatoire'}`)
+                                    //     .required(`${'This field is required'}`)
                                     //     .matches(
                                     //         /^(?=.*[!@#\$%\^&\*])(?=.{12,})/,
                                     //         `${"Le mot de passe doit comporter 12 caractères avec l'utilisation d'un caractère spécial"}`
                                     //     ),
                                     // passwordConfirmation: yup.string()
                                     //     .oneOf([yup.ref('password'), null], 'Passwords must match')
-                                    //     .required(`${'Ce champ est obligatoire'}`),
+                                    //     .required(`${'This field is required'}`),
                                     // town: yup
                                     //     .string()
-                                    //     .required(`${'Ce champ est obligatoire'}`),
+                                    //     .required(`${'This field is required'}`),
                                     // street: yup
                                     //     .string()
-                                    //     .required(`${'Ce champ est obligatoire'}`),
+                                    //     .required(`${'This field is required'}`),
                                     // bp: yup
                                     //     .string()
-                                    //     .required(`${'Ce champ est obligatoire'}`),
+                                    //     .required(`${'This field is required'}`),
                                 })
                             }
                             // innerRef={formRef}
