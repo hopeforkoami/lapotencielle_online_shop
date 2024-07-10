@@ -184,7 +184,7 @@ const PriceUnitBox: FC<{ price: any }> = ( { price} ) => {
         [price]
     )
     return ( 
-        <><b style={{ fontSize: "15px" }}>{ unit === '$' || unit === 'USD' ? "USD : $" : unit }</b> {numberWithCommas(priceCopy)}</>
+        <><b style={{ fontSize: "15px" }}>{ unit === '$' || unit === 'USD' ? "USD : $" : unit }</b> {numberWithCommas(priceCopy.toFixed(2))}</>
     ); 
 }
 

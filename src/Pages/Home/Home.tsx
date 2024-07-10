@@ -1061,7 +1061,7 @@ right_padding_80px left_padding_80px "   ><div className="row-bg-wrap">
 	
 		{
 			bestSellerProducts.slice(0,4).map((product, id) => <ProductBox key={id} 
-			productListLength={4} animated={false} product={product}  /> )
+			productListLength={4} animated={false} product={product} isKit={true}  /> )
 		}
 	
 	</div>
@@ -1459,7 +1459,7 @@ NEWSLETTER</li>
 				  id="email" onChange={handleChange('email')}
 				  onBlur={handleBlur('email')}
 					  value={values.email} />
-				<button  disabled={ !isValid && !dirty }  className="tnp-submit" type="submit" >
+				<button  disabled={ !isValid && !dirty }  className="tnp-submit sub-btn" type="submit" >
 				{ loading && <i className="fas fa-spinner fa-spin"></i>
                   } Subscribe
 				</button>

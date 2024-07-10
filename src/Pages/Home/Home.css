@@ -6,3 +6,31 @@
 .sub-input-error {
     border: 1px red solid !important;
 }
+
+button[type=submit].sub-btn {
+    background: #c4c851 !important;
+    color: #fff !important;
+    border-color: #c4c851 !important;
+}
+
+button[type=submit].sub-btn:hover {
+    background: #c4c851 !important;
+    color: #fff !important;
+    border-color: #c4c851 !important;
+}
+
+
+@media only screen and (max-width: 999px) and (min-width: 690px) {
+
+    button[type=submit].sub-btn {
+        background: #c4c851 !important;
+        color: #fff !important;
+        border-color: #c4c851 !important;
+    }
+    
+    button[type=submit].sub-btn:hover {
+        background: #c4c851 !important;
+        color: #fff !important;
+        border-color: #c4c851 !important;
+    } 
+}

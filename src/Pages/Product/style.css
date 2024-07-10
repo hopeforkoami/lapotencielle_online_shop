@@ -239,3 +239,19 @@ ul {
 .product_meta  .cat-link:focus::after{
   transform: scale(1) !important; 
 }
+
+
+.relate-products {
+  width: '24%';
+  margin-bottom: "55px";
+  margin-top: "55px"
+}
+@media only screen and (max-width: 999px) and (min-width: 690px) {
+
+  .relate-products {
+    width: '98%';
+    margin-bottom: "55px";
+    margin-top: "55px"
+  }
+
+}

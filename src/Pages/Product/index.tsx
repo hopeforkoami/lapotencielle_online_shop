@@ -117,8 +117,13 @@ const Product: FC = () => {
 		getProduct(id);
     }, [ location ]);
 
-
-  
+    const strToJson = (str: string) => {  
+        try {
+            return JSON.parse(str);
+        } catch (error) {
+            return [];
+        }
+    }  
 
     useEffect(() => {
         if (product !== null ) {
@@ -233,7 +238,8 @@ const Product: FC = () => {
 	<p><strong>Size: 12 oz. | {product?.skynType}</strong></p>
 <p><strong> 
     {
-        product?.tags !== null && product?.tags !== undefined && product?.tags !== ''  ? JSON.parse(product.tags).length > 0 ? JSON.parse(product.tags).map(
+        product?.tags !== null && product?.tags !== undefined && product?.tags !== ''  ? 
+        strToJson(product.tags).length > 0 ? strToJson(product.tags).map(
             (tag: string, id: number) => tag.toUpperCase() + ' - ' 
         ) : <></> : <></>
     } </strong></p>
@@ -887,7 +893,8 @@ style={{ paddingTop: '0px', paddingBottom: '0px' }}>
             {
 
                 products.map((product, id) =>  
-                    <li style={{ width: '24%', marginBottom: "35px" }}  className={`product type-product post-264 status-publish outofstock product_cat-uncategorized product_cat-body-care product_cat-body-scrub product_cat-in-paris-body-creme-souffle-products has-post-thumbnail taxable shipping-taxable purchasable product-type-simple `}>
+                    <li style={{  }} 
+                     className={` relate-products `}>
                         <ReleatedProductBox
                             key={id} product={product} />
                     </li>

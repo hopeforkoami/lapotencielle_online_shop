@@ -17,13 +17,17 @@ import { Formik, Field, Form, FormikProps } from 'formik'
 import * as yup from 'yup';
 
 import { useAppDispatch, useAppSelector } from '../../Hooks/customSelector';
-import { addProduct, removeProduct, updateProductQty, updateProducts } from '../../Redux/Reducers/storeReducer';
+import { addProduct, removeProduct, setReductions, updateProductQty, updateProducts } from '../../Redux/Reducers/storeReducer';
 import Footer from '../../Layouts/Footer';
 import { RootState } from '../../Redux/store';
 
-import { PayPalScriptProvider, PayPalButtons, usePayPalHostedFields, usePayPalScriptReducer } from "@paypal/react-paypal-js";
+import { PayPalScriptProvider, PayPalButtons, usePayPalHostedFields, usePayPalScriptReducer, 
+    BraintreePayPalButtons
+ } from "@paypal/react-paypal-js";
 
 import PriceUnitBox from '../../Components/PriceUnitBox';
+import MyaccountService from '../Myaccount/service';
+import { setUser } from '../../Redux/Reducers/userReducer';
 
 var countries = require('country-data-list').countries ;
 
@@ -55,6 +59,10 @@ interface CheckoutData {
                                         sameAddressShippingAndBilling: string
 }
 
+interface PromotionCodeForm {
+    promoCode: string | null
+}
+
 
 const Checkout: FC = () => {   
  
@@ -63,7 +71,11 @@ const Checkout: FC = () => {
     const dispatch = useAppDispatch();
     let navigate = useNavigate();
 
+    const myaccountService = new MyaccountService();
+
     const checkOutDataFormRef = useRef< FormikProps< CheckoutData >>(null);
+
+    const promoCodeFormRef = useRef< FormikProps< PromotionCodeForm >>(null);
 
     const user = useAppSelector((state: RootState) => state.users.user );
 
@@ -96,6 +108,22 @@ const Checkout: FC = () => {
 
     const orderIdInit: any = null;
     let [ orderId, setOrderId ] = useState('');
+
+    let [
+        message, setMessage
+    ] = useState(null);
+
+    let [
+        loadReduction, setLoadReduction
+    ] = useState(false);
+
+    let [
+        termsAccept, setTermsAccpet
+    ] = useState(false);
+
+    // const [ reduction, setReduction ] = useState(null);
+
+    
 
     const getStoreTotal = () => {
         let strTtl = 0;
@@ -152,6 +180,30 @@ const Checkout: FC = () => {
         }
 
     }, []);
+
+    useEffect(
+        () => { 
+            if (user !== null && user !== undefined) {
+                if (checkOutDataFormRef.current !== null) {
+                    checkOutDataFormRef.current.values.firstname =  user?.prenomClient;
+                    checkOutDataFormRef.current.values.lastname =  user?.nomClient;
+                    checkOutDataFormRef.current.values.email =  user?.email;
+                    checkOutDataFormRef.current.values.phone =  user?.phone;
+                } 
+            }
+        }, [user]
+    );
+
+    useEffect(
+        () => {
+            
+            if (store?.basketId !== null && store?.basketId !== undefined) {
+                if (checkOutDataFormRef.current !== null) {
+                    checkOutDataFormRef.current.values.idVente = store?.basketId
+                } 
+            }
+        }, [store?.basketId]
+    );
 
 
     useEffect(() => { 
@@ -503,7 +555,7 @@ const Checkout: FC = () => {
         <>        
             <div id="ajax-content-wrap">
 		<div className="breadcrumb">
-			<span><span><a href="https://www.lapotencielle.com/">Home</a></span> / <span className="breadcrumb_last" aria-current="page">Checkout</span></span>		</div>
+			<span><span><a href="/">Home</a></span> / <span className="breadcrumb_last" aria-current="page">Checkout</span></span>		</div>
 <div className="container-wrap" style={{ minHeight: '566px' }}>
 	<div className="container main-content">
 		<div className="row">
@@ -516,23 +568,103 @@ const Checkout: FC = () => {
 <div className="wpb_text_column wpb_content_element ">
 	<div className="wpb_wrapper">
 		<div className="woocommerce"><div className="woocommerce-notices-wrapper"></div>
-{/* <div className="woocommerce-form-login-toggle">
+{ !( user !== null && user !== undefined ) ?  <>
+<div className="woocommerce-form-login-toggle">
 	<br />
 	<div className="woocommerce-info">
-		Returning customer? <Link to={ "/myaccount" } className="showlogin">Click here to login</Link>	</div>
-</div> */}
-{/* <form className="woocommerce-form woocommerce-form-login login" method="post" style={{ display:'none' }}>
+		Returning customer? <a onClick={() =>{
+            document.getElementById('loginForm')?.classList.toggle("show-form");
+            setMessage(() => null);
+        }} className="showlogin">Click here to login</a>	</div>
+</div>
+{
+                                        
+                                        message !== null && message !== '' && 
+                                        <b id='errorMsg' className='error-msg'  >
+                                            { message }
+                                        </b>
+
+}
+<Formik
+                                initialValues={ 
+                                    {
+                                        login: '',
+                                        password:  ''
+                                }}
+
+                                validationSchema={
+                                    yup.object().shape({
+                                        
+                                        login: yup 
+                                            .string()
+                                            .required(`${'This field is required'}`),
+                                        password: yup
+                                            .string()
+                                            .required(`${'This field is required'}`)
+                                    })
+                                }
+                                // innerRef={formRef}
+                                onSubmit={async (
+                                    values 
+                                ) => {
+                                        setMessage(() => null);
+                                        console.log(values); 
+                                        setLoading(true);
+                                        myaccountService.login(values).then(async function (response: any) {
+                                            console.log(response); 
+                                            if (response.data.statut === 200) {
+                                                alert('Welcome dear !');
+                                                console.log('Logged user');
+                                                dispatch( setUser( response.data.data[0] ) );
+
+                                                window.localStorage.setItem(
+                                                    '__user',
+                                                    JSON.stringify(response.data.data[0])
+                                                );
+                
+                                                setLoading(false);  
+                                                window.location.reload();
+
+                                            } else if (response.data.statut === 500) {
+                                                setMessage(() => response.data.message);
+                                            }
+                                        })
+                                          .catch(function (error: any) {
+                                            console.log(error); 
+                                        });
+                                    }}
+                                >
+                                    {({ dirty, errors, touched, isValid, handleChange, handleBlur, handleSubmit, values }) => (
+                                    <Form  id="loginForm" 
+                                    className="woocommerce-form woocommerce-form-login login"
+                                     method="post" style={{ display:'none' }}>
 
 	
 	<p>If you have shopped with us before, please enter your details below. If you are a new customer, please proceed to the Billing section.</p>
-
+   
 	<p className="form-row form-row-first">
 		<label htmlFor="username">Username or email&nbsp;<span className="required">*</span></label>
-		<input type="text" className="input-text" name="username" id="username" autoComplete="username" />
+		<input type="text" className="input-text" name="username" id="username"
+          onChange={handleChange('login')}
+          onBlur={handleBlur('login')}
+              value={values.login} autoComplete="username" />
+        { errors.login && touched.login && errors.login && 
+                                            <small id="validationServer05Feedback" className="invalid-feedback">
+                                                { errors.login && touched.login && errors.login }
+                                            </small> 
+                                    }	
 	</p>
 	<p className="form-row form-row-last">
 		<label htmlFor="password">Password&nbsp;<span className="required">*</span></label>
-		<input className="input-text" type="password" name="password" id="password" autoComplete="current-password" />
+		<input className="input-text" type="password" name="password" id="password"
+        onChange={handleChange('password')}
+        onBlur={handleBlur('password')}
+            value={values.password}  autoComplete="current-password" />
+          { errors.password && touched.password && errors.password && 
+                                            <small id="validationServer05Feedback" className="invalid-feedback">
+                                                { errors.password && touched.password && errors.password }
+                                            </small> 
+                                        }
 	</p>
 	<div className="clear"></div>
 
@@ -545,36 +677,92 @@ const Checkout: FC = () => {
 		<button type="submit" className="woocommerce-button button woocommerce-form-login__submit" name="login" value="Login">Login</button>
 	</p>
 	<p className="lost_password">
-		<a href="https://www.lapotencielle.com/my-account/lost-password/">Forgot your Password?</a>
+		<a href="">Forgot your Password?</a>
 	</p>
 
 	<div className="clear"></div>
 
-	
-</form> */}
-{/* <div className="woocommerce-form-coupon-toggle">
+    </Form>
+            )}
+        </Formik> </> : <></>
+}
+< br />
+<div className="woocommerce-form-coupon-toggle">
 	
 	<div className="woocommerce-info">
 		Have a coupon? <a onClick={() =>{
             document.getElementById('couponForm')?.classList.toggle("show-form");
         }} className="showcoupon">Click here to enter your code</a>	</div>
-</div> */}
+</div> 
 
-{/* <form id="couponForm" className="checkout_coupon woocommerce-form-coupon" method="post" style={{ display:'none' }}>
+<Formik
+                                initialValues={ 
+                                    {
+                                        promoCode: ''
+                                }}
+
+                                validationSchema={
+                                    yup.object().shape({
+                                        
+                                        promoCode: yup 
+                                            .string()
+                                            .required(`${'This field is required'}`)
+                                    })
+                                }
+                                innerRef={promoCodeFormRef}
+                                onSubmit={async (
+                                    values 
+                                ) => {  
+                                        setLoadReduction(true);
+                                        // setReduction((red) => (null));
+                                        console.log(values);
+                                        const data = {
+                                            ...values,
+                                            montantBasket: storeTotal
+                                        }
+                                        cartService.getPromoCodeReduction(data).then(async function (response: any) {
+                                            console.log(response); 
+                                        if (response.data.statut === 200) {
+
+                                            dispatch( setReductions( response.data.data.reduction ) );
+
+                                              
+                                        } else {
+                                            alert('Unknown promo code');
+                                        }
+                                        setLoadReduction(false);
+                                    }).catch(function (error: any) {
+                                            console.log(error); 
+                                            setLoadReduction(false);
+                                    });
+                                    }}
+                                >
+                                    {({ dirty, errors, touched, isValid, handleChange, handleBlur, handleSubmit, values }) => (
+                                    <Form id="couponForm" className="checkout_coupon woocommerce-form-coupon" method="post" style={{ display:'none' }}>
 
 	<p>If you have a coupon code, please apply it below.</p>
 
 	<p className="form-row form-row-first">
-		<input type="text" name="coupon_code" className="input-text" placeholder="Coupon code" id="coupon_code" value="" />
+		<input type="text" name="coupon_code" className="input-text" placeholder="Coupon code"
+         onChange={handleChange('promoCode')}
+         onBlur={handleBlur('promoCode')}
+             value={ values.promoCode ?? ''} id="coupon_code"  />
 	</p>
 
 	<p className="form-row form-row-last">
-		<button type="submit" className="button" name="apply_coupon" value="Apply coupon">Apply coupon</button>
+		<button type="submit" className="button" name="apply_coupon" value="Apply coupon">{
+                                                loadReduction && <i className="fas fa-spinner fa-spin"></i>
+                                            } Apply coupon</button>
 	</p>
 
 	<div className="clear"></div>
-</form> */}
-
+    </Form>
+                                    )}
+                                    </Formik>
+                                    <br/> 
+{
+        reduction !== null && <p style={{ fontWeight: 'bold' }}>Congratulations you have <PriceUnitBox price={reduction} /> benefit</p>
+}
 <div className="woocommerce-notices-wrapper"></div>
 {/* {  user !== null && user !== undefined ? */}
 <Formik
@@ -690,7 +878,8 @@ const Checkout: FC = () => {
              onBlur={handleBlur('company')}
              value={values.company}  autoComplete="organization" /></span>
         </p>
-
+        { showBillingForm === 'true' ? <></> : 
+            <>
         <p className="form-row form-row-wide address-field update_totals_on_change 
         validate-required  " id="billing_country_field" data-priority="40">
             <label htmlFor="billing_country" className="">Country / Region&nbsp;
@@ -755,6 +944,8 @@ const Checkout: FC = () => {
             <label htmlFor="billing_postcode" className="">Postcode / ZIP&nbsp;<abbr className="required" title="required">*</abbr></label><span className="woocommerce-input-wrapper"><input type="text" className="input-text " name="billing_postcode" 
         id="billing_postcode" placeholder="Postcode / ZIP"  
          /></span></p>
+
+        </> }
 
         <p className="form-row form-row-wide validate-required validate-phone" id="billing_phone_field" data-priority="100">
             <label htmlFor="billing_phone" className="">Phone&nbsp;<abbr className="required" title="required">*</abbr>
@@ -1066,6 +1257,14 @@ const Checkout: FC = () => {
             <span className="woocommerce-Price-amount amount"><bdi> <PriceUnitBox price={storeTotal} /> </bdi></span></span></td>
 		</tr>
 
+        {
+                            reduction !== null && <tr className="order-total">
+                            <th>Reduction</th>
+                            <td data-title="Total"><strong><span className="woocs_special_price_code"><span className="woocommerce-Price-amount amount">
+                                <bdi> <PriceUnitBox price={reduction} /></bdi></span></span></strong> </td>
+                        </tr>
+                        }
+
 		
 		
 			
@@ -1086,23 +1285,17 @@ const Checkout: FC = () => {
 </tr>
 
 
-                        {
-                            reduction !== null && <tr className="order-total">
-                            <th>Reduction</th>
-                            <td data-title="Total"><strong><span className="woocs_special_price_code"><span className="woocommerce-Price-amount amount">
-                                <bdi> <PriceUnitBox price={reduction} /></bdi></span></span></strong> </td>
-                        </tr>
-                        }
+                        
 			
 		
         {
             storeDetails !== null && <tr className="order-total">
-                <th>TVA</th>
+                <th>TAX</th>
                 <td>
                     <strong><span className="woocs_special_price_code">
 
                         <span className="woocommerce-Price-amount amount"><bdi> 
-                            { storeDetails?.taxeBoutique + "%" } =  
+                            {/* { storeDetails?.taxeBoutique + "%" } =   */}
                          <PriceUnitBox price={ (storeTotal+(shippingCost ?? 0)) * (Number(storeDetails?.taxeBoutique) / 100) } /> </bdi></span></span>
                     </strong> 
                 </td>
@@ -1125,6 +1318,31 @@ const Checkout: FC = () => {
 	</tfoot>
 </table>
 
+<div className="woocommerce-terms-and-conditions-wrapper">
+		<div className="woocommerce-privacy-policy-text"><p>Your personal data will be used to
+             process your order, support your experience throughout this website, and for other
+              purposes described in our <Link to={"/privacy-policy"} className="woocommerce-privacy-policy-link" 
+              target="_blank">privacy policy</Link>.</p>
+</div> 
+<p className="form-row validate-required">
+    <label className="woocommerce-form__label woocommerce-form__label-for-checkbox checkbox">
+				<input  onChange={
+                    () => { 
+                        console.log("Value changed"); 
+                        setTermsAccpet((er) => !termsAccept);
+
+                    }
+                } type="checkbox" className="woocommerce-form__input woocommerce-form__input-checkbox 
+                input-checkbox" name="terms" id="terms" />
+					<span className="woocommerce-terms-and-conditions-checkbox-text">
+                        I have read and agree to the website's 
+                        <Link to={"/terms-conditions"} target="_blank">Terms Conditions</Link>.</span>&nbsp;<span 
+                        className="required">*</span>
+				</label>
+				<input type="hidden" name="terms-field" value="1" />
+</p>
+</div>
+
 <div id="payment" className="woocommerce-checkout-payment" style={{ position: 'static', zoom: 1 }} >
 			<ul className="wc_payment_methods payment_methods methods">
 			<li className="wc_payment_method payment_method_ppcp-gateway">
@@ -1133,7 +1351,7 @@ const Checkout: FC = () => {
 
 	<label htmlFor="payment_method_ppcp-gateway">
 		PayPal 	</label>
-        { ( !isValid  || !storeDetails ) ?
+        { ( !isValid  || !storeDetails || !termsAccept ) ?
 
         <div className="wc-proceed-to-checkout">
             <button onClick={() => {  }} className="checkout-button button alt wc-forward"  >
@@ -1142,13 +1360,27 @@ const Checkout: FC = () => {
         </div>
         :
         <PayPalScriptProvider options={{ clientId: "AQnwfOiBDcktqMInwGzwOa8_Yj57L0FmDOOLXydK091A_PVxTDeNs06D7PXfYJxoWz-E6E0lK9Oxnj8b",
-            currency: "USD", components: "buttons"  }}> 
-           
-            <PayPalButtons disabled={ (!isValid && !dirty) || !storeDetails } 
+            currency: "USD", components: "buttons",  dataClientToken: ""  }}> 
+
+
+            <PayPalButtons disabled={ (!isValid ) || !storeDetails || !termsAccept} 
                 createOrder={ onCreateOrder }
                 onApprove={ onApproveOrder  }
+                fundingSource='paypal'
                 style={{ layout: "horizontal" }}
              /> 
+           
+            <PayPalButtons disabled={ (!isValid ) || !storeDetails || !termsAccept} 
+                createOrder={ onCreateOrder }
+                onApprove={ onApproveOrder  }
+                fundingSource='card'
+                style={{ layout: "horizontal" }}
+             /> 
+
+            {/* <BraintreePayPalButtons
+                createOrder={ onCreateOrder }
+                onApprove={ onApproveOrder  }
+                /> */}
            
         </PayPalScriptProvider>
          

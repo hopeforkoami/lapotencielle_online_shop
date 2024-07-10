@@ -387,7 +387,7 @@ const Header: FC<{  }> = (  ) => {
                                  
                                   {
                                     countries !== null ? countries.all.map((c:any, index: number) => 
-                                    <option key={index} value={ c.alpha2  } selected={ c.alpha2 === 'US' }  label={c.name}>
+                                    <option  style={{ fontSize: "1.5em" }} key={index} value={ c.alpha2  } selected={ c.alpha2 === 'US' }  label={c.name}>
                                          {c.name}</option>)
                                     : <></>
                                   }
@@ -563,8 +563,10 @@ const Header: FC<{  }> = (  ) => {
               <div className="cart-outer" data-user-set-ocm="off" data-cart-style="dropdown">
                   <div className="cart-menu-wrap">
                       <div className="cart-menu">
-                          <a id="cart-dropdown-icon"  className="cart-contents cart-dropdown-icon" ><div className="cart-icon-wrap">
-                            <i className="icon-salient-cart" aria-hidden="true"></i> <div className="cart-wrap"><span>{ store.products.length } 
+                          <a id="cart-dropdown-icon"  className="cart-contents cart-dropdown-icon" >
+                            <div className="cart-icon-wrap">
+                            <i className="icon-salient-cart" aria-hidden="true"></i> 
+                            <div className="cart-wrap"><span>{ store.products.length } 
                                 </span></div> </div></a>
 
                                 <div id="cartDropdown" className="cartDropdown-content">
@@ -648,10 +650,24 @@ const Header: FC<{  }> = (  ) => {
                               </div>
   
               <div className="col span_9 col_last">
-                                      <a className="mobile-search" href="#searchbox"><span className="nectar-icon icon-salient-search" aria-hidden="true"></span><span className="screen-reader-text">search</span></a>
-                                          <a className="mobile-user-account" href="http://lapotencielle.com/my-account/"><span className="normal icon-salient-m-user" aria-hidden="true"></span><span className="screen-reader-text">account</span></a>
+                                      <a className="mobile-search" href="#searchbox">
+                                        <span className="nectar-icon icon-salient-search" aria-hidden="true"></span><span className="screen-reader-text">search</span></a>
+                                        {
+        user !== null ? 
+        <Link to={"/client"} className="user-account-btn mobile-user-account " >
+            <img style={{ cursor: 'pointer' }} id='user-photo' className='user-photo user-account-btn normal icon-salient-m-user' 
+            src="/assets/images/user.png" alt="" /> 
+            <span className="screen-reader-text">
+                   account </span>
+             
+        </Link> : <Link className="mobile-user-account" 
+                                        to="/myaccount">
+                                            <span className="normal icon-salient-m-user" 
+                                            aria-hidden="true"></span>
+                                            <span className="screen-reader-text">account</span></Link> }
                       
-                          <a id="mobile-cart-link" data-cart-style="dropdown" href="./cart/index.html"><i className="icon-salient-cart"></i><div className="cart-wrap"><span>0 </span></div></a>
+                          <Link id="mobile-cart-link" data-cart-style="dropdown" to={'/cart'}>
+                          <i className="icon-salient-cart"></i><div className="cart-wrap"><span>{ store.products.length } </span></div></Link>
                                           <a className="show-btn borderfree__link"  >
                                                 {/* <img src="/assets/wp-content/uploads/2022/02/flags-borderflag.gif" width="18px" height="12px" alt="United States" /> */}
                                                 <div id="flag-parent-element" className='flag-element'></div><span> { currency }</span>

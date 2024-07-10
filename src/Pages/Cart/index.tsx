@@ -105,6 +105,23 @@ const Cart: FC = () => {
             navigate: navigate
         }));
 
+        let shippingAddresInfos = window.localStorage.getItem('shippingAddresInfos');
+
+        if ( shippingAddresInfos !== null && shippingAddresInfos !== '' ) {
+            let shippingAddresInfosFormatted: any = JSON.parse(shippingAddresInfos) ;
+            setShippingAddress(  shippingAddresInfosFormatted  );
+
+            if (shippingAddressFormRef.current !== null && shippingAddresInfosFormatted !== null ) {
+                shippingAddressFormRef.current.values.countryCode = 
+                shippingAddresInfosFormatted?.countryCode;
+                shippingAddressFormRef.current.values.state = shippingAddresInfosFormatted?.state;
+                shippingAddressFormRef.current.values.city = shippingAddresInfosFormatted?.city;
+                shippingAddressFormRef.current.values.postalCode = shippingAddresInfosFormatted?.postalCode;
+                shippingAddressFormRef.current.values.addressLine1 = shippingAddresInfosFormatted?.addressLine1;
+                shippingAddressFormRef.current.values.saveAddress = shippingAddresInfosFormatted?.saveAddress;
+            }
+        }
+
     }, []);
 
     useEffect(() => {   
@@ -427,6 +444,14 @@ const Cart: FC = () => {
                                         <td data-title="Subtotal"><span className="woocs_special_price_code">
                                         <span className="woocommerce-Price-amount amount"><bdi> <PriceUnitBox price={storeTotal} /> </bdi></span></span></td>
                                     </tr>
+                                    {
+                            reduction !== null && <tr className="order-total">
+                            <th>Reduction</th>
+                            <td data-title="Total"><strong><span className="woocs_special_price_code"><span className="woocommerce-Price-amount amount">
+                                <bdi> <PriceUnitBox price={reduction} /></bdi></span></span></strong> </td>
+                        </tr>
+                        }
+                        
                                     <tr className="woocommerce-shipping-totals shipping">
                             <th>Shipping</th>
                             <td data-title="Shipping">
@@ -491,7 +516,7 @@ const Cart: FC = () => {
                                     <div role="group" aria-labelledby="my-radio-group">
                                         {
                                             Object.keys(shippingOptions ?? {}).map(
-                                                (key) => shippingOptions !== null ? <label>
+                                                (key) => shippingOptions !== null ? <label style={{ fontSize: "1.2em" }} >
                                                 <Field onClick={ (e: any) => {
                                                     console.log(e.target.value);
                                                     const cost  = e.target.value;
@@ -503,7 +528,7 @@ const Cart: FC = () => {
                                                     }
 
                                                 }} type="radio" name="cost" value={ toString(shippingOptions[key]) } />
-                                                { key.replaceAll("_", " ") } : <PriceUnitBox price={ shippingOptions[key]   } />
+                                                { "Fedex_" + key.replaceAll("_", " ") } : <PriceUnitBox price={ shippingOptions[key]   } />
                                             </label> : <></>
                                             )
                                             
@@ -532,13 +557,16 @@ const Cart: FC = () => {
 
 { showShppingForm && shippingOptions === null && <Formik 
                                 initialValues={ 
+                                    shippingAddress !== null && shippingAddress !== '' ? {
+                                        ...shippingAddress
+                                    } : 
                                     {
-                                        countryCode: '',
-                                        state: '',
-                                        city: '',
-                                        postalCode: '',
+                                        countryCode:  '',
+                                        state:  '',
+                                        city:  '',
+                                        postalCode:  '',
                                         addressLine1: '',
-                                        saveAddress: false
+                                        saveAddress:   false
                                 }}
 
                                 validationSchema={
@@ -571,6 +599,8 @@ const Cart: FC = () => {
                                         setLoadShippingOptions(true);
                                         console.log(values);
 
+
+
                                         const data = {
                                             recipientAddress:  values,
                                             basket: store.products.map(
@@ -587,7 +617,8 @@ const Cart: FC = () => {
                                         cartService.getShippingCosts(data).then(async function (response: any) {
                                             console.log(response); 
                                             if (response.data.statut === 200) {
-                                                setShippingAddress((add: any) => JSON.stringify(values));
+                                                window.localStorage.setItem('shippingAddresInfos', JSON.stringify(values));
+                                                setShippingAddress((add: any) =>  values );
                                                 setShippingOptions(response.data.data.fedex);
                                                 // setReduction(() => (response.data.data.reduction))
                                             } else {
@@ -627,7 +658,7 @@ const Cart: FC = () => {
 
                                     { errors.countryCode && touched.countryCode && errors.countryCode && 
                                             <small id="validationServer05Feedback" className="invalid-feedback">
-                                                { errors.countryCode && touched.countryCode && errors.countryCode }
+                                                { errors.countryCode && '' }
                                             </small> 
                                         }
                                        
@@ -643,7 +674,7 @@ const Cart: FC = () => {
 
 { errors.state && touched.state && errors.state && 
                                             <small id="validationServer05Feedback" className="invalid-feedback">
-                                                { errors.state && touched.state && errors.state }
+                                                { errors.state && '' }
                                             </small> 
                                         }
                                 </div>
@@ -658,7 +689,7 @@ const Cart: FC = () => {
                                                 id="calc_shipping_city" data-placeholder="Town / City" />
                                     { errors.city && touched.city && errors.city && 
                                             <small id="validationServer05Feedback" className="invalid-feedback">
-                                                { errors.city && touched.city && errors.city }
+                                                { errors.city  && '' }
                                             </small> 
                                         }
 
@@ -675,7 +706,7 @@ const Cart: FC = () => {
                                                          id="calc_shipping_postcode" data-placeholder="Postcode / ZIP" />
                                      { errors.postalCode && touched.postalCode && errors.postalCode && 
                                             <small id="validationServer05Feedback" className="invalid-feedback">
-                                                { errors.postalCode && touched.postalCode && errors.postalCode }
+                                                { errors.postalCode && '' }
                                             </small> 
                                         }
                                 </div>
@@ -691,7 +722,7 @@ const Cart: FC = () => {
                                                          id="calc_shipping_postcode" data-placeholder="Street / Home number" />
                                     { errors.addressLine1 && touched.addressLine1 && errors.addressLine1 && 
                                             <small id="validationServer05Feedback" className="invalid-feedback">
-                                                { errors.addressLine1 && touched.addressLine1 && errors.addressLine1 }
+                                                { errors.addressLine1 && '' }
                                             </small> 
                                         }
 
@@ -722,13 +753,7 @@ const Cart: FC = () => {
                             </td>
                         </tr>
 
-                        {
-                            reduction !== null && <tr className="order-total">
-                            <th>Reduction</th>
-                            <td data-title="Total"><strong><span className="woocs_special_price_code"><span className="woocommerce-Price-amount amount">
-                                <bdi> <PriceUnitBox price={reduction} /></bdi></span></span></strong> </td>
-                        </tr>
-                        }
+                       
                                 <tr className="order-total">
                                     <th>Total</th>
                                     <td data-title="Total"><strong><span className="woocs_special_price_code"><span className="woocommerce-Price-amount amount">
@@ -757,7 +782,7 @@ const Cart: FC = () => {
                                     }
 
                                     if (shippingAddress !== undefined && shippingAddress !== null && shippingAddress !== '') {
-                                        dispatch(  setCurrentShippingAddress( shippingAddress ) );  
+                                        dispatch(  setCurrentShippingAddress( JSON.stringify(shippingAddress) ) );  
                                     }
 
                                     let shippingMethod = null;
@@ -804,7 +829,7 @@ const Cart: FC = () => {
                                 loading && <i className="fa fa-circle-o-notch fa-spin fa-1x fa-fw"></i>
                                }
                         </button>
-
+                        <br/>
                         {
                             user !== null ? <></> :
                             <Link style={{
@@ -812,8 +837,9 @@ const Cart: FC = () => {
                             }} to="/myaccount" className="checkout-button button alt wc-forward">
                             Sign Up / Login</Link>
                         }
-                        
-                        <Link  to="/products/OUR-ORANGE-AND-VANILLA-PRODUCTS/orange" className="checkout-button button alt wc-forward">
+                         <br/>
+                        <Link  to="/products/OUR-ORANGE-AND-VANILLA-PRODUCTS/orange" 
+                        className="checkout-button button alt wc-forward">
                             Continue Shopping</Link>	</div>
                             
                             </div>

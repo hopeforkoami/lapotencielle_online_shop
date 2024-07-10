@@ -6,7 +6,7 @@ import {
 import { useAppDispatch, useAppSelector } from '../Hooks/customSelector'; 
 import { setUser } from '../Redux/Reducers/userReducer';
 import { RootState } from '../Redux/store';
-import { updateProducts,  setShippingCosts, setReductions, setCurrentShippingAddress  } from '../Redux/Reducers/storeReducer';
+import { updateProducts,  setShippingCosts, setReductions, setCurrentShippingAddress, setBasketId  } from '../Redux/Reducers/storeReducer';
 import { setUnit } from '../Redux/Reducers/productPriceReducer';
 
 
@@ -30,6 +30,12 @@ const Main: FC = () => {
             if (user !== null) { 
                 dispatch( setUser( JSON.parse(user) ) );
             }
+
+            let storeBasketId  = window.localStorage.getItem('_store_basket_id');
+            if (storeBasketId !== null) { 
+                dispatch( setBasketId ( Number(storeBasketId) ) );
+            }
+
             let storeProducts = window.localStorage.getItem('_store_products');
             if (storeProducts !== null) { 
                 dispatch( updateProducts( JSON.parse(storeProducts) ) );

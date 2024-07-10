@@ -25,3 +25,36 @@
     transition: background-size 0.55s cubic-bezier(.2,.75,.5,1);
     background-position: left bottom;
 } 
+
+a.added_to_cart {
+    background-color: #000000 !important;
+}
+
+.checkout-button {
+    background-color: #000000 !important;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    background-image: none;
+    text-shadow: none;
+    -webkit-text-shadow: none;
+    border: none;
+    background-repeat: no-repeat;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 12px;
+    line-height: 12px;
+    padding: 10px 10px;
+    position: relative;
+    text-align: center;
+    text-transform: capitalize;
+    font-weight: normal;
+    
+}
+
+.checkout-button:hover {
+    background-color: #333333 !important;
+    transition: all 0.25s ease 0s !important;
+    opacity: 0.8;
+    
+}
