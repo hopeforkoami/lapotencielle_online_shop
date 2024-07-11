@@ -69,6 +69,8 @@ const Product: FC = () => {
 
     let [ showIngrediants, setShowIngrediants ] = useState(false);
 
+    let [ loadIngrediants, setLoadIngrediants ] = useState(false);
+
     const getProduct = (id: any) => {
         setLoading(true);
         if (forKit !== undefined && forKit !== null) {
@@ -173,6 +175,25 @@ const Product: FC = () => {
     const onPointerEnter = () => {}
     const onPointerLeave = () => {}
     const onPointerMove = (value: number, index: number) => {}
+
+
+    const setIngredInnerHtml = (ingred: string) => {
+        let spanElement = document.createElement('span');
+        spanElement.innerHTML = ingred;
+        spanElement.style.margin = '2px';
+        console.log(document.getElementById('ingredList'));
+        document.getElementById('ingredList')?.appendChild(spanElement);
+    }
+
+    const setIngredsList = () => {
+     if (product?.ingredNamesArray !== null && product?.ingredNamesArray !== undefined) {
+        product.ingredNamesArray.map(
+            (ing: any) => setIngredInnerHtml(ing)  + ', '       
+        )
+     }                 
+    }
+
+
 
     return (
         <> 
@@ -818,7 +839,13 @@ style={{ paddingTop: '0px', paddingBottom: '0px' }}>
 				<div className="toggles " data-starting="default" data-style="default">
                     <div className="toggle default" data-inner-wrap="true">
                 { !showIngrediants ? <h3 onClick={() => {
-                    setShowIngrediants((e) => !showIngrediants)
+                    setShowIngrediants((e) => !showIngrediants);
+                    setLoadIngrediants(true);
+                    setTimeout(() => {
+                        setLoadIngrediants(false);
+                        setIngredsList();
+                    }, 2000);
+                    
                     }} ><a  className="">READ FULL INGREDIENT</a></h3>
                     :
                     <h3><a onClick={() => {
@@ -828,21 +855,13 @@ style={{ paddingTop: '0px', paddingBottom: '0px' }}>
  
 { showIngrediants && <div ><div className="inner-toggle-wrap">
     <div className="wpb_text_column wpb_content_element ">
-        <div className="wpb_wrapper">
-            {
+        INGREDIENTS:
+        <div className="wpb_wrapper" id='ingredList'>
+            { loadIngrediants ?
+                <i className="fa fa-circle-o-notch fa-spin fa-1x fa-fw"></i> :
                 product !== null ? 
                 <>
-                        INGREDIENT: {
-                            product.ingredNamesArray.map(
-                                (ing: any) => 
-                                    <span style={{ display: 'inline-block', margin: '2px' }} ><a  className="">
-                                        {
-                                            ing + ', '
-                                        }
-                                        </a>
-                                    </span>
-                            )
-                        }
+                        <span ></span>
                 </>:
                 <></>
             }
