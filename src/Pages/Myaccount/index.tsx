@@ -299,16 +299,13 @@ const Myaccount: FC = () => {
                                         middleNameClient:  yup 
                                             .string() ,
                                         prenomClient: yup 
-                                            .string()
-                                            .required(`${'This field is required'}`),
+                                            .string(),
                                         billAddress: yup 
                                             .string(),
                                         contactClient: yup 
-                                            .string()
-                                            .required(`${'This field is required'}`),
+                                            .string(),
                                         newsletter:  yup 
-                                            .string()
-                                            .required(`${'This field is required'}`),
+                                            .string(),
                                         '2faActivated': yup 
                                             .boolean(),
                                         email: yup 
@@ -327,8 +324,7 @@ const Myaccount: FC = () => {
                                                 })
                                             ),
                                         paysClient: yup 
-                                            .string()
-                                            .required(`${'This field is required'}`),
+                                            .string(),
                                         login: yup 
                                             .string()
                                             .required(`${'This field is required'}`)
@@ -354,14 +350,11 @@ const Myaccount: FC = () => {
                                             .oneOf([yup.ref('password'), null], 'Passwords must match')
                                             .required(`${'This field is required'}`),
                                         town: yup
-                                            .string()
-                                            .required(`${'This field is required'}`),
+                                            .string(),
                                         street: yup
-                                            .string()
-                                            .required(`${'This field is required'}`),
+                                            .string(),
                                         bp: yup
-                                            .string()
-                                            .required(`${'This field is required'}`),
+                                            .string(),
                                     })
                                 }
                                 // innerRef={formRef}
