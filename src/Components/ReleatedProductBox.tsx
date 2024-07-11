@@ -31,12 +31,20 @@ const ReleatedProductBox: FC<{ product: any }> = ( {product} ) => {
                     <span>Quick View</span></Link>
                 </div>		   
             </div>
-		    <h2 className="woocommerce-loop-product__title"><a href="./../sunset-in-paris-creamy-moist-body-polish-scrub/index.html">SUNSET IN PARIS CREAMY MOIST BODY POLISH SCRUB</a></h2>
+		   <div className="title_and_link" style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: "10px"
+
+           }}>
+           <h2 className="woocommerce-loop-product__title"><a href="./../sunset-in-paris-creamy-moist-body-polish-scrub/index.html">SUNSET IN PARIS CREAMY MOIST BODY POLISH SCRUB</a></h2>
 	            <span className="price" style={ { textAlign: "center", fontWeight: "bold" } } >
                 <PriceUnitBox price={product?.pu} /></span> <br/>
                 <br/>
-                <Link to={'/product/' + product.id} data-quantity="1" className="button product_type_simple" data-product_id="264" data-product_sku="" aria-label="Read more about &ldquo;SUNSET IN PARIS CREAMY MOIST BODY POLISH SCRUB&rdquo;" rel="nofollow">Add to cart</Link>
+                <Link to={'/product/' + product.id} data-quantity="1" style={{maxWidth:"150px"}} className="button product_type_simple" data-product_id="264" data-product_sku="" aria-label="Read more about &ldquo;SUNSET IN PARIS CREAMY MOIST BODY POLISH SCRUB&rdquo;" rel="nofollow">Add to cart</Link>
 
+           </div>
                 {/* <div className="product-wrap">
                 <Link to={'/product/' + product.id}>
                     <img width="300" height="387" 

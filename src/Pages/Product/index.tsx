@@ -213,11 +213,6 @@ const Product: FC = () => {
 
 	<div className="container-wrap" data-midnight="dark">
 <div className="container main-content"><div className="row">
-<nav className="woocommerce-breadcrumb" itemProp="breadcrumb">
-    <span><a href="/">Home</a></span> <i className="fa fa-angle-right"></i>
-     <span>{ product?.gamme?.libGamme }</span>
-      <i className="fa fa-angle-right"></i> 
-      <span> { product?.libProduit } </span> </nav>
 					
 			<div className="woocommerce-notices-wrapper"></div>
 <div id="product-278" className="product type-product post-278 status-publish first instock product_cat-body-care product_cat-body-lotion product_cat-uncategorized product_cat-our-orange-and-vanilla-products has-post-thumbnail taxable shipping-taxable purchasable product-type-simple">
@@ -249,9 +244,9 @@ const Product: FC = () => {
 </div>
 </div>
 	<div className="summary entry-summary">
-		<h1 className="product_title entry-title">
-            { product?.libProduit }
-        </h1>
+    <h1 className="product_title entry-title" style={{ fontSize: "22px" }}>
+  {product?.libProduit}
+</h1>
 <p className="price nectar-inherit-default"><span className="woocs_price_code" data-product-id="278">
 <span className="woocommerce-Price-amount amount"><bdi><span className="woocommerce-Price-currencySymbol"></span>
 <PriceUnitBox price={ Number(product?.capitalUnitaireProduit) + Number(product?.interetUnitaireProduit)  } /></bdi></span></span></p>
@@ -907,13 +902,13 @@ style={{ paddingTop: '0px', paddingBottom: '0px' }}>
             listStyle: 'none !important', 
             display: 'flex', 
             flexFlow: 'row wrap',
-            justifyContent: 'start' }} 
+            justifyContent: 'space-between' }} 
         >
             {
 
                 products.map((product, id) =>  
-                    <li style={{  }} 
-                     className={` relate-products `}>
+                    <li style={{ listStyle: 'none'}} 
+                     className={` relate-products `} >
                         <ReleatedProductBox
                             key={id} product={product} />
                     </li>
