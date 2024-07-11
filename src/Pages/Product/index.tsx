@@ -244,9 +244,9 @@ const Product: FC = () => {
 </div>
 </div>
 	<div className="summary entry-summary">
-		<h1 className="product_title entry-title">
-            { product?.libProduit }
-        </h1>
+    <h1 className="product_title entry-title" style={{ fontSize: "22px" }}>
+  {product?.libProduit}
+</h1>
 <p className="price nectar-inherit-default"><span className="woocs_price_code" data-product-id="278">
 <span className="woocommerce-Price-amount amount"><bdi><span className="woocommerce-Price-currencySymbol"></span>
 <PriceUnitBox price={ Number(product?.capitalUnitaireProduit) + Number(product?.interetUnitaireProduit)  } /></bdi></span></span></p>
