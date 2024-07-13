@@ -39,7 +39,7 @@ const Myaccount: FC = () => {
     ] = useState(false);
 
     let [
-        showLoginPassword, setShowLoginPassword
+        show2faForm, setShow2faForm
     ] = useState(false);
 
     let [
@@ -150,6 +150,7 @@ const Myaccount: FC = () => {
                             <div className='alert-box'>
 
                             </div>
+                            { !show2faForm ?
                             <Formik
                                 initialValues={ 
                                     {
@@ -178,18 +179,30 @@ const Myaccount: FC = () => {
                                         myaccountService.login(values).then(async function (response: any) {
                                             console.log(response); 
                                             if (response.data.statut === 200) {
-                                                alert('Welcome dear !');
-                                                console.log('Logged user');
-                                                dispatch( setUser( response.data.data[0] ) );
+                                                if (response.data.data[0]['twofa'] === 0) {
+                                                    alert('Welcome dear !');
+                                                    console.log('Logged user');
+                                                    dispatch( setUser( response.data.data[0] ) );
 
-                                                window.localStorage.setItem(
-                                                    '__user',
-                                                    JSON.stringify(response.data.data[0])
-                                                );
-                
-                                                setLoading(false); 
-                
-                                                window.location.href = "/";
+                                                    window.localStorage.setItem(
+                                                        '__user',
+                                                        JSON.stringify(response.data.data[0])
+                                                    );
+                    
+                                                    setLoading(false); 
+                    
+                                                    window.location.href = "/";
+                                                } else if (response.data.data[0]['twofa'] === 1) {
+                                                    alert('2FA code sent to your email, check please!');
+
+                                                    window.localStorage.setItem(
+                                                        '2fa_user',
+                                                        JSON.stringify(response.data.data[0])
+                                                    );
+
+                                                    setShow2faForm(true);
+                                                }
+                                                
                                             } else if (response.data.statut === 500) {
                                                 setMessage(() => response.data.message);
                                             }
@@ -263,7 +276,96 @@ const Myaccount: FC = () => {
                                 
                                 </Form>
             )}
-        </Formik>
+        </Formik> : <Formik
+                                initialValues={ 
+                                    {
+                                        '2faCode': ''
+                                }}
+
+                                validationSchema={
+                                    yup.object().shape({
+                                        
+                                        '2faCode': yup 
+                                            .string()
+                                            .required(`${'This field is required'}`) 
+                                    })
+                                }
+                                // innerRef={formRef}
+                                onSubmit={async (
+                                    values 
+                                ) => {
+                                        setMessage(() => null);
+                                        console.log(values); 
+                                        setLoading(true);
+
+                                        const faUser = JSON.parse(window.localStorage.getItem( '2fa_user' ) ?? '') ;
+                                        myaccountService.check2faCode({
+                                            ...values,
+                                            id: faUser.id
+                                        }).then(async function (response: any) {
+                                            console.log(response); 
+                                            if (response.data.statut === 200) {
+                                                alert('Welcome dear !');
+                                                console.log('Logged user');
+                                                dispatch( setUser( response.data.data[0] ) );
+
+                                                window.localStorage.setItem(
+                                                    '__user',
+                                                    JSON.stringify(response.data.data[0])
+                                                );
+                
+                                                setLoading(false); 
+                
+                                                window.location.href = "/";
+                                            } else if (response.data.statut === 500) {
+                                                setMessage(() => response.data.message);
+                                            }
+                                        })
+                                          .catch(function (error: any) {
+                                            console.log(error); 
+                                        });
+                                    }}
+                                >
+                                    {({ dirty, errors, touched, isValid, handleChange, handleBlur, handleSubmit, values }) => (
+                                    <Form  className="woocommerce-form woocommerce-form-login login" >
+                                        {
+                                        
+                                            message !== null && message !== '' && 
+                                            <b className='error-msg'>
+                                                { message }
+                                            </b>
+
+                                        }
+                                     
+                                
+                                <p className="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+                                    <label htmlFor="2faCode">Enter 2FA code here&nbsp;<span className="required">*</span></label>
+                                    <input type="text"   
+                                    className={`woocommerce-Input woocommerce-Input--text input-text 
+                                     ${ errors["2faCode"] && touched["2faCode"] ? "input-format-error":"input-format"}`}
+                                        name="2faCode" id="2faCode" autoComplete="2faCode" 
+                                            onChange={handleChange('2faCode')}
+                                                onBlur={handleBlur('2faCode')}
+                                                    value={values["2faCode"]} />	
+                                    { errors["2faCode"]&& touched["2faCode"] && errors["2faCode"] && 
+                                            <small id="validationServer05Feedback" className="invalid-feedback">
+                                                { errors["2faCode"] && touched["2faCode"] && errors["2faCode"] }
+                                            </small> 
+                                    }	
+                                </p>
+
+                                <p className="form-row">
+                                  
+                                    <input type="hidden" id="woocommerce-login-nonce" name="woocommerce-login-nonce" 
+                                    value="50f6b19b53" /><input type="hidden" name="_wp_http_referer" value="/my-account/" />				
+                                    <button  type="submit" className="woocommerce-button button woocommerce-form-login__submit" 
+                                    name="login" value="Log in">Log in</button>
+                                </p>
+
+                                
+                                </Form>
+            )}
+        </Formik> }
 
                         </div>
 

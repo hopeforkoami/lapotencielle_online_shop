@@ -18,6 +18,10 @@ export default class MyaccountService {
         return await axiosInstance.post('/client/login', login );
     } 
 
+    public check2faCode =  async (data: Record<string, any>) => {
+        return await axiosInstance.post('/client/2facheck', data );
+    } 
+
     public verifyEmail =  async (email: string) => {
         return await axiosInstance.post('/client/email/test', {
             "email": email

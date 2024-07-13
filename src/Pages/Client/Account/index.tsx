@@ -631,7 +631,7 @@ const Account: FC = () => {
                         </div>
                     </div>
                     
-                    <Footer />
+                    {/* <Footer /> */}
 
                 </div>
                 {/* <div id="footer-outer" data-cols="4" data-custom-color="false" data-disable-copyright="true" data-matching-section-color="true" data-copyright-line="false" data-using-bg-img="false" data-bg-img-overlay="0.8" data-full-width="false" data-using-widget-area="false" data-link-hover="default">
