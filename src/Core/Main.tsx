@@ -121,11 +121,11 @@ const Main: FC = () => {
         console.log("Pop value");
         console.log(pop);
 
-        if (!(pop === 'true')) {
-            console.log("Set pop value");
-            setShowModal(true);
-        }
-        
+        // if (!(pop === 'true')) {
+        //     console.log("Set pop value");
+        //     setShowModal(true);
+        // }
+        //
         window.localStorage.setItem('popup', "true");
 
         const currency = window.localStorage.getItem('currency');
