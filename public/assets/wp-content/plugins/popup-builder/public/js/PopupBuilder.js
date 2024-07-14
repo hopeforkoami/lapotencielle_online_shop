@@ -157,6 +157,12 @@ SGPBPopup.listeners = function () {
 		if (!Object.keys(openedPopups).length) {
 			return false;
 		}
+		if (getCookie("alreadyVisited") !== "true") {
+            setCookie("alreadyVisited", "true", 365); // Setting cookie to expire in 365 days
+        }
+        else{
+        	return false;
+        }
 		var params = {};
 		params.popupsIdCollection = window.sgpbOpenedPopup;
 
