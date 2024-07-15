@@ -64,10 +64,10 @@ const Products: FC = () => {
         switch (title?.replaceAll("-", " ")) {
             
             case "ACCESSORIES & TOOLS":
-                return "white!important";
+                return "white";
                 break;
             case "FACIAL CARE":{
-                return "#ffffff!important";
+                return "#ffffff";
                
             } break;
             case "HAIR CARE":
