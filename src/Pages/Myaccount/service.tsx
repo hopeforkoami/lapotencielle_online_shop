@@ -22,6 +22,14 @@ export default class MyaccountService {
         return await axiosInstance.post('/client/2facheck', data );
     } 
 
+    public requestResetPassword =  async (data: Record<string, any>) => {
+        return await axiosInstance.post('/client/password/reset', data );
+    } 
+
+    public resetPassword =  async (data: Record<string, any>) => {
+        return await axiosInstance.post('/client/password/set', data );
+    } 
+
     public verifyEmail =  async (email: string) => {
         return await axiosInstance.post('/client/email/test', {
             "email": email

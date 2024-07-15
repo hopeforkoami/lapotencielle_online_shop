@@ -199,7 +199,7 @@ const Header: FC<{  }> = (  ) => {
 
             for(var i =0; i <= (subMenus.length - 1); i++) {
 
-                console.log(subMenus[i]);
+               //  console.log(subMenus[i]);
 
                 subMenus[i].addEventListener("click", (event: any) => {
                     console.log("Menu is clicked");
@@ -224,7 +224,7 @@ const Header: FC<{  }> = (  ) => {
 
             for(var i =0; i <= (mainMenus.length - 1); i++) {
 
-                console.log(mainMenus[i]);
+               //  console.log(mainMenus[i]);
 
                 mainMenus[i].addEventListener("mouseover", (event: any) => {
                     console.log("Menu over");

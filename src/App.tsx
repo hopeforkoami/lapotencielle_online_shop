@@ -76,7 +76,9 @@ function App() {
           <Routes > 
 
             <Route path="/" element={ <Main />} >
+
               <Route index element={<Home />} />
+
               <Route  path="/products/:group/:category" element={ <Products />} />
               <Route  path="/product/:id" element={ <Product />} />
               <Route  path="/product/:id/:forKit" element={ <Product />} />
@@ -85,6 +87,7 @@ function App() {
               <Route  path="/cart/checkout" element={ <Checkout />} />
 
               <Route  path="/myaccount" element={ <Myaccount />} />
+              <Route  path="/myaccount/reset-password/:userId" element={ <Myaccount />} />
 
               <Route  path="/news/:title" element={ <News />} />
               <Route  path="/kits/:group/:category" element={ <Kits />} /> 

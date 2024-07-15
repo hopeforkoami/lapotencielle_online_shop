@@ -23,6 +23,8 @@ import { RootState } from '../../Redux/store';
 var countries = require('country-data-list').countries;
 
 const Myaccount: FC = () => {   
+
+    let { userId } = useParams();
     
     let location = useLocation(); 
     const user = useAppSelector((state: RootState) => state.users.user );
@@ -43,6 +45,14 @@ const Myaccount: FC = () => {
     ] = useState(false);
 
     let [
+        showForgetPassword, setShowForgetPassword
+    ] = useState(false);
+
+    let [
+        showResetPassword, setShowResetPassword
+    ] = useState(false);
+
+    let [
         message, setMessage
     ] = useState(null);
 
@@ -52,6 +62,9 @@ const Myaccount: FC = () => {
 
     const checkPasswordStrength = (password: string) => {
         // Create an object to store the criteria that the password needs to meet
+        if (password === null || password === undefined) {
+            return '';
+        }
         const criteria = {
           length: false,
           uppercase: false,
@@ -126,6 +139,21 @@ const Myaccount: FC = () => {
         }
     }
 
+    useEffect(
+        () => {
+            console.log(location);
+            console.log(userId);
+            if (location !== null) {
+                if (location.pathname.includes('reset-password')) {
+                    setShowResetPassword(true);
+                } else {
+                    setShowResetPassword(false);
+                }
+            }
+        },
+        [location]
+    )
+
     return (
         <div className='woocommerce-account'>
             <div id="ajax-content-wrap">
@@ -146,11 +174,12 @@ const Myaccount: FC = () => {
                         <div className="u-column1 col-1 visible" >
 
 
-                            <h2>Login</h2>
+                            <h2>{ !showResetPassword ? 'Login' : 'Reset password'
+                                }</h2>
                             <div className='alert-box'>
 
                             </div>
-                            { !show2faForm ?
+                            { !showResetPassword ? !showForgetPassword ? !show2faForm ?
                             <Formik
                                 initialValues={ 
                                     {
@@ -200,14 +229,18 @@ const Myaccount: FC = () => {
                                                         JSON.stringify(response.data.data[0])
                                                     );
 
+                                                    setLoading(false); 
+
                                                     setShow2faForm(true);
                                                 }
                                                 
                                             } else if (response.data.statut === 500) {
+                                                setLoading(false); 
                                                 setMessage(() => response.data.message);
                                             }
                                         })
                                           .catch(function (error: any) {
+                                            setLoading(false); 
                                             console.log(error); 
                                         });
                                     }}
@@ -266,11 +299,14 @@ const Myaccount: FC = () => {
                                     <input type="hidden" id="woocommerce-login-nonce" name="woocommerce-login-nonce" 
                                     value="50f6b19b53" /><input type="hidden" name="_wp_http_referer" value="/my-account/" />				
                                     <button  type="submit" className="woocommerce-button button woocommerce-form-login__submit" 
-                                    name="login" value="Log in">Log in</button>
+                                    name="login" value="Log in">{
+                                        loading && <i className="fas fa-spinner fa-spin"></i>
+                                    } Log in</button>
                                 </p>
                                 
-                                <p className="woocommerce-LostPassword lost_password">
-                                    <a href="#">Forgot your Password?</a>
+                                <p  style={{ cursor: 'pointer' }} 
+                                 className="woocommerce-LostPassword lost_password">
+                                    <a onClick={() => { setShowForgetPassword( !showForgetPassword ) }}>Forgot your Password?</a>
                                 </p>
 
                                 
@@ -318,10 +354,12 @@ const Myaccount: FC = () => {
                 
                                                 window.location.href = "/";
                                             } else if (response.data.statut === 500) {
+                                                setLoading(false); 
                                                 setMessage(() => response.data.message);
                                             }
                                         })
                                           .catch(function (error: any) {
+                                            setLoading(false); 
                                             console.log(error); 
                                         });
                                     }}
@@ -359,7 +397,258 @@ const Myaccount: FC = () => {
                                     <input type="hidden" id="woocommerce-login-nonce" name="woocommerce-login-nonce" 
                                     value="50f6b19b53" /><input type="hidden" name="_wp_http_referer" value="/my-account/" />				
                                     <button  type="submit" className="woocommerce-button button woocommerce-form-login__submit" 
-                                    name="login" value="Log in">Log in</button>
+                                    name="login" value="Log in">{
+                                        loading && <i className="fas fa-spinner fa-spin"></i>
+                                    } Log in</button>
+                                </p>
+
+                                
+
+                                
+                                </Form>
+            )}
+        </Formik>  :  <Formik
+                                initialValues={ 
+                                    {
+                                        'userName': ''
+                                }}
+
+                                validationSchema={
+                                    yup.object().shape({
+                                        
+                                        'userName': yup 
+                                            .string()
+                                            .required(`${'This field is required'}`) 
+                                    })
+                                }
+                                // innerRef={formRef}
+                                onSubmit={async (
+                                    values, actions 
+                                ) => {
+                                        setMessage(() => null);
+                                        console.log(values); 
+                                        setLoading(true); 
+                                        myaccountService.requestResetPassword({
+                                            ...values 
+                                        }).then(async function (response: any) {
+                                            console.log(response); 
+                                            if (response.data.statut === 200) {
+                                                alert('An password reseting Url was sent to your email, check and click the link!');
+                                                actions.resetForm();
+                                                setLoading(false);  
+                                                // window.location.href = "/myaccount";
+                                            } else if (response.data.statut === 500) {
+                                                setLoading(false); 
+                                                setMessage(() => response.data.message);
+                                            }
+                                        })
+                                          .catch(function (error: any) {
+                                            setLoading(false); 
+                                            console.log(error); 
+                                        });
+                                    }}
+                                >
+                                    {({ dirty, errors, touched, isValid, handleChange, handleBlur, handleSubmit, values }) => (
+                                    <Form  className="woocommerce-form woocommerce-form-login login" >
+                                        {
+                                        
+                                            message !== null && message !== '' && 
+                                            <b className='error-msg'>
+                                                { message }
+                                            </b>
+
+                                        }
+                                     
+                                
+                                <p className="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+                                    <label htmlFor="userName">Ente your username here&nbsp;<span className="required">*</span></label>
+                                    <input type="text"   
+                                    className={`woocommerce-Input woocommerce-Input--text input-text 
+                                     ${ errors["userName"] && touched["userName"] ? 
+                                        "input-format-error":"input-format"}`}
+                                        name="userName" id="userName" autoComplete="userName" 
+                                            onChange={handleChange('userName')}
+                                                onBlur={handleBlur('userName')}
+                                                    value={values["userName"]} />	
+                                    { errors["userName"]&& touched["userName"] && errors["userName"] && 
+                                            <small id="validationServer05Feedback" className="invalid-feedback">
+                                                { errors["userName"] && touched["userName"] && errors["userName"] }
+                                            </small> 
+                                    }	
+                                </p>
+
+                                <p className="form-row">
+                                  
+                                    <input type="hidden" id="woocommerce-login-nonce" name="woocommerce-login-nonce" 
+                                    value="50f6b19b53" /><input type="hidden" name="_wp_http_referer" value="/my-account/" />				
+                                    <button  type="submit" className="woocommerce-button button woocommerce-form-login__submit" 
+                                    name="login" value="Request reset password">{
+                                        loading && <i className="fas fa-spinner fa-spin"></i>
+                                    } Request reset password</button>
+                                </p>
+
+                                <p  style={{ cursor: 'pointer' }}  className="woocommerce-LostPassword lost_password">
+                                    <a onClick={() => { setShowForgetPassword( !showForgetPassword ) }}>
+                                        Cancel and log in</a>
+                                </p>
+
+                                
+                                </Form>
+            )}
+        </Formik> : <Formik
+                                initialValues={ 
+                                    {
+                                        newPass: '',
+                                        passwordConfirmation: '',
+                                        resetKey:  userId
+                                }}
+
+                                validationSchema={
+                                    yup.object().shape({
+                                        
+                                    newPass: yup 
+                                            .string()
+                                            .required(`${'This field is required'}`)
+                                            .matches(
+                                                /^(?=.*[!@#\$%\^&\*])(?=.{12,})/,
+                                                `${"Hint: The password should be at least twelve characters long. To make it stronger, use upper and lower case letters, numbers, and symbols like ! \" ? $ % ^ & )."}`
+                                            ),
+
+                                    passwordConfirmation: yup.string()
+                                            .oneOf([yup.ref('newPass'), null], 'Passwords must match')
+                                            .required(`${'This field is required'}`),
+
+                                    resetKey: yup
+                                            .string() 
+                                    })
+                                }
+                                // innerRef={formRef}
+                                onSubmit={async (
+                                    values 
+                                ) => {
+                                        setMessage(() => null);
+                                        console.log(values); 
+                                        setLoading(true);
+                                        values.resetKey = userId;
+                                        myaccountService.resetPassword(values).then(async function (response: any) {
+                                            console.log(response); 
+                                            if (response.data.statut === 200) { 
+                                                
+                                                    alert('Password reset successfully, you can loggin now!');
+                                                    console.log('Logged user'); 
+
+                                                    setLoading(false); 
+                    
+                                                    window.location.href = "/myaccount";
+                                                 
+                                                
+                                            } else if (response.data.statut === 500) {
+                                                setLoading(false); 
+                                                setMessage(() => response.data.message);
+                                            }
+                                        })
+                                          .catch(function (error: any) {
+                                            setLoading(false); 
+                                            console.log(error); 
+                                        });
+                                    }}
+                                >
+                                    {({ dirty, errors, touched, isValid, handleChange, handleBlur, handleSubmit, values }) => (
+                                    <Form  className="woocommerce-form woocommerce-form-login login" >
+                                        {
+                                        
+                                            message !== null && message !== '' && 
+                                            <b className='error-msg'>
+                                                { message }
+                                            </b>
+
+                                        }
+
+                                        <p> Set new password by filling the form </p>
+                                     
+                                
+                                
+                                        <p className="form-row form-row-wide">
+                                        <label htmlFor="reg_billing_first_name">Password<span 
+                                        className="required">*</span></label>
+                                        <span className="password-input"><input type={ showPassword ? "text" : "password" } 
+                                        className={`input-text  ${ errors.newPass && touched.newPass ?
+                                             "input-format-error":"input-format"}`} name="newPass" 
+                                        id="newPass" onChange={handleChange('newPass')}
+                                        onBlur={handleBlur('newPass')}
+                                            value={values.newPass} /><span 
+                                            onClick={() => setShowPassword(() => !showPassword) }
+                                             className="show-password-input"></span></span>
+
+                                        {
+                                            checkPasswordStrength(values.newPass) && <div 
+                                            className={`woocommerce-password-strength `} style={ getPasswordFeedbackStyle(checkPasswordStrength(values.newPass)) } 
+                                            aria-live="polite">{ checkPasswordStrength(values.newPass) }
+                                            { ( checkPasswordStrength(values.newPass) === 'Weak' || 
+                                            checkPasswordStrength(values.newPass) === 'Medium'  ) 
+                                            && '- Please enter a stronger password.'  }</div>
+                                        }
+                                        
+                                        { errors.newPass && touched.newPass && errors.newPass && 
+                                            <small id="validationServer05Feedback" >
+                                                { errors.newPass && touched.newPass && errors.newPass }
+                                            </small> 
+                                        }
+                                    </p>
+
+                                <p className="form-row form-row-wide">
+                                        <label htmlFor="reg_billing_first_name">Confirm password <span className="required">*</span></label>
+                                        <span className="password-input">
+                                            <input type={ showPasswordConfirm ? "text" : "password" }  
+                                            className={`input-text 
+                                                        ${ errors.passwordConfirmation && touched.passwordConfirmation ?
+                                                        "input-format-error":"input-format"}`}
+                                              name="passwordConfirmation" 
+                                              id="passwordConfirmation" 
+                                              onChange={handleChange('passwordConfirmation')}
+                                              onBlur={handleBlur('passwordConfirmation')}
+                                              value={values.passwordConfirmation} />
+                                              <span onClick={() => setShowPasswordConfirm(() => !showPasswordConfirm) }
+                                               className="show-password-input"></span></span>
+                                              { errors.passwordConfirmation && touched.passwordConfirmation && 
+                                              errors.passwordConfirmation && 
+                                            <small id="validationServer05Feedback" className="invalid-feedback">
+                                                { errors.passwordConfirmation && touched.passwordConfirmation &&
+                                                 errors.passwordConfirmation }
+                                            </small> 
+                                        }
+                                    </p>
+
+                                {/* <p className="form-row form-row-wide">
+                                        <label htmlFor="reg_billing_first_name">Password<span className="required">*</span></label>
+                                        <span className="password-input"><input type={ showPassword ? "text" : "password" } 
+                                        className={`input-text  ${ errors.password && touched.password ?
+                                             "input-format-error":"input-format"}`} name="password" 
+                                        id="password" onChange={handleChange('password')}
+                                        onBlur={handleBlur('password')}
+                                            value={values.password} /><span 
+                                            onClick={() => setShowPassword(() => !showPassword) }
+                                             className="show-password-input"></span></span>
+                                        { errors.password && touched.password && errors.password && 
+                                            <small id="validationServer05Feedback" className="invalid-feedback">
+                                                { errors.password && touched.password && errors.password }
+                                            </small> 
+                                        }
+                                </p> */}
+                                
+                                <p className="form-row">
+                                  
+                                    <input type="hidden" id="woocommerce-login-nonce" name="woocommerce-login-nonce" 
+                                    value="50f6b19b53" /><input type="hidden" name="_wp_http_referer" value="/my-account/" />				
+                                    <button  disabled={ (!dirty && !isValid) }  type="submit" className="woocommerce-button button woocommerce-form-login__submit" 
+                                    name="login" value="Log in">{
+                                        loading && <i className="fas fa-spinner fa-spin"></i>
+                                    } Reset password</button>
+                                </p>
+                                
+                                <p style={{ cursor: 'pointer' }} className="woocommerce-LostPassword lost_password">
+                                    <a onClick={() => { setShowForgetPassword( !showForgetPassword ) }}>
+                                        Cancel and log in</a>
                                 </p>
 
                                 
@@ -487,6 +776,7 @@ const Myaccount: FC = () => {
                                                 window.location.href = "/";
                                             } 
                                         }).catch(function (error: any) {
+                                            setLoading(false); 
                                                 console.log(error); 
                                         });
                                          
@@ -727,7 +1017,9 @@ const Myaccount: FC = () => {
                                     <input type="hidden" name="_wp_http_referer" value="/my-account/" /> */}
                                     <button disabled={ (!dirty && !isValid) }  type="submit" className="woocommerce-Button woocommerce-button 
                                     button woocommerce-form-register__submit" name="register" 
-                                    value="Register">Register</button>
+                                    value="Register">{
+                                        loading && <i className="fas fa-spinner fa-spin"></i>
+                                    } Register</button>
                                 </p>
 
                                 
