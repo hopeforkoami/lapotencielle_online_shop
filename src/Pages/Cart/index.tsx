@@ -84,10 +84,12 @@ const Cart: FC = () => {
     ] = useState(false);
 
     const getStoreTotal = () => {
+        console.log("Store products");
+        console.log(store.products);
         let strTtl = 0;
         store.products.forEach(
             (row: any) => {
-                strTtl += ( (Number(row.product?.capitalUnitaireProduit) + Number(row.product?.interetUnitaireProduit)) * row.qty );
+                strTtl = strTtl + ( (Number(row.product?.capitalUnitaireProduit) + Number(row.product?.interetUnitaireProduit)) * row.qty );
             }
         );
         setStoreTotal( strTtl );
@@ -95,7 +97,9 @@ const Cart: FC = () => {
 
     useEffect(() => {   
         console.log(user);
-        getStoreTotal();
+
+        dispatch( setReductions( null ) );  
+        
         window.onload = function() { 
             setShowShppingForm(true);
         }
@@ -121,6 +125,8 @@ const Cart: FC = () => {
                 shippingAddressFormRef.current.values.saveAddress = shippingAddresInfosFormatted?.saveAddress;
             }
         }
+
+        getStoreTotal();
 
     }, []);
 
@@ -355,76 +361,7 @@ const Cart: FC = () => {
                                 reduction !== null && <p style={{ fontWeight: 'bold' }}>Congratulations you have <PriceUnitBox price={reduction} /> benefit</p>
                             }
  
-                        {/* <div className="coupon">
-							<label htmlFor="coupon_code">Coupon:</label> 
-                            <span><div  style={{ display: 'flex', flexFlow: 'row ', justifyContent: 'space-between' }}>
-                            <Formik
-                                initialValues={ 
-                                    {
-                                        promoCode: ''
-                                }}
-
-                                validationSchema={
-                                    yup.object().shape({
-                                        
-                                        promoCode: yup 
-                                            .string()
-                                            .required(`${'This field is required'}`)
-                                    })
-                                }
-                                innerRef={promoCodeFormRef}
-                                onSubmit={async (
-                                    values 
-                                ) => {  
-                                        setLoadReduction(true);
-                                        setReduction((red) => (null));
-                                        console.log(values);
-                                        const data = {
-                                            ...values,
-                                            montantBasket: storeTotal
-                                        }
-                                        cartService.getPromoCodeReduction(data).then(async function (response: any) {
-                                            console.log(response); 
-                                        if (response.data.statut === 200) {
-                                             setReduction(() => (response.data.data.reduction))
-                                        } else {
-                                            alert('Unknown promo code');
-                                        }
-                                        setLoadReduction(false);
-                                    }).catch(function (error: any) {
-                                            console.log(error); 
-                                            setLoadReduction(false);
-                                    });
-                                    }}
-                                >
-                                    {({ dirty, errors, touched, isValid, handleChange, handleBlur, handleSubmit, values }) => (
-                                    <Form  className="woocommerce-form woocommerce-form-login login" >
-
-                                        <input type="text" name="coupon_code" className="input-text" id="coupon_code" value="" 
-                                         />  
-                                         <input type="text" placeholder="Coupon code" id="coupon_code"
-                                            className={`input-text ${ errors.promoCode && touched.promoCode ? "input-format-error":""}`}
-                                                name="promoCode"  autoComplete="promoCode" 
-                                                    onChange={handleChange('promoCode')}
-                                                        onBlur={handleBlur('promoCode')}
-                                                            value={values.promoCode ?? ''} />	
-                                        <button type="submit" disabled={ (!dirty && !isValid) }
-                                         className="button" name="apply_coupon" value="Apply coupon">{
-                                            loadReduction && <i className="fas fa-spinner fa-spin"></i>
-                                         } Apply coupon</button>
-
-                                    </Form>
-            )}
-        </Formik>
-
-                                   
-                            </div></span>
-                            <br/> 
-                            {
-                                reduction !== null && <p style={{ fontWeight: 'bold' }}>Congratulations you have <PriceUnitBox price={reduction} /> benefit</p>
-                            }
-						</div> */}
-
+                         
                         
                         </div>
                     </div> 
@@ -442,7 +379,8 @@ const Cart: FC = () => {
                                     <tr className="cart-subtotal">
                                         <th>Subtotal</th>
                                         <td data-title="Subtotal"><span className="woocs_special_price_code">
-                                        <span className="woocommerce-Price-amount amount"><bdi> <PriceUnitBox price={storeTotal} /> </bdi></span></span></td>
+                                        <span className="woocommerce-Price-amount amount"><bdi> 
+                                            { storeTotal !== null && storeTotal !== 0 ? <PriceUnitBox price={storeTotal} /> : '' } </bdi></span></span></td>
                                     </tr>
                                     {
                             reduction !== null && <tr className="order-total">
@@ -620,6 +558,12 @@ const Cart: FC = () => {
                                                 window.localStorage.setItem('shippingAddresInfos', JSON.stringify(values));
                                                 setShippingAddress((add: any) =>  values );
                                                 setShippingOptions(response.data.data.fedex);
+                                                window.localStorage.setItem(
+                                                    '_shipping_options',
+                                                    JSON.stringify(
+                                                        response.data.data.fedex
+                                                    )
+                                                );
                                                 // setReduction(() => (response.data.data.reduction))
                                             } else {
                                                 alert('Error');
@@ -758,9 +702,9 @@ const Cart: FC = () => {
                                     <th>Total</th>
                                     <td data-title="Total"><strong><span className="woocs_special_price_code"><span className="woocommerce-Price-amount amount">
                                         <bdi> 
-                                            <PriceUnitBox price={ 
+                                            { storeTotal !== null && storeTotal !== 0 ? <PriceUnitBox price={ 
                                                 reduction !== null ? (storeTotal+shippingCost) - Number(reduction) :
-                                                 (storeTotal+shippingCost) } /></bdi></span></span></strong> </td>
+                                                 (storeTotal+shippingCost) } /> : '' } </bdi></span></span></strong> </td>
                                 </tr>
 
                                 
@@ -796,10 +740,12 @@ const Cart: FC = () => {
                                     });
 
                                     if (shippingMethod !== null) {
+
                                         window.localStorage.setItem(
                                             '_shipping_method',
                                             shippingMethod
-                                        );
+                                        ); 
+
                                     }
 
                                     if (promoCodeFormRef.current !== null) {

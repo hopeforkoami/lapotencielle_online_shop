@@ -118,22 +118,25 @@ const ProductBox: FC<{ product: any, productListLength: number, animated?: boole
                                 </div>
                             </div>
                             </div>
-                        <div className="wpb_text_column wpb_content_element " >
-                            <div className="wpb_wrapper">
-                                <Link style={{ fontSize: "13px" , fontWeight: "500" }} 
-                                to={ detailsLink } >
-                                   {product.fullName} </Link>
+
+                        <div className='product-details-block'> 
+                            <div className="wpb_text_column wpb_content_element " >
+                                <div className="wpb_wrapper">
+                                    <Link style={{ fontSize: "13px" , fontWeight: "500" }} 
+                                    to={ detailsLink } >
+                                    {product.fullName} </Link>
+                                </div>
                             </div>
-                        </div>
-                        
-                        
-                        
-                        
-                        <div className="wpb_text_column wpb_content_element " >
-                            <div className="wpb_wrapper">
-                                <p style={{ textAlign: "center", fontSize: "13px" , fontWeight: "500" }} > 
-                                    <PriceUnitBox price={product?.pu} /></p>
-                            </div>
+                            
+                            
+                            
+                            
+                            <div className="wpb_text_column wpb_content_element " >
+                                <div className="wpb_wrapper">
+                                    <p style={{ textAlign: "center", fontSize: "13px" , fontWeight: "500" }} > 
+                                        <PriceUnitBox price={product?.pu} /></p>
+                                </div>
+                            </div> 
                         </div>
                         
                         <div className="wpb_text_column wpb_content_element  hover_show_text" >

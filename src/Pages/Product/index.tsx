@@ -833,7 +833,7 @@ style={{ paddingTop: '0px', paddingBottom: '0px' }}>
 			<div className="wpb_wrapper">
 				<div className="toggles " data-starting="default" data-style="default">
                     <div className="toggle default" data-inner-wrap="true">
-                { !showIngrediants ? <h3 onClick={() => {
+                { !showIngrediants ? <h3 style={{ cursor: 'pointer' }} onClick={() => {
                     setShowIngrediants((e) => !showIngrediants);
                     setLoadIngrediants(true);
                     setTimeout(() => {
@@ -843,7 +843,7 @@ style={{ paddingTop: '0px', paddingBottom: '0px' }}>
                     
                     }} ><a  className="">READ FULL INGREDIENT</a></h3>
                     :
-                    <h3><a onClick={() => {
+                    <h3 style={{ cursor: 'pointer' }}><a onClick={() => {
                         setShowIngrediants((e) => !showIngrediants)
                         }}  className="open">Hide</a></h3>
                 }
@@ -923,6 +923,18 @@ style={{ paddingTop: '0px', paddingBottom: '0px' }}>
     <Footer />
                 {/* Footer  */}
             </div>
+            <div className="nectar-social fixed woo visible" data-position="" data-rm-love="0" 
+            data-color-override="override"><a href="#">
+                <i className="icon-default-style steadysets-icon-share"></i></a>
+                <div className="nectar-social-inner"><a className="facebook-share nectar-sharing" 
+                href="#" title="Share this"> <i className="fa fa-facebook"></i> 
+                <span className="social-text">Share</span> </a><a className="twitter-share nectar-sharing" 
+                href="#" title="Tweet this"> <i className="fa fa-twitter"></i> <span className="social-text">
+                    Tweet</span> </a><a className="linkedin-share nectar-sharing" href="#" title="Share this">
+                         <i className="fa fa-linkedin"></i> <span className="social-text">Share</span> 
+                         </a><a className="pinterest-share nectar-sharing" href="#" title="Pin this"> 
+                            <i className="fa fa-pinterest"></i> <span className="social-text">Pin</span> 
+                            </a></div></div>
     </div> : <></> }
     </> 
     );

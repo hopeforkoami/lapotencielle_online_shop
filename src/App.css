@@ -122,6 +122,16 @@ html body.page.home.page-template-default div#ajax-content-wrap li.product.type-
   background-color: black !important;
 }
 
-/* html body.page.home.page-template-default div#ajax-content-wrap li.product.type-product a.button.product_type_simple.add_to_cart_button: hover {
-  background-color: black !important;
-} */
+.product-details-block {
+   height: 80px;
+   max-height: 30%;
+}
+
+@media only screen and (max-width: 768px) {
+
+  .product-details-block {
+    height: 30% !important;
+    max-height: 30%;
+ }
+
+}

@@ -17,7 +17,7 @@ import { Formik, Field, Form, FormikProps } from 'formik'
 import * as yup from 'yup';
 
 import { useAppDispatch, useAppSelector } from '../../Hooks/customSelector';
-import { addProduct, removeProduct, setReductions, updateProductQty, updateProducts } from '../../Redux/Reducers/storeReducer';
+import { addProduct, removeProduct, setReductions, setShippingCosts, updateProductQty, updateProducts } from '../../Redux/Reducers/storeReducer';
 import Footer from '../../Layouts/Footer';
 import { RootState } from '../../Redux/store';
 
@@ -30,6 +30,10 @@ import MyaccountService from '../Myaccount/service';
 import { setUser } from '../../Redux/Reducers/userReducer';
 
 var countries = require('country-data-list').countries ;
+
+interface ShippingOptionsForm {
+    cost: string | null
+}
 
 interface CheckoutData {
                                         idVente: any;
@@ -56,7 +60,8 @@ interface CheckoutData {
                                         email: string;
                                         phone: string;
                                         company: string;
-                                        sameAddressShippingAndBilling: string
+                                        sameAddressShippingAndBilling: string,
+                                        orderNote: string;
 }
 
 interface PromotionCodeForm {
@@ -76,6 +81,8 @@ const Checkout: FC = () => {
     const checkOutDataFormRef = useRef< FormikProps< CheckoutData >>(null);
 
     const promoCodeFormRef = useRef< FormikProps< PromotionCodeForm >>(null);
+
+    const shippingOptionsFormRef = useRef< FormikProps< ShippingOptionsForm >>(null);
 
     const user = useAppSelector((state: RootState) => state.users.user );
 
@@ -120,8 +127,10 @@ const Checkout: FC = () => {
     let [
         termsAccept, setTermsAccpet
     ] = useState(false);
-
-    // const [ reduction, setReduction ] = useState(null);
+    
+    let [
+        shippingOptions, setShippingOptions
+    ] = useState(null);
 
     
 
@@ -153,11 +162,18 @@ const Checkout: FC = () => {
                 console.log(error); 
             });
     }
+
+    const toString = (str:any) => {
+        return str.toString();
+    } 
  
 
     useEffect(() => {   
-        console.log(user);
-        console.log(store);
+        let shpOtions = window.localStorage.getItem("_shipping_options");
+
+        if (shpOtions !== null && shpOtions !== '') {
+            setShippingOptions( JSON.parse(shpOtions) );
+        }
 
         getStoreTotal();
         getStoreDetails();
@@ -761,7 +777,7 @@ const Checkout: FC = () => {
                                     </Formik>
                                     <br/> 
 {
-        reduction !== null && <p style={{ fontWeight: 'bold' }}>Congratulations you have <PriceUnitBox price={reduction} /> benefit</p>
+        reduction !== null && reduction !== 0 && <p style={{ fontWeight: 'bold' }}>Congratulations you have <PriceUnitBox price={reduction} /> benefit</p>
 }
 <div className="woocommerce-notices-wrapper"></div>
 {/* {  user !== null && user !== undefined ? */}
@@ -792,7 +808,8 @@ const Checkout: FC = () => {
                                         email: user !== null ? user?.emailClient : '',
                                         phone: user !== null ? user?.contactClient : '',
                                         company: '',
-                                        sameAddressShippingAndBilling: 'false'
+                                        sameAddressShippingAndBilling: 'false',
+                                        orderNote: ''
                                 }}
 
                                 validationSchema={
@@ -827,7 +844,8 @@ const Checkout: FC = () => {
                                         deliveryAdrLine1: yup
                                             .string()
                                             .required('This field is required'),
-                                        sameAddressShippingAndBilling: yup.string()
+                                        sameAddressShippingAndBilling: yup.string(),
+                                        orderNote: yup.string()
                                     })
                                 }
                                 innerRef={checkOutDataFormRef}
@@ -1198,7 +1216,29 @@ const Checkout: FC = () => {
                              className="button">  
                              save</button></p> */}
             </>
-        }
+        } 
+	
+		
+    <div className="woocommerce-additional-fields__field-wrapper">
+                        <p className="form-row notes" id="order_comments_field" data-priority="">
+                            <label htmlFor="order_comments" className="">Order notes&nbsp;
+                                <span className="optional">(optional)</span></label>
+                                <span className="woocommerce-input-wrapper"><textarea name="order_comments" 
+                                className="input-text " id="order_comments" 
+                                onChange={handleChange('orderNote')}
+                                onBlur={handleBlur('orderNote')}
+                                    value={values.orderNote}
+                                placeholder="Notes about your order, e.g. special notes for delivery." 
+                                rows={2} cols={5}></textarea></span></p>		
+                                { errors.orderNote && touched.orderNote && errors.orderNote && 
+                                        <small id="validationServer05Feedback" className="invalid-feedback">
+                                            { errors.orderNote && touched.orderNote && errors.orderNote }
+                                        </small> 
+                                    }			
+    </div>
+
+
+ 
 
 	
 </div>
@@ -1254,11 +1294,12 @@ const Checkout: FC = () => {
 		<tr className="cart-subtotal">
 			<th>Subtotal</th>
 			<td><span className="woocs_special_price_code">
-            <span className="woocommerce-Price-amount amount"><bdi> <PriceUnitBox price={storeTotal} /> </bdi></span></span></td>
+            <span className="woocommerce-Price-amount amount"><bdi> 
+            { storeTotal !== null && storeTotal !== 0 ? <PriceUnitBox price={storeTotal} /> : '' } </bdi></span></span></td>
 		</tr>
 
         {
-                            reduction !== null && <tr className="order-total">
+                            reduction !== null &&  reduction !== 0 && <tr className="order-total">
                             <th>Reduction</th>
                             <td data-title="Total"><strong><span className="woocs_special_price_code"><span className="woocommerce-Price-amount amount">
                                 <bdi> <PriceUnitBox price={reduction} /></bdi></span></span></strong> </td>
@@ -1274,10 +1315,96 @@ const Checkout: FC = () => {
     {
                                     shippingCost === 0 || shippingCost === null  ? 
                                     <p>Set an shipping adress so that we can calculate delivery fees</p>
-                                    : 
-                                    <p>
-                                        <b> <PriceUnitBox price={shippingCost} /> </b>
-                                    </p>
+                                    : <>
+                                        <p>
+                                            <b> <PriceUnitBox price={shippingCost} /> </b>
+                                        </p>
+                                        {
+            shippingOptions !== null && 
+            <>
+                 {/* <br/>
+                <br/>
+                <button onClick={() => {
+                    setShippingOptions(null);
+                }} style={{ float: "left" }} type="button" name="calc_shipping" value="1"
+                                 className="button">Retour</button>
+                <br/>
+                <br/> */}
+                <p>Here are the delivery options available to you depending on the address provided</p>
+
+                <Formik
+                                initialValues={ 
+                                    {
+                                        cost: null
+                                }}
+
+                                validationSchema={
+                                    yup.object().shape({
+                                        
+                                        cost: yup 
+                                            .string()
+                                            .required(`${'This field is required'}`)
+                                    })
+                                }
+                                innerRef={shippingOptionsFormRef}
+                                onSubmit={async (
+                                    values 
+                                ) => {
+                                         
+                                    }}
+                                >
+
+                                {({ dirty, errors, touched, isValid, handleChange, handleBlur, handleSubmit, values }) => (
+                                    <Form >
+
+                <div className="form-group col-md-12"> 
+
+                                    <div role="group" aria-labelledby="my-radio-group">
+                                        {
+                                            Object.keys(shippingOptions ?? {}).map(
+                                                (key) => shippingOptions !== null ? <label style={{ fontSize: "1.2em" }} >
+                                                <Field onClick={ (e: any) => {
+                                                    console.log(e.target.value);
+                                                    const cost  = e.target.value;
+
+                                                    console.log(cost);
+
+                                                    if ( cost !== undefined && cost !== null && cost !== '') {
+                                                        
+                                                        // setShippingCost( Number(cost) ?? null );
+
+                                                        dispatch( setShippingCosts( Number(cost) ) );
+
+                                                    }
+
+                                                }} type="radio" name="cost" 
+                                                checked={  toString(shippingCost) == toString(shippingOptions[key]) } value={ 
+                                                    toString(shippingOptions[key]) } />
+                                                { "Fedex_" + key.replaceAll("_", " ") } : <PriceUnitBox price={ shippingOptions[key]   } />
+                                            </label> : <></>
+                                            )
+                                            
+                                            // .forEach(function(key, index) {
+                                            //     shippingOptions[key] *= 2;
+                                            //     return <label>
+                                            //     <Field type="radio" name="status" value="new" />
+                                            //     Je suis un nouveau membre
+                                            // </label>
+                                            // });
+                                        }
+                                        
+                                        <br/>
+                                     
+                                    </div>
+ 
+                                </div>
+
+                                </Form>
+            )}
+        </Formik> 
+            </>
+        }
+                                    </>
                                 }
                              
 		
@@ -1290,7 +1417,7 @@ const Checkout: FC = () => {
 		
         {
             storeDetails !== null && <tr className="order-total">
-                <th>TAX</th>
+                <th>Tax</th>
                 <td>
                     <strong><span className="woocs_special_price_code">
 
@@ -1308,9 +1435,9 @@ const Checkout: FC = () => {
 			<th>Total</th>
 			<td><strong><span className="woocs_special_price_code">
                <span className="woocommerce-Price-amount amount"><bdi> 
-               { storeDetails !== null && <PriceUnitBox price={ reduction !== null ? 
+               { storeTotal !== null && storeTotal !== 0 ? storeDetails !== null && <PriceUnitBox price={ reduction !== null ? 
                ( (storeTotal+(shippingCost ?? 0)) +  ((storeTotal+(shippingCost ?? 0)) * (Number(storeDetails?.taxeBoutique) / 100)) ) - Number(reduction) :
-               ( (storeTotal+(shippingCost ?? 0)) +  ((storeTotal+(shippingCost ?? 0)) * (Number(storeDetails?.taxeBoutique) / 100)) ) } /> }
+               ( (storeTotal+(shippingCost ?? 0)) +  ((storeTotal+(shippingCost ?? 0)) * (Number(storeDetails?.taxeBoutique) / 100)) ) } /> : '' }
                </bdi></span></span></strong> </td>
 		</tr>
 
@@ -1335,8 +1462,7 @@ const Checkout: FC = () => {
                 } type="checkbox" className="woocommerce-form__input woocommerce-form__input-checkbox 
                 input-checkbox" name="terms" id="terms" />
 					<span className="woocommerce-terms-and-conditions-checkbox-text">
-                        I have read and agree to the website's 
-                        <Link to={"/terms-conditions"} target="_blank">Terms Conditions</Link>.</span>&nbsp;<span 
+                        I have read and agree to the website's <Link style={{ color: 'blue', textDecoration: 'underline' }} to={"/terms-conditions"} target="_blank">Terms Conditions</Link>.</span>&nbsp;<span 
                         className="required">*</span>
 				</label>
 				<input type="hidden" name="terms-field" value="1" />
@@ -1351,26 +1477,26 @@ const Checkout: FC = () => {
 
 	<label htmlFor="payment_method_ppcp-gateway">
 		PayPal 	</label>
-        { ( !isValid  || !storeDetails || !termsAccept ) ?
+        {/* { ( !isValid  || !storeDetails || !termsAccept ) ?
 
         <div className="wc-proceed-to-checkout">
             <button onClick={() => {  }} className="checkout-button button alt wc-forward"  >
                 Pay 
             </button>
         </div>
-        :
+        : */}
         <PayPalScriptProvider options={{ clientId: "AQnwfOiBDcktqMInwGzwOa8_Yj57L0FmDOOLXydK091A_PVxTDeNs06D7PXfYJxoWz-E6E0lK9Oxnj8b",
             currency: "USD", components: "buttons",  dataClientToken: ""  }}> 
 
 
-            <PayPalButtons disabled={ (!isValid ) || !storeDetails || !termsAccept} 
+            <PayPalButtons disabled={ !isValid  || !storeDetails || !termsAccept} 
                 createOrder={ onCreateOrder }
                 onApprove={ onApproveOrder  }
                 fundingSource='paypal'
                 style={{ layout: "horizontal" }}
              /> 
            
-            <PayPalButtons disabled={ (!isValid ) || !storeDetails || !termsAccept} 
+            <PayPalButtons disabled={ !isValid || !storeDetails || !termsAccept} 
                 createOrder={ onCreateOrder }
                 onApprove={ onApproveOrder  }
                 fundingSource='card'
@@ -1384,7 +1510,7 @@ const Checkout: FC = () => {
            
         </PayPalScriptProvider>
          
-        }
+        {/* } */}
           
 		<div className="payment_box payment_method_ppcp-gateway">
 			<p  onClick={() => { console.log(values); }} >Pay via PayPal.</p>

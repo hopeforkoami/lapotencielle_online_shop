@@ -213,11 +213,11 @@ export const storeSlice = createSlice({
       );
       state.shippingCost = action.payload;
     }, 
-    setReductions: (state, action: PayloadAction< number >) => {
+    setReductions: (state, action: PayloadAction< number | null >) => {
       console.log("Store basket id"); 
       window.localStorage.setItem(
         '_store_reduction',
-        action.payload?.toString()
+        action.payload !== null ? action.payload?.toString() : ''
       );
       state.reduction = action.payload;
     }, 
