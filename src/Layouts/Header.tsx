@@ -777,7 +777,7 @@ const Header: FC<{  }> = (  ) => {
         <Link to="/kits/OUR-GIFTS-AND-SETS-COLLECTION/gifts" ><span className="menu-title-text">
             OUR GIFTS &#038; SETS COLLECTION</span></Link></li>
       <li id="menu-item-597" className="border_left menu-item menu-item-type-custom menu-item-object-custom nectar-regular-menu-item megamenu-column-width-60 megamenu-column-padding-default menu-item-597">
-        <Link to="/products/OUR-GIFTS-AND-SETS-COLLECTION/gifts" >
+        <Link to="/kits/OUR-GIFTS-AND-SETS-COLLECTION/gifts" >
             <div className="nectar-ext-menu-item style-img-above-text">
   <div className="image-layer-outer hover-default">
   <div className="image-layer"></div>
