@@ -62,6 +62,7 @@ interface CheckoutData {
                                         company: string;
                                         sameAddressShippingAndBilling: string,
                                         orderNote: string;
+                                        termsAccept?: boolean
 }
 
 interface PromotionCodeForm {
@@ -98,6 +99,9 @@ const Checkout: FC = () => {
 
     const [ shippings, setShippings ] = useState( [] );
 
+    const checkoutErrorsInit: any = [];
+    const [ checkoutErrors, setCheckoutErrors ] = useState( checkoutErrorsInit );
+
     const storeDetailsInit: any = null;
     let [ storeDetails, setStoreDetails ] = useState(storeDetailsInit);
 
@@ -125,7 +129,7 @@ const Checkout: FC = () => {
     ] = useState(false);
 
     let [
-        termsAccept, setTermsAccpet
+        termsAccept, setTermsAccept
     ] = useState(false);
     
     let [
@@ -193,6 +197,12 @@ const Checkout: FC = () => {
 
         if ( _promotion_code !== null) { 
             setPromotionCode(_promotion_code);
+        }
+
+        if (checkOutDataFormRef.current !== null) {
+
+            checkOutDataFormRef.current.setTouched({termsAccept : true});
+         
         }
 
     }, []);
@@ -442,20 +452,34 @@ const Checkout: FC = () => {
           );
     }
 
+    const smoothScroll = (elementId: string) => {
+        document.querySelector('#'+elementId)?.scrollIntoView({
+            behavior: 'smooth'
+        });
+    }
+
+    const onCreateOrder = (data: any,actions: any, ) => {
+       
 
 
-    const onCreateOrder = (data: any,actions: any) => {
         return new Promise(async (resolve:(value: string) => any, reject) => {
 
+            if (checkOutDataFormRef.current !== null) {
 
-            // console.log('Order on creation');
-            // const venteInitialize: any = await initializeVente();
-            // console.log(venteInitialize);
-    
-            // const addProducts = await addProductToBasket(venteInitialize.data?.data.idVente.toString());
-            // console.log(addProducts);
-    
-            // const paypalOrder = await createPaypalOrder();
+                console.log( checkOutDataFormRef.current.errors );
+                console.log( Object.entries( checkOutDataFormRef.current.errors ) );
+                const errors  = Object.entries( checkOutDataFormRef.current.errors );
+
+                console.log(termsAccept);
+
+                if (errors.length > 0 && errors[0].toString() !== '') {
+                    setCheckoutErrors(errors);
+                    smoothScroll('coupon-code');
+                    resolve('');
+                }  
+            
+            }
+             
     
     
             const order = {
@@ -471,7 +495,7 @@ const Checkout: FC = () => {
                 shippingFees: shippingCost, 
                 taxesFees:  ((storeTotal+(shippingCost ?? 0)) * (Number(storeDetails?.taxeBoutique) / 100)), 
                 reductionMontant: reduction ?? 0, 
-                promoCode: promotionCode,
+                promoCode: promotionCode
             }
     
             cartService.createOrder(order).then(async function (response: any) {
@@ -703,7 +727,7 @@ const Checkout: FC = () => {
         </Formik> </> : <></>
 }
 < br />
-<div className="woocommerce-form-coupon-toggle">
+<div id="coupon-code" className="woocommerce-form-coupon-toggle">
 	
 	<div className="woocommerce-info">
 		Have a coupon? <a onClick={() =>{
@@ -809,7 +833,8 @@ const Checkout: FC = () => {
                                         phone: user !== null ? user?.contactClient : '',
                                         company: '',
                                         sameAddressShippingAndBilling: 'false',
-                                        orderNote: ''
+                                        orderNote: '',
+                                        termsAccept: false
                                 }}
 
                                 validationSchema={
@@ -845,7 +870,11 @@ const Checkout: FC = () => {
                                             .string()
                                             .required('This field is required'),
                                         sameAddressShippingAndBilling: yup.string(),
-                                        orderNote: yup.string()
+                                        orderNote: yup.string(),
+                                        termsAccept: yup.boolean().test('psitiveCheck', 
+                                            "Please read and accept the terms and conditions to proceed with your order.", async value =>
+                                            !value ? false : true
+                                       ),
                                     })
                                 }
                                 innerRef={checkOutDataFormRef}
@@ -859,7 +888,16 @@ const Checkout: FC = () => {
                                     <Form >
  
 
-	
+        { checkoutErrors.length > 0  ?  <ul className="woocommerce-error" role="alert">
+
+            {
+                checkoutErrors.map(
+                    (val: any) => 
+                    <li><strong>{ val[0] }</strong> {val[1]}</li>
+                )
+            } 
+            
+        </ul> : <></> }
 		
 		<div className="col2-set" id="customer_details">
 			<div className="col-1">
@@ -1362,7 +1400,7 @@ const Checkout: FC = () => {
                                     <div role="group" aria-labelledby="my-radio-group">
                                         {
                                             Object.keys(shippingOptions ?? {}).map(
-                                                (key) => shippingOptions !== null ? <label style={{ fontSize: "1.2em" }} >
+                                                (key) => shippingOptions !== null ? <> <label style={{ fontSize: "1.2em" }} >
                                                 <Field onClick={ (e: any) => {
                                                     console.log(e.target.value);
                                                     const cost  = e.target.value;
@@ -1380,8 +1418,8 @@ const Checkout: FC = () => {
                                                 }} type="radio" name="cost" 
                                                 checked={  toString(shippingCost) == toString(shippingOptions[key]) } value={ 
                                                     toString(shippingOptions[key]) } />
-                                                { "Fedex_" + key.replaceAll("_", " ") } : <PriceUnitBox price={ shippingOptions[key]   } />
-                                            </label> : <></>
+                                                { "Fedex_" + key.replaceAll("_", " ") } : <PriceUnitBox price={ shippingOptions[key]   } /> 
+                                            </label> <br/></>: <></>
                                             )
                                             
                                             // .forEach(function(key, index) {
@@ -1454,9 +1492,15 @@ const Checkout: FC = () => {
 <p className="form-row validate-required">
     <label className="woocommerce-form__label woocommerce-form__label-for-checkbox checkbox">
 				<input  onChange={
-                    () => { 
+                    (event: any) => { 
+
                         console.log("Value changed"); 
-                        setTermsAccpet((er) => !termsAccept);
+                        setTermsAccept( event.target.checked ); 
+                        if( checkOutDataFormRef.current !== null ) {
+                            checkOutDataFormRef.current.setFieldValue('termsAccept', event.target.checked) 
+                            // {termsAccept:  }) 
+                            // values.termsAccept = event.target.checked ;
+                        }
 
                     }
                 } type="checkbox" className="woocommerce-form__input woocommerce-form__input-checkbox 
@@ -1489,14 +1533,33 @@ const Checkout: FC = () => {
             currency: "USD", components: "buttons",  dataClientToken: ""  }}> 
 
 
-            <PayPalButtons disabled={ !isValid  || !storeDetails || !termsAccept} 
+            <PayPalButtons 
+                // disabled={ !isValid  || !storeDetails || !termsAccept} 
                 createOrder={ onCreateOrder }
                 onApprove={ onApproveOrder  }
                 fundingSource='paypal'
                 style={{ layout: "horizontal" }}
              /> 
+
+
+            <PayPalButtons 
+                            // disabled={ !isValid  || !storeDetails || !termsAccept} 
+                            createOrder={ onCreateOrder }
+                            onApprove={ onApproveOrder  }
+                            fundingSource='venmo'
+                            style={{ layout: "horizontal" }}
+                        /> 
+
+            <PayPalButtons 
+                            // disabled={ !isValid  || !storeDetails || !termsAccept} 
+                            createOrder={ onCreateOrder }
+                            onApprove={ onApproveOrder  }
+                            fundingSource='paylater'
+                            style={{ layout: "horizontal" }}
+                        /> 
            
-            <PayPalButtons disabled={ !isValid || !storeDetails || !termsAccept} 
+            <PayPalButtons 
+                // disabled={ !isValid || !storeDetails || !termsAccept} 
                 createOrder={ onCreateOrder }
                 onApprove={ onApproveOrder  }
                 fundingSource='card'

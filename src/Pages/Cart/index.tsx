@@ -454,7 +454,7 @@ const Cart: FC = () => {
                                     <div role="group" aria-labelledby="my-radio-group">
                                         {
                                             Object.keys(shippingOptions ?? {}).map(
-                                                (key) => shippingOptions !== null ? <label style={{ fontSize: "1.2em" }} >
+                                                (key) => shippingOptions !== null ? <> <label style={{ fontSize: "1.2em" }} >
                                                 <Field onClick={ (e: any) => {
                                                     console.log(e.target.value);
                                                     const cost  = e.target.value;
@@ -467,7 +467,7 @@ const Cart: FC = () => {
 
                                                 }} type="radio" name="cost" value={ toString(shippingOptions[key]) } />
                                                 { "Fedex_" + key.replaceAll("_", " ") } : <PriceUnitBox price={ shippingOptions[key]   } />
-                                            </label> : <></>
+                                            </label> <br/></> : <></>
                                             )
                                             
                                             // .forEach(function(key, index) {

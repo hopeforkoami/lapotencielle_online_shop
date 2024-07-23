@@ -519,13 +519,22 @@ const Header: FC<{  }> = (  ) => {
   </script> */}
   </li></ul>						<ul className="buttons" data-user-set-ocm="off">
   <li id="search-btn">
-  <div><a href="#searchbox"><span className="icon-salient-search" aria-hidden="true"></span><span className="screen-reader-text">search</span></a></div> </li>			 <li id="nectar-user-account" className="">
+  <div>
+    <a href="#searchbox">
+    <span className="icon-salient-search" aria-hidden="true"></span>
+    <span className="screen-reader-text">search</span></a></div> </li>			
+     <li id="nectar-user-account" className="">
   <div>
     {
         user !== null ? 
         <div className="user-account-btn " >
-            <img style={{ cursor: 'pointer' }} id='user-photo' className='user-photo user-account-btn' 
-            src="/assets/images/user.png" alt="" /> 
+            {/* <img style={{ cursor: 'pointer' }} className='user-photo user-account-btn' 
+            src="/assets/images/user.png" alt="" />  */}
+
+            <span id='user-photo' className="icon-salient-m-user" aria-hidden="true"></span>
+                <span className="screen-reader-text">
+                   account </span>
+
             <span className="screen-reader-text">
                    account </span>
             <div id="myDropdown" className="dropdown-content">
@@ -656,8 +665,11 @@ const Header: FC<{  }> = (  ) => {
                                         {
         user !== null ? 
         <Link to={"/client"} className="user-account-btn mobile-user-account " >
-            <img style={{ cursor: 'pointer' }} id='user-photo' className='user-photo user-account-btn normal icon-salient-m-user' 
-            src="/assets/images/user.png" alt="" /> 
+            {/* <img style={{ cursor: 'pointer' }} id='user-photo' className='user-photo user-account-btn normal icon-salient-m-user' 
+            src="/assets/images/user.png" alt="" />  */}
+             <span id='user-photo' className="icon-salient-m-user" aria-hidden="true"></span>
+                <span className="screen-reader-text">
+                   account </span>
             <span className="screen-reader-text">
                    account </span>
              
