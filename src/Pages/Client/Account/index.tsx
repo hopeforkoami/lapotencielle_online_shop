@@ -20,6 +20,8 @@ import Footer from '../../../Layouts/Footer';
 import { setUser } from '../../../Redux/Reducers/userReducer';
 import { RootState } from '../../../Redux/store';
 
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+
 var countries = require('country-data-list').countries;
 
 
@@ -88,29 +90,21 @@ const Account: FC = () => {
     
     return (
         <>
-        { clientLoading || client === null ? <h4><b>Loading...</b></h4> : <div className='woocommerce-account'>
-        <div id="ajax-content-wrap">
-            <br />
-                {/* <div className="breadcrumb">
-                    <span><span><a href="/">Home</a></span> / 
-                    <span className="breadcrumb_last" aria-current="page">My account</span></span>
-                </div> */}
-                <br />
-                <div className="container-wrap" style={{ minHeight: '566px' }}>
-                    <div className="container main-content">
-                        <div className="row">
-                            <div className="woocommerce">
-                                {/* <div className="woocommerce-notices-wrapper"></div> */}
+        { clientLoading || client === null ? <h4><b>Loading...</b></h4> : 
+        <div className='woocommerce-account'>
 
-                <div className="u-columns col2-set" id="customer_login"><div className="nectar-form-controls"><div className="control active">Login</div><div className="control">Register</div></div>
+    <Tabs selectedTabClassName={'tab-active'} >
 
-                    <div className="u-column1 col-1 visible" >
+        <TabList className={'tab-list'} >
+            <Tab>Security</Tab>
+            <Tab>Account</Tab> 
+        </TabList>
 
-                        <h2>Security</h2>
-                        <div className='alert-box'>
 
-                        </div>
-                        <Formik
+
+        <TabPanel>
+
+        <Formik
                             initialValues={ 
                                 {
                                     old_password:'',
@@ -129,7 +123,7 @@ const Account: FC = () => {
                                     .required(`${'This field is required'}`)
                                     .matches(
                                         /^(?=.*[!@#\$%\^&\*])(?=.{12,})/,
-                                        `${"Le mot de passe doit comporter 12 caractères avec l'utilisation d'un caractère spécial"}`
+                                        `${"Password must be 12 characters long with the use of a special character"}`
                                     ),
                                 passwordConfirmation: yup.string()
                                     .oneOf([yup.ref('password'), null], 'Passwords must match')
@@ -164,92 +158,92 @@ const Account: FC = () => {
                                 }}
                             >
                                 {({ dirty, errors, touched, isValid, handleChange, handleBlur, handleSubmit, values }) => (
-                                <Form  className="woocommerce-form woocommerce-form-login login" >
-                                    {
-                                    
-                                        message !== null && message !== '' && 
-                                        <b className='error-msg'>
-                                            { message }
-                                        </b>
+                                <Form className="woocommerce-EditAccountForm edit-account" action="" method="post">
 
-                                    }
-                                   
-                            <p className="form-row form-row-wide">
-                                    <label htmlFor="reg_billing_first_name">Old password<span className="required">*</span></label>
-                                    <span className="password-input"><input type={ showOldPassword ? "text" : "password" } 
-                                    className={`input-text  ${ errors.old_password && touched.old_password ?
-                                         "input-format-error":"input-format"}`} name="old_password" 
-                                    id="old_password" onChange={handleChange('old_password')}
-                                    onBlur={handleBlur('old_password')}
-                                        value={values.old_password} /><span 
-                                        onClick={() => setShowOldPassword(() => (!showOldPassword)) }
-                                         className="show-password-input"></span></span>
-                                    { errors.old_password && touched.old_password && errors.old_password && 
-                                        <small id="validationServer05Feedback" className="invalid-feedback">
-                                            { errors.old_password && touched.old_password && errors.old_password }
-                                        </small> 
-                                    }
+                    <fieldset>
+                            <legend>Password change</legend>
+
+                            <p className="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+                                <label htmlFor="password_current">Current password (leave blank to leave unchanged)</label>
+                                <span className="password-input">
+                                    <input type={ showOldPassword ? "text" : "password" } 
+                                            className={`woocommerce-Input woocommerce-Input--password 
+                                                input-text 
+                                                ${ errors.old_password && touched.old_password ?
+                                                "input-format-error" : ""}`} name="old_password" 
+                                            id="old_password" onChange={handleChange('old_password')}
+                                            onBlur={handleBlur('old_password')}
+                                                value={values.old_password} /><span 
+                                                onClick={() => setShowOldPassword(() => (!showOldPassword)) }
+                                                className="show-password-input"></span></span>
+                                            { 
+                                                errors.old_password && touched.old_password && errors.old_password && 
+                                                <small id="validationServer05Feedback" className="invalid-feedback">
+                                                    { errors.old_password && touched.old_password && errors.old_password }
+                                                </small> 
+                                            }
                             </p>
-
-
-                            <p className="form-row form-row-wide">
-                                    <label htmlFor="reg_billing_first_name">New password<span className="required">*</span></label>
-                                    <span className="password-input"><input type={ showPassword ? "text" : "password" } 
-                                    className={`input-text  ${ errors.password && touched.password ?
-                                         "input-format-error":"input-format"}`} name="password" 
-                                    id="password" onChange={handleChange('password')}
-                                    onBlur={handleBlur('password')}
-                                        value={values.password} /><span 
-                                        onClick={() => setShowPassword(() => !showPassword) }
-                                         className="show-password-input"></span></span>
-                                    { errors.password && touched.password && errors.password && 
-                                        <small id="validationServer05Feedback" className="invalid-feedback">
-                                            { errors.password && touched.password && errors.password }
-                                        </small> 
-                                    }
+                            <p className="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+                                <label htmlFor="password_1">New password (leave blank to leave unchanged)</label>
+                                <span className="password-input">
+                                    <input type={ showPassword ? "text" : "password" } 
+                                            className={`woocommerce-Input 
+                                                woocommerce-Input--password input-text 
+                                                ${ errors.password && touched.password ?
+                                                "input-format-error" : "" }`} name="password" 
+                                            id="password_1" onChange={ handleChange('password') }
+                                            onBlur={handleBlur('password')}
+                                                value={values.password} /><span 
+                                                onClick={() => setShowPassword(() => !showPassword) }
+                                                className="show-password-input"></span></span>
+                                                { errors.password && touched.password && errors.password && 
+                                                <small id="validationServer05Feedback" className="invalid-feedback">
+                                                    { errors.password && touched.password && errors.password }
+                                                </small> 
+                                            }
+                                                
                             </p>
-
-                            <p className="form-row form-row-wide">
-                                    <label htmlFor="reg_billing_first_name">New password confirmation<span className="required">*</span></label>
-                                    <span className="password-input"><input type={ showPasswordConfirm ? "text" : "password" } 
-                                    className={`input-text  ${ errors.passwordConfirmation && touched.passwordConfirmation ?
-                                         "input-format-error":"input-format"}`} name="passwordConfirmation" 
-                                    id="passwordConfirmation" onChange={handleChange('passwordConfirmation')}
-                                    onBlur={handleBlur('passwordConfirmation')}
-                                        value={values.passwordConfirmation} /><span 
-                                        onClick={() => setShowPasswordConfirm(() => !showPasswordConfirm) }
-                                         className="show-password-input"></span></span>
-                                    { errors.passwordConfirmation && touched.passwordConfirmation && errors.passwordConfirmation && 
-                                        <small id="validationServer05Feedback" className="invalid-feedback">
-                                            { errors.passwordConfirmation && touched.passwordConfirmation && errors.passwordConfirmation }
-                                        </small> 
-                                    }
+                            <p className="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+                                <label htmlFor="password_2">Confirm new password</label>
+                                <span className="password-input">
+                                    <input type={ showPasswordConfirm ? "text" : "password" } 
+                                            className={`woocommerce-Input woocommerce-Input--password 
+                                                input-text ${ errors.passwordConfirmation && touched.passwordConfirmation ?
+                                                "input-format-error" : "" }`} name="passwordConfirmation" 
+                                            id="passwordConfirmation" 
+                                            onChange={handleChange('passwordConfirmation')}
+                                            onBlur={handleBlur('passwordConfirmation')}
+                                                value={values.passwordConfirmation} /><span 
+                                                onClick={() => setShowPasswordConfirm(() => !showPasswordConfirm) }
+                                                className="show-password-input"></span></span>
+                                                { errors.passwordConfirmation && touched.passwordConfirmation && errors.passwordConfirmation && 
+                                                <small id="validationServer05Feedback" className="invalid-feedback">
+                                                    { errors.passwordConfirmation && touched.passwordConfirmation && errors.passwordConfirmation }
+                                                </small> 
+                                            }
                             </p>
-                            
-                            <p className="form-row"> 
-                                <button  type="submit" className="woocommerce-button button woocommerce-form-login__submit" 
-                                name="login" value="Log in">Change password
-                                {
-                                    loading && <i style={{color: "black" }} className="fa fa-circle-o-notch fa-spin fa-1x fa-fw"></i>
-                                }
-                                </button>
-                            </p>
-                            
-                            {/* <p className="woocommerce-LostPassword lost_password">
-                                <a href="#">Forgot your Password?</a>
-                            </p> */}
+                        </fieldset>
+                        <div className="clear"></div>
 
-                            
-                            </Form>
-        )}
-    </Formik>
+                        <p>
+                            {/* <input type="hidden" id="save-account-details-nonce" name="save-account-details-nonce"
+                            value="c29daa5f32" />
+                            <input type="hidden" name="_wp_http_referer" value="/my-account/edit-account/" />		 */}
+                            <button type="submit" className="woocommerce-Button button" name="save_account_details" 
+                            value="Save changes">Save changes {
+                                loading && <i style={{color: "white" }} className="fa fa-circle-o-notch fa-spin fa-1x fa-fw"></i>
+                            }</button>
+                            {/* <input type="hidden" name="action" value="save_account_details" /> */}
+                        </p>
 
-                    </div>
+                    </Form>
+                )}
+            </Formik>
+        </TabPanel>
 
-                    <div className="u-column2 col-2">
+        <TabPanel>
 
-                        <h2>Personnal info</h2>
-                         <Formik
+                <Formik
                             initialValues={ 
                                 client !== null && client !== "" ? 
                                 {
@@ -260,19 +254,11 @@ const Account: FC = () => {
                                  {
                                     nomClient: '',
                                     middleNameClient:  '',
-                                    prenomClient: '',
-                                    // billAddress: '',
+                                    prenomClient: '', 
                                     contactClient: '',
                                     newsletter: '',
                                     '2faActivated': false,
-                                    email: '',
-                                    // paysClient: '',
-                                    // login: '',
-                                    // password: '',
-                                    // passwordConfirmation: '',                                       
-                                    // town: '',
-                                    // street: '',
-                                    // bp: ''
+                                    email: '' 
                             }}
 
                             validationSchema={
@@ -285,17 +271,10 @@ const Account: FC = () => {
                                         .string() ,
                                     prenomClient: yup 
                                         .string()
-                                        .required(`${'This field is required'}`),
-                                    // billAddress: yup 
-                                    //     .string(),
+                                        .required(`${'This field is required'}`), 
                                     contactClient: yup 
                                         .string()
-                                        .required(`${'This field is required'}`),
-                                    // newsletter:  yup 
-                                    //     .string()
-                                    //     .required(`${'This field is required'}`),
-                                    // '2faActivated': yup 
-                                    //     .boolean(),
+                                        .required(`${'This field is required'}`), 
                                     email: yup 
                                         .string()
                                         .email('Mail non valide')
@@ -304,52 +283,15 @@ const Account: FC = () => {
                                             clientService.verifyEmail(value ?? '')
                                             .then((res) => { 
                                                 console.log(res);
-                                                return !res.data.data.usable ?  value === client?.emailClient ? true : res.data.data.usable : res.data.data.usable;
+                                                return !res.data.data.usable ? value === client?.emailClient ? true : res.data.data.usable : res.data.data.usable;
                                             })
                                             .catch((e) => {
                                                 console.log(e);
                                                 return false;
                                             })
-                                        ),
-                                    // paysClient: yup 
-                                    //     .string()
-                                    //     .required(`${'This field is required'}`),
-                                    // login: yup 
-                                    //     .string()
-                                    //     .required(`${'This field is required'}`)
-                                    //     .test('checkLoginUnique', "Login already used", async value =>
-                                    //         clientService.verifyLogin(value ?? '')
-                                    //         .then((res) => { 
-                                    //             console.log(res);
-                                    //             return  res.data.data.usable;
-                                    //         })
-                                    //         .catch((e) => {
-                                    //             console.log(e);
-                                    //             return false;
-                                    //         })
-                                    //     ),
-                                    // password: yup
-                                    //     .string()
-                                    //     .required(`${'This field is required'}`)
-                                    //     .matches(
-                                    //         /^(?=.*[!@#\$%\^&\*])(?=.{12,})/,
-                                    //         `${"Le mot de passe doit comporter 12 caractères avec l'utilisation d'un caractère spécial"}`
-                                    //     ),
-                                    // passwordConfirmation: yup.string()
-                                    //     .oneOf([yup.ref('password'), null], 'Passwords must match')
-                                    //     .required(`${'This field is required'}`),
-                                    // town: yup
-                                    //     .string()
-                                    //     .required(`${'This field is required'}`),
-                                    // street: yup
-                                    //     .string()
-                                    //     .required(`${'This field is required'}`),
-                                    // bp: yup
-                                    //     .string()
-                                    //     .required(`${'This field is required'}`),
+                                        ) 
                                 })
-                            }
-                            // innerRef={formRef}
+                            } 
                             onSubmit={async (
                                 values 
                             ) => {
@@ -387,59 +329,66 @@ const Account: FC = () => {
                                 }}
                             >
                                 {({ dirty, errors, touched, isValid, handleChange, handleBlur, handleSubmit, values }) => (
-                                <Form  className="woocommerce-form woocommerce-form-register register">
+                                <Form className="woocommerce-EditAccountForm edit-account" action="" method="post">
 
-                                <p className="form-row form-row-wide">
-                                    <label htmlFor="reg_billing_first_name">Firstname<span className="required">*</span></label>
-                                    <input type="text" 
-                                    className={`input-text  ${ errors.prenomClient && touched.prenomClient ? "input-format-error":"input-format"}`} name="prenomClient" 
-                                    id="prenomClient" onChange={handleChange('prenomClient')}
-                                    onBlur={handleBlur('prenomClient')}
-                                        value={values.prenomClient} />
-                                    { errors.prenomClient && touched.prenomClient && errors.prenomClient && 
-                                        <small id="validationServer05Feedback" className="invalid-feedback">
-                                            { errors.prenomClient.toString() }
-                                        </small> 
-                                    }
-                                </p>
+        
+                <p className="woocommerce-form-row woocommerce-form-row--first form-row form-row-first">
+                    <label htmlFor="account_first_name">First name&nbsp;<span className="required">*</span></label>
+                    <input type="text" id="account_first_name" className={`input-text 
+                        woocommerce-Input woocommerce-Input--text
+                         ${ errors.prenomClient && touched.prenomClient ? "input-format-error":""}`} 
+                         name="prenomClient" 
+                        onChange={handleChange('prenomClient')}
+                        onBlur={handleBlur('prenomClient')}
+                            value={values.prenomClient} />
+                        { errors.prenomClient && touched.prenomClient && errors.prenomClient && 
+                            <small id="validationServer05Feedback" className="invalid-feedback">
+                                { errors.prenomClient.toString() }
+                            </small> 
+                        }
+                </p>
 
-                                <p className="form-row form-row-wide">
-                                    <label htmlFor="reg_billing_first_name">Middle name</label>
-                                    <input type="text" 
-                                    className={`input-text  ${ errors.middleNameClient &&
-                                         touched.middleNameClient ? "input-format-error":"input-format"}`}
-                                          name="middleNameClient" 
-                                    id="middleNameClient" onChange={handleChange('middleNameClient')}
-                                    onBlur={handleBlur('middleNameClient')}
-                                        value={values.middleNameClient} />
-                                    { 
-                                        errors.middleNameClient && touched.middleNameClient && errors.middleNameClient && 
-                                        <small id="validationServer05Feedback" className="invalid-feedback">
-                                            { errors.middleNameClient.toString() }
-                                        </small> 
-                                    }
-                                </p>
+                <p className="woocommerce-form-row woocommerce-form-row--last form-row form-row-last">
+                    <label htmlFor="account_last_name">Middle name&nbsp;<span className="required">*</span></label>
+                    <input type="text" 
+                   className={`woocommerce-Input woocommerce-Input--text input-text ${ errors.middleNameClient &&
+                    touched.middleNameClient ? "input-format-error":""}`} name="nomClient" 
+                    id="middleNameClient" onChange={handleChange('middleNameClient')}
+                    onBlur={handleBlur('middleNameClient')}
+                        value={values.middleNameClient} />
+                    
+                    { 
+                        errors.middleNameClient && touched.middleNameClient && errors.middleNameClient && 
+                        <small id="validationServer05Feedback" className="invalid-feedback">
+                            { errors.middleNameClient.toString() }
+                        </small> 
+                    }
+                </p>
 
-                                <p className="form-row form-row-wide">
-                                    <label htmlFor="reg_billing_first_name">Name<span className="required">*</span></label>
-                                    <input type="text" className={`input-text  ${ errors.nomClient &&
-                                         touched.nomClient ? "input-format-error":"input-format"}`} name="nomClient" 
-                                    id="nomClient" onChange={handleChange('nomClient')}
-                                    onBlur={handleBlur('nomClient')}
-                                        value={values.nomClient} />
-                                    
-                                    { 
-                                        errors.nomClient && touched.nomClient && errors.nomClient && 
-                                        <small id="validationServer05Feedback" className="invalid-feedback">
-                                            { errors.nomClient.toString() }
-                                        </small> 
-                                    }
-                                </p>
+                <div className="clear"></div>
 
-                                <p className="form-row form-row-wide">
-                                    <label htmlFor="reg_billing_first_name">Email address<span className="required">*</span></label>
-                                    <input type="email" 
-                                    className={`input-text  ${ errors.email && touched.email ? "input-format-error":"input-format"}`} name="email" 
+                <p className="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+                    <label htmlFor="account_last_name">Last name&nbsp;<span className="required">*</span></label>
+                    <input type="text" 
+                   className={`woocommerce-Input woocommerce-Input--text input-text ${ errors.nomClient &&
+                    touched.nomClient ? "input-format-error":""}`} name="nomClient" 
+                    id="nomClient" onChange={handleChange('nomClient')}
+                    onBlur={handleBlur('nomClient')}
+                        value={values.nomClient} />
+                    
+                    { 
+                        errors.nomClient && touched.nomClient && errors.nomClient && 
+                        <small id="validationServer05Feedback" className="invalid-feedback">
+                            { errors.nomClient.toString() }
+                        </small> 
+                    } 
+                </p>
+                <div className="clear"></div>
+
+                <p className="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+                    <label htmlFor="account_email">Email address&nbsp;<span className="required">*</span></label>
+                    <input type="email" className={` woocommerce-Input woocommerce-Input--email input-text  
+                        ${ errors.email && touched.email ? "input-format-error": ""}`} name="email" 
                                     id="email" onChange={handleChange('email')}
                                     onBlur={handleBlur('email')}
                                         value={values.email} />
@@ -448,16 +397,14 @@ const Account: FC = () => {
                                             { errors.email.toString() }
                                         </small> 
                                     }
-                                </p>
+                </p>
 
-                                
-
-                                <p className="form-row form-row-wide">
-                                    <label htmlFor="reg_billing_first_name">Contact<span className="required">*</span></label>
-                                    <input type="text" 
-                                    className={`input-text  ${ errors.contactClient && touched.contactClient ?
-                                         "input-format-error":"input-format"}`} name="contactClient" 
-                                    id="contactClient" onChange={handleChange('contactClient')}
+                <p className="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+                    <label htmlFor="account_email">Contact &nbsp;<span className="required">*</span></label>
+                    <input type="text" className={` woocommerce-Input woocommerce-Input--email input-text  
+                        ${ errors.contactClient && touched.contactClient ? 
+                            "input-format-error": ""}`} name="contactClient" 
+                                    id="email" onChange={handleChange('contactClient')}
                                     onBlur={handleBlur('contactClient')}
                                         value={values.contactClient} />
                                     { errors.contactClient && touched.contactClient && errors.contactClient && 
@@ -465,180 +412,42 @@ const Account: FC = () => {
                                             { errors.contactClient.toString() }
                                         </small> 
                                     }
-                                </p>
+                </p>
 
-                                {/* 
-                                    <b style={{ color: "white", textDecoration: "underline" }}>Delivery informations</b>
-
-                                    <p className="form-row form-row-wide">
-                                        <label htmlFor="reg_billing_first_name">Country<span className="required">*</span></label>
-                                        <select 
-                                        className={`input-text  ${ errors.paysClient && touched.paysClient ? 
-                                            "input-format-error":"input-format"}`} name="paysClient" 
-                                        id="paysClient" onChange={handleChange('paysClient')}
-                                        onBlur={handleBlur('paysClient')}
-                                            value={values.paysClient}>
-                                            {
-                                                countries !== null ? countries.all.map((c:any, index: number) => 
-                                                <option value={ c.name  } selected={ c.name === 'United States' }  label={c.name}>
-                                                    {c.name}</option>)
-                                                : <></>
-                                            }
-                                        </select>
-                                        { errors.paysClient && touched.paysClient && errors.paysClient && 
-                                            <small id="validationServer05Feedback" className="invalid-feedback">
-                                                { errors.paysClient && touched.paysClient && errors.paysClient }
-                                            </small> 
-                                        }
-                                    </p>
-
-                                    <p className="form-row form-row-wide">
-                                        <label htmlFor="reg_billing_first_name">Town<span className="required">*</span></label>
-                                        <input type="text" 
-                                        className={`input-text  ${ errors.town && touched.town ?
-                                            "input-format-error":"input-format"}`} name="town" 
-                                        id="town" onChange={handleChange('town')}
-                                        onBlur={handleBlur('town')}
-                                            value={values.town} />
-                                        { errors.town && touched.town && errors.town && 
-                                            <small id="validationServer05Feedback" className="invalid-feedback">
-                                                { errors.town && touched.town && errors.town }
-                                            </small> 
-                                        }
-                                    </p>
-
-                                    <p className="form-row form-row-wide">
-                                        <label htmlFor="reg_billing_first_name">Street<span className="required">*</span></label>
-                                        <input type="text" 
-                                        className={`input-text  ${ errors.street && touched.street ?
-                                            "input-format-error":"input-format"}`} name="street" 
-                                        id="street" onChange={handleChange('street')}
-                                        onBlur={handleBlur('street')}
-                                            value={values.street} />
-                                        { errors.street && touched.street && errors.street && 
-                                            <small id="validationServer05Feedback" className="invalid-feedback">
-                                                { errors.street && touched.street && errors.street }
-                                            </small> 
-                                        }
-                                    </p>
-
-                                    <p className="form-row form-row-wide">
-                                        <label htmlFor="reg_billing_first_name">MailBox<span className="required">*</span></label>
-                                        <input type="text" 
-                                        className={`input-text  ${ errors.bp && touched.bp ?
-                                            "input-format-error":"input-format"}`} name="bp" 
-                                        id="bp" onChange={handleChange('bp')}
-                                        onBlur={handleBlur('bp')}
-                                            value={values.bp} />
-                                        { errors.bp && touched.bp && errors.bp && 
-                                            <small id="validationServer05Feedback" className="invalid-feedback">
-                                                { errors.bp && touched.bp && errors.bp }
-                                            </small> 
-                                        }
-                                    </p> 
-
-                                    <b style={{ color: "white", textDecoration: "underline" }}>Login informations</b>
-                                
-                                    <p className="form-row form-row-wide">
-                                        <label htmlFor="reg_billing_first_name">Username<span className="required">*</span></label>
-                                        <input type="text" 
-                                        className={`input-text  ${ errors.login && touched.login ?
-                                            "input-format-error":"input-format"}`} name="login" 
-                                        id="login" onChange={handleChange('login')}
-                                        onBlur={handleBlur('login')}
-                                            value={values.login} />
-                                        { errors.login && touched.login && errors.login && 
-                                            <small id="validationServer05Feedback" className="invalid-feedback">
-                                                { errors.login && touched.login && errors.login }
-                                            </small> 
-                                        }
-                                    </p>
-
-                                    <p className="form-row form-row-wide">
-                                        <label htmlFor="reg_billing_first_name">Password<span className="required">*</span></label>
-                                        <span className="password-input"><input type={ showPassword ? "text" : "password" } 
-                                        className={`input-text  ${ errors.password && touched.password ?
-                                            "input-format-error":"input-format"}`} name="password" 
-                                        id="password" onChange={handleChange('password')}
-                                        onBlur={handleBlur('password')}
-                                            value={values.password} /><span 
-                                            onClick={() => setShowPassword(() => !showPassword) }
-                                            className="show-password-input"></span></span>
-                                        { errors.password && touched.password && errors.password && 
-                                            <small id="validationServer05Feedback" className="invalid-feedback">
-                                                { errors.password && touched.password && errors.password }
-                                            </small> 
-                                        }
-                                    </p>
-
-                                
-                                    <p className="form-row form-row-wide">
-                                        <label htmlFor="reg_billing_first_name">Confirm password <span className="required">*</span></label>
-                                        <span className="password-input">
-                                            <input type={ showPasswordConfirm ? "text" : "password" }  
-                                            className={`input-text 
-                                                        ${ errors.passwordConfirmation && touched.passwordConfirmation ?
-                                                        "input-format-error":"input-format"}`}
-                                            name="passwordConfirmation" 
-                                            id="passwordConfirmation" 
-                                            onChange={handleChange('passwordConfirmation')}
-                                            onBlur={handleBlur('passwordConfirmation')}
-                                            value={values.passwordConfirmation} />
-                                            <span onClick={() => setShowPasswordConfirm(() => !showPasswordConfirm) }
-                                            className="show-password-input"></span></span>
-                                            { errors.passwordConfirmation && touched.passwordConfirmation && 
-                                            errors.passwordConfirmation && 
-                                            <small id="validationServer05Feedback" className="invalid-feedback">
-                                                { errors.passwordConfirmation && touched.passwordConfirmation &&
-                                                errors.passwordConfirmation }
-                                            </small> 
-                                        }
-                                    </p>
-                                    <div className="woocommerce-privacy-policy-text">
-                                        <p>*note: Password must be 12 character long with use of special character.</p>
-                                    </div> 
-                                */}
-
-                                <label style={{ color: "white " }}>
+                <label style={{ color: "white " }}>
                                         <Field type="checkbox"  onChange={handleChange('newsletter')}
                                             onBlur={handleBlur('newsletter')} name="newsletter" />
                                         Subscribe to the newsletter
                                 </label> 
-
+                                <br />  
                                 <label style={{ color: "white " }}>
                                         <Field type="checkbox"  onChange={handleChange('2faActivated')}
                                             onBlur={handleBlur('2faActivated')}  name="2faActivated" />
                                         Enable two-factor authentication
                                 </label>
+                
+                <div className="clear"></div>
 
-                                <p className="woocommerce-form-row form-row">
-                                    <button disabled={ (!dirty && !isValid) }  type="submit" className="woocommerce-Button woocommerce-button 
-                                    button woocommerce-form-register__submit" name="register" 
-                                    value="Register">Change information{
-                                        loading && <i style={{color: "black" }} className="fa fa-circle-o-notch fa-spin fa-1x fa-fw"></i>
-                                    }</button>
-                                </p> 
 
-                            </Form>
-                        )}
-                    </Formik>
+                <p>
+                    {/* <input type="hidden" id="save-account-details-nonce" name="save-account-details-nonce"
+                    value="c29daa5f32" />
+                    <input type="hidden" name="_wp_http_referer" value="/my-account/edit-account/" />		 */}
+                    <button type="submit" className="woocommerce-Button button" name="save_account_details" 
+                    value="Save changes">Save changes {
+                        loading && <i style={{color: "white" }} className="fa fa-circle-o-notch fa-spin fa-1x fa-fw"></i>
+                    }</button>
+                    {/* <input type="hidden" name="action" value="save_account_details" /> */}
+                </p>
 
-                    </div>
+                    </Form>
+                )}
+            </Formik>
+                 
+        </TabPanel> 
 
-                </div>
+    </Tabs>
 
-                </div>
-                        </div>
-                    </div>
-                    
-                    {/* <Footer /> */}
-
-                </div>
-                {/* <div id="footer-outer" data-cols="4" data-custom-color="false" data-disable-copyright="true" data-matching-section-color="true" data-copyright-line="false" data-using-bg-img="false" data-bg-img-overlay="0.8" data-full-width="false" data-using-widget-area="false" data-link-hover="default">
-                    
-                        
-                </div> */}
-                </div>
     </div> }
     </>
     );
