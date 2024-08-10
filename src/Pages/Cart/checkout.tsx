@@ -484,7 +484,8 @@ const Checkout: FC = () => {
     
             const order = {
                 ...checkOutDataFormRef.current?.values,
-                shippingCountry: (countries.all.filter((c:any, index: number) => c.alpha2 === shippingAddress?.countryCode ))[0]?.name, 
+                shippingCountry: (countries.all.filter((c:any, index: number) => c.alpha2 === 
+                    shippingAddress?.countryCode ))[0]?.name, 
                 shippingCity: shippingAddress?.city, 
                 shippingState: shippingAddress?.state, 
                 shippingZip: shippingAddress?.postalCode, 
@@ -503,7 +504,7 @@ const Checkout: FC = () => {
                 console.log(response.data); 
                 window.localStorage.setItem('_order_id', response.data?.data.orderId);
                 
-                const order: any = actions.order.create({
+                const paypalOrder: any = actions.order.create({
                     purchase_units: [
                         {
                             reference_id: response.data?.data.orderId,
@@ -512,17 +513,27 @@ const Checkout: FC = () => {
                                     ( (storeTotal+(shippingCost ?? 0)) +  ((storeTotal+(shippingCost ?? 0)) * (Number(storeDetails?.taxeBoutique) / 100)) ) - Number(reduction) :
                                     ( (storeTotal+(shippingCost ?? 0)) +  ((storeTotal+(shippingCost ?? 0)) * (Number(storeDetails?.taxeBoutique) / 100)) ) ).toFixed(2),
                             },
+                            shipping: {
+                                address: {
+                                  address_line_1: shippingAddress?.addressLine1,
+                                  address_line_2: shippingAddress?.addressLine1,
+                                  admin_area_2: shippingAddress?.city,
+                                  admin_area_1: shippingAddress?.state,
+                                  postal_code:  shippingAddress?.postalCode,
+                                  country_code: shippingAddress?.countryCode
+                                }
+                            }
                         },
                     ],
                 });
 
-                console.log(order);
-                const order_copy = order;
+                console.log(paypalOrder);
+                const order_copy = paypalOrder;
                 order_copy.then(
                     (val:any) => { 
-                        if (order !== null && order !== '') {
+                        if (paypalOrder !== null && paypalOrder !== '') {
                             window.localStorage.setItem('_paypal_order_id', val);
-                            resolve(order);
+                            resolve(paypalOrder);
     
                         }
 
