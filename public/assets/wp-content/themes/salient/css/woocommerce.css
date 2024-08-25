@@ -3373,9 +3373,19 @@ body .woocommerce-checkout-review-order-table .product-info .product-quantity {
 .woocommerce-MyAccount-navigation ul li.woocommerce-MyAccount-navigation-link--payment-methods a:before{
   content:"\f09d";
 }
+
 .woocommerce-MyAccount-navigation ul li.woocommerce-MyAccount-navigation-link--edit-account a:before{
   content:"\f007";
 }
+
+.woocommerce-MyAccount-navigation ul li.woocommerce-MyAccount-navigation-link--newsletter a:before{
+	content:"\f003";
+}
+
+.woocommerce-MyAccount-navigation ul li.woocommerce-MyAccount-navigation-link--security-account a:before{
+	content:"\f023";
+}
+
 .woocommerce-MyAccount-navigation ul li.woocommerce-MyAccount-navigation-link--customer-logout a:before{
   content:"\f08b";
 }

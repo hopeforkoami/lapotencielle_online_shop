@@ -147,7 +147,7 @@ const OrderDetails: FC = () => {
                     {  order !== null && <ul style={{ listStyleType: 'none', width: '100%' }} >
                             <li style={{ width: '49%', display: 'inline-block' }} >
                                 <b>Country :</b> 
-                                { order.shippingAddress.country }
+                                { order.shippingAddress.country.name }
                             </li>
                             <li style={{ width: '49%', display: 'inline-block' }} >
                                 <b>State :</b> { order.shippingAddress.stateOrProvince }
@@ -183,7 +183,7 @@ const OrderDetails: FC = () => {
                                         {  order !== null && <ul style={{ listStyleType: 'none', width: '100%' }} >
                                                 <li style={{ width: '49%', display: 'inline-block' }} >
                                                     <b>Country :</b> 
-                                                    { order.deliveryAddress.country }
+                                                    { order.deliveryAddress.country.name }
                                                 </li>
                                                 <li style={{ width: '49%', display: 'inline-block' }} >
                                                     <b>State :</b> { order.deliveryAddress.stateOrProvince }

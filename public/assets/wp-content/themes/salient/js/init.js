@@ -10293,6 +10293,8 @@
 				*/
 				function OCM_slideOutRightHoverOpen() {
 
+					console.log('open Menu');
+
 					calculateHoverNavMinHeight();
 
 					if ( nectarDOMInfo.usingMobileBrowser && $('#slide-out-widget-area.open').length > 0 ) {
@@ -10616,6 +10618,8 @@
 
 						if ($('#ajax-content-wrap > .slide-out-widget-area-toggle').length == 0) {
 
+							console.log
+
 							//icon effect html creation
 							var $iconInsertLocation = ( $('.slide-out-widget-area-toggle[data-custom-color="true"]').length > 0 ) ? '#slide-out-widget-area > div' : '#slide-out-widget-area';
 
@@ -10671,6 +10675,8 @@
 				* @since 10.5
 				*/
 				function OCM_slideOutRightOpen() {
+
+						console.log("Menu icon oclicked");
 
 						var $slideOutAmount = ($bodyBorderTop.length > 0 && $('body.mobile').length == 0) ? $bodyBorderTop.height() : 0;
 
@@ -11677,6 +11683,8 @@
 					// Click event.
 					$('#header-outer #mobile-menu .sf-sub-indicator').on('click', function(){
 
+						
+
 						var $parentLI = $(this).parent().parent();
 
 						$parentLI.toggleClass('current-open-item');
@@ -11729,7 +11737,10 @@
 				function OCM_clickTriggeredStylesInit() {
 
 					// Click triggered open bind.
-					$body.on('click', '.slide-out-widget-area-toggle:not(.std-menu) a.closed:not(.animating), .nectar-ocm-trigger-open', function () {
+					$body.on('click', '.slide-out-widget-area-toggle:not(.std-menu) a.closed:not(.animating), .nectar-ocm-trigger-open',
+						 function () {
+
+						console.log('Menu')
 
 						if (nectarBoxRoll.animating == 'true' || $('.slide-out-from-right-hover').length > 0) {
 							return false;
@@ -11909,9 +11920,14 @@
 				*/
 				function OCM_init() {
 
+					console.log("OCM initialisation");
+
 					if ($('#slide-out-widget-area.slide-out-from-right-hover').length > 0) {
+						console.log("OCM initialisation option 1");
+
 						OCM_slideOutRightHoverInit();
 					} else {
+						console.log("OCM initialisation option 2");
 						OCM_clickTriggeredStylesInit();
 						OCM_simpleStyleInit();
 					}
@@ -12067,6 +12083,8 @@
 
 					// Click event.
 					$(left_header_selector + ', ' + $ocm_link_selector).on('click', function () {
+
+						console.log('Menu')
 
 						var $parentSelector = $(this).parent();
 						if( lh_dropdown_func === 'separate-dropdown-parent-link' ) {
@@ -17986,6 +18004,7 @@
 							if( $(this).attr('href') !== '#' &&
 							    $(this).attr('href') !== '#searchbox' &&
 									$(this).attr('href') !== '#sidewidgetarea') {
+										console.log('Has link found');
 								hashLinksFound = true;
 							}
 						});
@@ -19923,12 +19942,18 @@
 
 
 						// Off canvas navigation.
-						mobileNavMegamenuCorrect();
-						materialSkinOCM_Init();
-						OCM_dropdownMarkup();
-						OCM_dropdownIconPos();
-						clickToggleSubmenus();
-						OCM_init();
+
+						$window.on('load', function () {
+
+							mobileNavMegamenuCorrect();
+							materialSkinOCM_Init();
+							OCM_dropdownMarkup();
+							OCM_dropdownIconPos();
+							clickToggleSubmenus(); 
+							OCM_init();
+
+						});
+						
 
 
 						// Page header

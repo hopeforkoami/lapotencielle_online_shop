@@ -10293,6 +10293,8 @@
 				*/
 				function OCM_slideOutRightHoverOpen() {
 
+					console.log('open Menu');
+
 					calculateHoverNavMinHeight();
 
 					if ( nectarDOMInfo.usingMobileBrowser && $('#slide-out-widget-area.open').length > 0 ) {
@@ -10655,6 +10657,8 @@
 				*/
 				function OCM_slideOutRightMobileClose() {
 
+					console.log('Menu')
+
 					if( $('.slide-out-from-right-hover.open').length > 0 ) {
 						$('.slide-out-widget-area-toggle:not(.std-menu) a').first().addClass('non-human-allowed').trigger('click');
 						setTimeout(function () {
@@ -10671,6 +10675,8 @@
 				* @since 10.5
 				*/
 				function OCM_slideOutRightOpen() {
+
+					console.log("Menu icon oclicked");
 
 						var $slideOutAmount = ($bodyBorderTop.length > 0 && $('body.mobile').length == 0) ? $bodyBorderTop.height() : 0;
 
@@ -11731,6 +11737,8 @@
 					// Click triggered open bind.
 					$body.on('click', '.slide-out-widget-area-toggle:not(.std-menu) a.closed:not(.animating), .nectar-ocm-trigger-open', function () {
 
+						console.log('Menu')
+
 						if (nectarBoxRoll.animating == 'true' || $('.slide-out-from-right-hover').length > 0) {
 							return false;
 						}
@@ -12067,6 +12075,8 @@
 
 					// Click event.
 					$(left_header_selector + ', ' + $ocm_link_selector).on('click', function () {
+
+						console.log('Menu')
 
 						var $parentSelector = $(this).parent();
 						if( lh_dropdown_func === 'separate-dropdown-parent-link' ) {
@@ -17986,6 +17996,7 @@
 							if( $(this).attr('href') !== '#' &&
 							    $(this).attr('href') !== '#searchbox' &&
 									$(this).attr('href') !== '#sidewidgetarea') {
+										console.log('Has link found');
 								hashLinksFound = true;
 							}
 						});

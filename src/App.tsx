@@ -46,6 +46,8 @@ import Download from './Pages/Client/Download';
 import Adress from './Pages/Client/Adress';
 import Account from './Pages/Client/Account';
 import OrderDetails from './Pages/Client/Order/details';
+import Security from './Pages/Client/Security';
+import Newsletter from './Pages/Client/Newsletter';
 
 // A wrapper for <Route> that redirects to the login
 // screen if you're not yet authenticated.
@@ -113,6 +115,8 @@ function App() {
                 <Route path="downloads" element={<ProtectedRoute  outlet={ <Download />} />} /> 
                 <Route path="adresses" element={<ProtectedRoute  outlet={ <Adress />} />} /> 
                 <Route path="account-details" element={<ProtectedRoute  outlet={ <Account />} />} /> 
+                <Route path="account-newsletter" element={<ProtectedRoute  outlet={ <Newsletter />} />} /> 
+                <Route path="account-security" element={<ProtectedRoute  outlet={ <Security />} />} /> 
               </Route>
 
             </Route>

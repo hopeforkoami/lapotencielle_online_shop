@@ -3373,7 +3373,7 @@ body .woocommerce-checkout-review-order-table .product-info .product-quantity {
 .woocommerce-MyAccount-navigation ul li.woocommerce-MyAccount-navigation-link--payment-methods a:before{
   content:"\f09d";
 }
-.woocommerce-MyAccount-navigation ul li.woocommerce-MyAccount-navigation-link--edit-account a:before{
+.woocommerce-MyAccount-navigation ul li. a:before{
   content:"\f007";
 }
 .woocommerce-MyAccount-navigation ul li.woocommerce-MyAccount-navigation-link--customer-logout a:before{

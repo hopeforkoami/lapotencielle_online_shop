@@ -654,7 +654,8 @@ const Header: FC<{  }> = (  ) => {
   <div className="slide-out-widget-area-toggle mobile-icon slide-out-from-right" 
   data-custom-color="false" data-icon-animation="simple-transform">
                                   <div> <a href="#sidewidgetarea" aria-label="Navigation Menu" aria-expanded="false" className="closed">
-                                      <span className="screen-reader-text">Menu</span><span aria-hidden="true"> <i className="lines-button x2"> <i className="lines"></i> </i> </span> </a> </div>
+                                      <span className="screen-reader-text">Menu</span><span aria-hidden="true"> 
+                                        <i className="lines-button x2"> <i className="lines"></i> </i> </span> </a> </div>
                               </div>
                                               </nav>
                               </div>
@@ -685,9 +686,12 @@ const Header: FC<{  }> = (  ) => {
                                                 {/* <img src="/assets/wp-content/uploads/2022/02/flags-borderflag.gif" width="18px" height="12px" alt="United States" /> */}
                                                 <div id="flag-parent-element" className='flag-element'></div><span> { currency }</span>
                                           </a>
+
+{/* Mobile menu icon  */}                                       
 <div className="slide-out-widget-area-toggle mobile-icon slide-out-from-right" data-custom-color="false" data-icon-animation="simple-transform">
-                          <div> <a href="#sidewidgetarea" aria-label="Navigation Menu" aria-expanded="false" className="closed">
-                              <span className="screen-reader-text">Menu</span><span aria-hidden="true"> <i className="lines-button x2"> <i className="lines"></i> </i> </span>
+                          <div> <a href="#sidewidgetarea" aria-label="Navigation Menu" aria-expanded="false" className="open">
+                              <span className="screen-reader-text">Menu</span><span aria-hidden="true"> 
+                                <i className="lines-button x2"> <i className="lines"></i> </i> </span>
                           </a>
   </div>
                       </div>

@@ -35,7 +35,8 @@ const Client: FC = () => {
                                             woocommerce-MyAccount-navigation-link--dashboard ${ location.pathname === '/client' ? "is-active" : "" }`}>
                                                 <Link to="/client" >Dashboard</Link>
                                             </li>
-                                                    <li className={`woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--orders ${ location.pathname.indexOf('orders') > 0 ? "is-active" : "" }`}>
+                                            <li className={`woocommerce-MyAccount-navigation-link 
+                                                        woocommerce-MyAccount-navigation-link--orders ${ location.pathname.indexOf('orders') > 0 ? "is-active" : "" }`}>
                                                 <Link to="/client/orders" > Orders</Link>
                                             </li>
                                                     <li className={`woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--downloads ${ location.pathname.indexOf('downloads') > 0 ? "is-active" : "" }`}>
@@ -44,13 +45,36 @@ const Client: FC = () => {
                                                     <li className={`woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--edit-address ${ location.pathname.indexOf('adresses') > 0 ? "is-active" : "" }`}>
                                                     <Link to="/client/adresses" >Addresses</Link>
                                             </li>
-                                                    <li className={`woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--edit-account ${ location.pathname.indexOf('account') > 0 ? "is-active" : "" }`} >
+                                                    <li className={`woocommerce-MyAccount-navigation-link 
+                                                        woocommerce-MyAccount-navigation-link--edit-account
+                                                         ${ location.pathname.indexOf('account-details') > 0 ? "is-active" : "" }`} >
                                                     <Link to="/client/account-details" >Account details</Link>
                                             </li>
-                                                    <li className="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--customer-logout">
-                                                    <Link to="#" >Log out</Link>
+                                            <li className={`woocommerce-MyAccount-navigation-link 
+                                                woocommerce-MyAccount-navigation-link--security-account 
+                                                ${ location.pathname.indexOf('account-security') > 0 ? "is-active" : "" }`} >
+                                                    <Link to="/client/account-security" >Security</Link>
                                             </li>
-                                            </ul>
+
+                                            <li className={`woocommerce-MyAccount-navigation-link 
+                                                woocommerce-MyAccount-navigation-link--newsletter
+                                                ${ location.pathname.indexOf('account-newsletter') > 0 ? "is-active" : "" }`} >
+                                                    <Link to="/client/account-newsletter" >Newsletter</Link>
+                                            </li>
+
+                                            <li className="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--customer-logout">
+                                                    <Link onClick={() => {  
+                                                            const response = window.confirm("Are you Sure to log-out ?");
+                                                            if (response) {
+                                                                window.localStorage.removeItem('__user');
+                                                                window.location.reload(); 
+                                                            }
+                                                        }} 
+                                                        
+                                                     to="#" >Log out</Link>
+                                            </li>
+
+                                    </ul>
                                 </nav>
 
 

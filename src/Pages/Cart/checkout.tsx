@@ -1378,8 +1378,10 @@ const Checkout: FC = () => {
                 }} style={{ float: "left" }} type="button" name="calc_shipping" value="1"
                                  className="button">Retour</button>
                 <br/>
-                <br/> */}
+                <br/>
                 <p>Here are the delivery options available to you depending on the address provided</p>
+                */}
+                
 
                 <Formik
                                 initialValues={ 
@@ -1540,7 +1542,8 @@ const Checkout: FC = () => {
             </button>
         </div>
         : */}
-        <PayPalScriptProvider options={{ clientId: "AQnwfOiBDcktqMInwGzwOa8_Yj57L0FmDOOLXydK091A_PVxTDeNs06D7PXfYJxoWz-E6E0lK9Oxnj8b",
+        <PayPalScriptProvider options={{ 
+            clientId: "AQnwfOiBDcktqMInwGzwOa8_Yj57L0FmDOOLXydK091A_PVxTDeNs06D7PXfYJxoWz-E6E0lK9Oxnj8b",
             currency: "USD", components: "buttons",  dataClientToken: ""  }}> 
 
 
