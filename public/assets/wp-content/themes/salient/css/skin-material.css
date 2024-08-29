@@ -2572,7 +2572,7 @@ body.mobile.material[data-header-color="light"] #header-outer.transparent .slide
 
 #slide-out-widget-area.slide-out-from-right,
 #slide-out-widget-area.slide-out-from-right:not(.fullscreen-alt):not(.fullscreen) {
-  background-color: transparent!important;
+  /* background-color: transparent!important; */
 }
 #slide-out-widget-area[class*="slide-out-from-right"] .off-canvas-menu-container li a {
   font-size: 22px;

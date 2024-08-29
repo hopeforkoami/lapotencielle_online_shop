@@ -19933,13 +19933,14 @@
 				blogSingle();
 
 
-				// Off canvas navigation.
-				mobileNavMegamenuCorrect();
-				materialSkinOCM_Init();
-				OCM_dropdownMarkup();
-				OCM_dropdownIconPos();
-				clickToggleSubmenus();
-				OCM_init();
+				// Off canvas navigation. 
+				
+					mobileNavMegamenuCorrect();
+					materialSkinOCM_Init();
+					OCM_dropdownMarkup();
+					OCM_dropdownIconPos();
+					clickToggleSubmenus();
+					OCM_init(); 
 
 
 				// Page header
