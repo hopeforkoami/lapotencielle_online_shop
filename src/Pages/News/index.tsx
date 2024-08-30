@@ -231,12 +231,12 @@ const News: FC = () => {
                             <div className="wpb_wrapper">
                               <p>Explore them</p>
                               <p>
-                                <Link to={{pathname:"/products/ORANGE VANILLA LUXURIOUS NATURAL BODY LOTION/orange body lotion"}}>
+                                <Link to={{pathname:"/product/16"}}>
                                   ORANGE &amp; VANILLA LUXURIOUS NATURAL BODY
                                   LOTION&nbsp;
                                 </Link>
                                 <br />
-                                <Link to={{pathname:"/products/LILY LAVENDER LUXURIOUS NATURAL BODY LOTION/lily body lotion"}}>
+                                <Link to={{pathname:"/product/22"}}>
                                   LILY &amp; LAVENDER LUXURIOUS NATURAL BODY
                                   LOTION&nbsp;
                                 </Link>
@@ -329,12 +329,12 @@ const News: FC = () => {
                             <div className="wpb_wrapper">
                               <p>Explore them</p>
                               <p>
-                                <Link to={{pathname:"/products/ORANGE VANILLA LUXURIOUS NATURAL BODY CREAM/orange body cream"}}>
+                                <Link to={{pathname:"/product/17"}}>
                                   ORANGE &amp; VANILLA LUXURIOUS NATURAL BODY
                                   CREAM&nbsp;
                                 </Link>
                                 <br />
-                                <Link to={{pathname:"/products/LILY LAVENDER LUXURIOUS NATURAL BODY CREAM/lily body cream"}}>
+                                <Link to={{pathname:"/product/23"}}>
                                   LILY &amp; LAVENDER LUXURIOUS NATURAL BODY
                                   CREAM
                                 </Link>
@@ -375,12 +375,12 @@ const News: FC = () => {
                             <div className="wpb_wrapper">
                               <p>Explore them</p>
                               <p>
-                                <Link to={{pathname:"/products/ORANGE VANILLA LUXURIOUS NATURAL BODY CREAM BUTTER/orange body butter"}}>
+                                <Link to={{pathname:"/product/18"}}>
                                   ORANGE &amp; VANILLA LUXURIOUS NATURAL BODY
                                   CREAM BUTTER
                                 </Link>
                                 <br />
-                                <Link to={{pathname:"/products/LILY LAVENDER LUXURIOUS NATURAL BODY CREAM BUTTER/lily body butter"}}>
+                                <Link to={{pathname:"/product/24"}}>
                                   LILY &amp; LAVENDER LUXURIOUS NATURAL BODY
                                   CREAM BUTTER
                                 </Link>
@@ -466,12 +466,12 @@ const News: FC = () => {
                             <div className="wpb_wrapper">
                               <p>Explore them</p>
                               <p>
-                                <Link to={{pathname:"/products/ORANGE VANILLA LUXURIOUS NATURAL BODY OIL/orange body oil"}}>
+                                <Link to={{pathname:"/product/19"}}>
                                   ORANGE &amp; VANILLA LUXURIOUS NATURAL BODY
                                   OIL
                                 </Link>
                                 <br />
-                                <Link to={{pathname:"/products/LILY LAVENDER LUXURIOUS NATURAL BODY OIL/lily body oil"}}>
+                                <Link to={{pathname:"/product/25"}}>
                                   LILY &amp; LAVENDER LUXURIOUS NATURAL BODY OIL
                                 </Link>
                                 <br />
@@ -518,12 +518,12 @@ const News: FC = () => {
                             <div className="wpb_wrapper">
                               <p>Explore them</p>
                               <p>
-                                <Link to={{pathname:"/products/ORANGE VANILLA LUXURIOUS NATURAL BODY FACIAL BALM/orange balm"}}>
+                                <Link to={{pathname:"/product/21"}}>
                                   ORANGE &amp; VANILLA LUXURIOUS NATURAL BODY
                                   &amp; FACIAL BALM
                                 </Link>
                                 <br />
-                                <Link to={{pathname:"/products/LILY LAVENDER LUXURIOUS NATURAL BODY FACIAL BALM/lily balm"}}>
+                                <Link to={{pathname:"/product/27"}}>
                                   LILY &amp; LAVENDER LUXURIOUS NATURAL BODY
                                   &amp; FACIAL BALM
                                 </Link>
@@ -559,12 +559,12 @@ const News: FC = () => {
                             <div className="wpb_wrapper">
                               <p>Explore them</p>
                               <p>
-                                <Link to={{pathname:"/products/ORANGE VANILLA ORGANIC CANE SUGAR SEA SALT CREAMY BODY POLISH/orange polish"}}>
+                                <Link to={{pathname:"/product/20"}}>
                                   ORANGE &amp; VANILLA ORGANIC CANE SUGAR &amp;
                                   SEA SALT CREAMY BODY POLISH
                                 </Link>
                                 <br />
-                                <Link to={{pathname:"/products/LILY LAVENDER ORGANIC CANE SUGAR SEA SALT CREAMY BODY POLISH/lily polish"}}>
+                                <Link to={{pathname:"/product/26"}}>
                                   LILY &amp; LAVENDER ORGANIC CANE SUGAR &amp;
                                   SEA SALT CREAMY BODY POLISH
                                 </Link>
