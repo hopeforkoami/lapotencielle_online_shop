@@ -19943,7 +19943,9 @@
 
 						// Off canvas navigation.
 
-						$window.on('load', function () {
+						setTimeout(function(){
+
+						//  $window.on('load', function () {
 
 							mobileNavMegamenuCorrect();
 							materialSkinOCM_Init();
@@ -19951,8 +19953,10 @@
 							OCM_dropdownIconPos();
 							clickToggleSubmenus(); 
 							OCM_init();
+	
+						}, 1000);
 
-						});
+						 
 						
 
 

@@ -120,3 +120,41 @@ iframe {
 #header-outer:not(.transparent) li.menu-item-475 > a:hover > .menu-title-text, #header-outer:not(.transparent) li.menu-item-475[class*="current"] > a > .menu-title-text {
   color: #0a0a0a !important;
 }
+
+.active_sub_menu .sidenav_wrapper {
+  display: block;
+}
+
+/* .inside-nav {
+  list-style-type: lower-roman;
+} */
+
+.sub_menu > a {
+  color: white !important;
+  font-size: 20px;
+  line-height: 30px;
+  font-family: 'Open Sans';
+  font-weight: 700;
+}
+
+.sidenav_wrapper > .sidenav_item > a {
+  color: white !important;
+  font-size: 16px;
+  line-height: 22px;
+  font-family: 'Open Sans';
+  font-weight: 500;
+  
+}
+
+.sidenav_wrapper > li {
+  list-style-type: none !important;
+}
+
+#second-menu > ul > li {
+  list-style-type: none !important;
+  
+}
+
+.active_sub_menu {
+  text-decoration: underline;
+}

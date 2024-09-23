@@ -19934,14 +19934,14 @@
 
 
 				// Off canvas navigation. 
-				
+				// setTimeout(function(){
 					mobileNavMegamenuCorrect();
 					materialSkinOCM_Init();
 					OCM_dropdownMarkup();
 					OCM_dropdownIconPos();
 					clickToggleSubmenus();
 					OCM_init(); 
-
+				// }, 2000);
 
 				// Page header
 				pageHeaderInit();

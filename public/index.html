@@ -857,5 +857,17 @@ jQuery(function () {
 
 </style>
 
+  <script defer>
+      $(".sidenav_active").parent().css({
+          "display": "block"
+      });
+
+      $('ul.navbar-nav li').click(function () {
+          // alert("hi");
+          //
+          $('.sidenav_wrapper:visible').add($(this).find('.sidenav_wrapper:first')).toggle();
+      });
+  </script>
+
   </body>
 </html>

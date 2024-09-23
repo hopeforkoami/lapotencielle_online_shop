@@ -4,6 +4,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from '../Hooks/customSelector'; 
 import { setUser } from '../Redux/Reducers/userReducer';
 import { RootState } from '../Redux/store';
+
+import $ from 'jquery';
+
 //importing the special css file for the header
 import './header.css';
  
@@ -16,8 +19,9 @@ import '../country-flags-master/dist/country-flag.css'
 import AllService from '../Pages/service';
 import PriceUnitBox from '../Components/PriceUnitBox';
 import { deleteBasketProduct, getBasketContents, removeProduct } from '../Redux/Reducers/storeReducer';
-import Modal from 'react-modal'; 
-Modal.setAppElement('#root');
+
+import 'react-responsive-modal/styles.css';
+import { Modal } from 'react-responsive-modal';
 
 var countries = require('country-data-list').countries ;
 
@@ -41,22 +45,31 @@ const Header: FC<{  }> = (  ) => {
     const user = useAppSelector((state: RootState) => state.users.user );
     const unit = useAppSelector((state: RootState) => state.units.unit );
 
-    let subtitle: any;
-    const [modalIsOpen, setIsOpen] = useState(false);
   
-    const openModal = function() {
-        console.log("Opening Modal");
-        setIsOpen(true);
-    }
+    const [open, setOpen] = useState(false);
+
+    const onOpenModal = () => {
+        setOpen(true);
+
+      setTimeout(() => {
+
+        $(".sidenav_active").parent().css({
+
+            "display": "block"
+
+        });
   
-    const afterOpenModal =  function() {
-      // references are now sync'd and can be accessed.
-      subtitle.style.color = '#f00';
+        $('ul.navbar-nav li').click(function () {
+
+            $('.sidenav_wrapper:visible').add($(this).find('.sidenav_wrapper:first')).toggle();
+
+        });
+
+      }, 1000)
     }
-  
-    const closeModal = function() {
-      setIsOpen(false);
-    }
+    const onCloseModal = () => setOpen(false);
+
+
 
     const currentRoutes = useAppSelector((state: RootState) => state.routes.currentRoute );
 
@@ -317,10 +330,173 @@ const Header: FC<{  }> = (  ) => {
 
       
         return (      
-            < > 
+            <>
+            <Modal styles={{ modal: { backgroundColor: '#cbd179' }, closeButton: { display: 'none' } }} open={open} onClose={onCloseModal} center>
+                <div className="second_menu">
+                    <div id="second-menu" className="collapse navbar-collapse menu_two">
+
+                        <ul style={{ listStyleType: 'none' }} className="nav navbar-nav inside-nav">
+                            <li className="sub_menu">	
+                                {/* <a href="javascript:void(0);">Menu 1</a> */}
+
+                                <Link className={`${ currentRoutes.includes('orange') || currentRoutes.includes('lavender') 
+                || currentRoutes.includes('accessories') 
+                || currentRoutes.includes('collection') ? 'active_sub_menu' : ''
+            }`} to="/products/OUR COLLECTION/collection">OUR COLLECTION </Link>
+
+                                <ul style={{ listStyleType: 'none' }} className="sidenav_wrapper">
+                                    <li className="sidenav_item">	
+                                        {/* <a href="javascript:void(0);">Sub menu 1</a>  */}
+                                        <Link to="/products/OUR-ORANGE-AND-VANILLA-PRODUCTS/orange">
+                                            OUR ORANGE AND VANILLA PRODUCTS
+                                        </Link>    
+                                    </li>
+                                    <li className="sidenav_item">	 
+                                        <Link to="/products/OUR-LILY-AND-LAVENDER-PRODUCTS/lavender">
+                                            OUR LILY AND LAVENDER PRODUCTS
+                                        </Link>    
+                                    </li>
+                                    <li className="sidenav_item">
+                                        <Link to="/products/ACCESSORIES-&-TOOLS/accessories">ACCESSORIES &#038; TOOLS
+                                        </Link>
+                                    </li>
+                                </ul>
+
+                            </li>
+
+                            <li className="sub_menu">
+
+                                <Link className={`${ currentRoutes.includes('bath') || 
+    currentRoutes.includes('body') 
+    || currentRoutes.includes('duo') ? 'active_sub_menu' : ''
+}`} to="/products/BATH-AND-BODY/bath" > BATH AND BODY </Link>
+
+                                <ul style={{ listStyleType: 'none', display: "none"  }} className="sidenav_wrapper" >
+                                    <li className="sidenav_item">	
+                                        <Link to="/kits/OUR-DUO-COLLECTION/duo" > 
+                                            OUR DUO COLLECTION
+                                        </Link> 
+                                    </li> 
+                                </ul>
+
+                            </li>
+
+
+                            <li className="sub_menu">	
+                                
+                                <Link className={`${ 
+                                    currentRoutes.includes('polish') || currentRoutes.includes('spa')  ? 'active_sub_menu' : ''
+                                }`} to="/products/HOME-SPA/spa" > HOME SPA </Link>
+
+                                <ul className="sidenav_wrapper" style={{ display: "none" }}>
+                                    <li className="sidenav_item">
+                                        <Link to="/products/BODY-POLISH/polish" >BODY POLISH </Link>
+                                    </li> 
+                                </ul>
+
+                            </li>
+
+                            <li className="sub_menu">	
+                                
+                                <Link className={`${ 
+        currentRoutes.includes('gifts sets') || currentRoutes.includes('gifts') || currentRoutes.includes('sets') 
+        ? 'active_sub_menu' : ''
+    }`} to="/kits/GIFTS-AND-SETS/gifts sets" >GIFTS &#038; SETS</Link>
+
+                                <ul className="sidenav_wrapper" style={{ display: "none" }}>
+                                    <li className="sidenav_item">
+                                        <Link to="/kits/OUR-GIFTS-AND-SETS-COLLECTION/gifts" >OUR GIFTS &#038; SETS COLLECTION </Link>
+                                    </li> 
+                                </ul>
+
+                            </li>
+
+
+                            <li className="sub_menu">	
+                                
+                                <Link className={`${ currentRoutes.includes('body care') || currentRoutes.includes('care') ||
+         currentRoutes.includes('body') ? 'active_sub_menu' : ''
+    }`} to="/products/BODY-CARE/body care"> BODY CARE </Link>
+
+                                <ul className="sidenav_wrapper" style={{ display: "none" }}>
+                                    <li className="sidenav_item">
+                                        <Link to="/products/BODY-LOTION/body lotion" > BODY LOTION </Link>
+                                    </li> 
+                                    <li className="sidenav_item">
+                                        <Link to="/products/BODY-CREAM/body cream" > BODY CREAM </Link>
+                                    </li> 
+                                    <li className="sidenav_item">
+                                        <Link to="/products/BODY-CREAM-BUTTER/body butter" > BODY CREAM BUTTER </Link>
+                                    </li> 
+                                    <li className="sidenav_item">
+                                        <Link to="/products/BODY-OIL/body oil"> BODY OIL </Link>
+                                    </li> 
+                                    <li className="sidenav_item">
+                                        <Link to="/products/BODY-SCRUB/body scrub"> BODY SCRUB</Link>
+                                    </li>
+
+                                    <li className="sidenav_item">
+                                        <Link to="/products/BODY-BALM/body balm" > BODY BALM</Link>
+                                    </li> 
+
+                                </ul>
+
+                            </li>
+
+                            <li className="sub_menu">	
+                                
+                                <Link className={` ${ currentRoutes.includes('facial care') ? 'active_sub_menu' : ''
+            }`} to="/products/FACIAL-CARE/facial care" > FACIAL CARE </Link>
+
+                            </li>
+
+                            <li className="sub_menu">	
+                                
+                                <Link  className={`${ currentRoutes.includes('hair') ? 'active_sub_menu' : ''
+        } `} to="/products/HAIR-CARE/hair"> HAIR CARE </Link>
+
+                            </li>
+
+                            <li className="sub_menu">	
+                                
+                                <Link className={`${ currentRoutes.includes('about') ? 'active_sub_menu' : ''
+    }`} to="/about"> ABOUT US </Link>
+
+                            </li>
+
+                            <li className="sub_menu">	
+                                
+                                <Link className={`${ currentRoutes.includes('contact') ? 'active_sub_menu' : ''
+        }`} to="/contact"> CONTACT </Link>
+
+                            </li>
+
+                            <br />
+
+                            <li style={{ position: "relative" }} className="menu-item menu-item-gtranslate gt-menu-39529 
+                                gt_container-u8hrgt">
+                                <select className="notranslate" id="gtranslate_selector" aria-label="Select Language"><option value="">Select Language
+                                    </option><option value="en|en" 
+                                    selected={ true }>English</option><option value="en|fr" 
+                                    >French</option><option value="en|de">German</option><option value="en|it" 
+                                    >Italian</option><option value="en|ru">Russian</option><option value="en|es" 
+                                    >Spanish</option>
+                                </select>
+                                <div id="google_translate_element2"> </div> 
+                            </li>
+
+                        </ul>
+ 
+                    </div>
+                </div>
+            </Modal> 
+
     <div id="header-outer" data-has-menu="true" data-has-buttons="yes" data-header-button_style="default" data-using-pr-menu="false" data-mobile-fixed="1" data-ptnm="false" data-lhe="animated_underline" data-user-set-bg="#ffffff" data-format="centered-menu-bottom-bar" data-menu-bottom-bar-align="center" data-permanent-transparent="false" data-megamenu-rt="1" data-remove-fixed="1" data-header-resize="0" data-cart="true" data-transparency-option="0" data-box-shadow="large" data-shrink-num="6" data-using-secondary="0" data-using-logo="1" data-logo-height="100" data-m-logo-height="70" data-padding="28" data-full-width="true" data-condense="false">
         { productSearchResults.length > 0 && <div   className="aws-search-result"
          style={{ width: '289px', top: '104px', left: '20px' }}>
+
+            
+
                     <ul>
                         {
                            productSearchResults.map(
@@ -680,12 +856,12 @@ const Header: FC<{  }> = (  ) => {
   
               </li>
   </ul>
-  <div  className="slide-out-widget-area-toggle mobile-icon slide-out-from-right" 
+  <div onClick={onOpenModal} className="slide-out-widget-area-toggle mobile-icon slide-out-from-right" 
   data-custom-color="false" data-icon-animation="simple-transform">
 
 {/* href="#sidewidgetarea" */}
                                 <div> 
-                                    <a href="#sidewidgetarea" aria-label="Navigation Menu" aria-expanded="false" className="closed">
+                                    <a  aria-label="Navigation Menu" aria-expanded="false" className="closed">
                                       <span className="screen-reader-text">Menu</span><span aria-hidden="true"> 
                                         <i className="lines-button x2"> <i className="lines"></i> </i> </span> 
                                     </a> 
@@ -722,12 +898,13 @@ const Header: FC<{  }> = (  ) => {
                                           </a>
 
 {/* Mobile menu icon href="#sidewidgetarea"s */}                                       
-<div className="slide-out-widget-area-toggle mobile-icon slide-out-from-right" data-custom-color="false" data-icon-animation="simple-transform">
-                          <div> <a href="#sidewidgetarea" aria-label="Navigation Menu" aria-expanded="false" className="open">
-                              <span className="screen-reader-text">Menu</span><span aria-hidden="true"> 
-                                <i className="lines-button x2"> <i className="lines"></i> </i> </span>
-                          </a>
-  </div>
+<div onClick={onOpenModal} className="slide-out-widget-area-toggle mobile-icon slide-out-from-right" data-custom-color="false" data-icon-animation="simple-transform">
+                            <div> 
+                                <a aria-label="Navigation Menu" aria-expanded="false" className="open">
+                                    <span className="screen-reader-text">Menu</span><span aria-hidden="true"> 
+                                        <i className="lines-button x2"> <i className="lines"></i> </i> </span>
+                                </a>
+                            </div>
                       </div>
                   
                                       <nav>
@@ -742,10 +919,12 @@ const Header: FC<{  }> = (  ) => {
                 || currentRoutes.includes('collection') ? 'current_page_ancestor' : ''
             }`}>
             <Link to="/products/OUR COLLECTION/collection"><span className="menu-title-text">
-            OUR COLLECTION</span><span className="sf-sub-indicator"><i className="fa fa-angle-down icon-in-menu" aria-hidden="true"></i>
+            OUR COLLECTION</span><span className="sf-sub-indicator"><i className="fa fa-angle-down icon-in-menu" 
+            aria-hidden="true"></i>
             </span></Link>
         <ul className="sub-menu">
-            <li id="menu-item-594" className="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children nectar-regular-menu-item hide-title megamenu-column-padding-default menu-item-hidden-text menu-item-594">
+            <li id="menu-item-594" className="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children 
+            nectar-regular-menu-item hide-title megamenu-column-padding-default menu-item-hidden-text menu-item-594">
             <a href="#"><span className="menu-title-text">OUR COLLECTION</span><span className="sf-sub-indicator">
                 <i className="fa fa-angle-right icon-in-menu" aria-hidden="true"></i></span></a>
                 <ul className="sub-menu">
@@ -842,89 +1021,68 @@ const Header: FC<{  }> = (  ) => {
     sf-with-ul menu-item-531 ${ currentRoutes.includes('body care') || currentRoutes.includes('care') ||
          currentRoutes.includes('body') ? 'current_page_ancestor' : ''
     }`}>
-  <Link to="/products/BODY-CARE/body care">
-    <span className="menu-title-text">BODY CARE</span><span className="sf-sub-indicator"><i className="fa fa-angle-down icon-in-menu" aria-hidden="true"></i></span></Link>
-  <ul className="sub-menu">
-      <li id="menu-item-599" className="text_center_txt menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children nectar-regular-menu-item hide-title megamenu-column-width-40 megamenu-column-padding-default menu-item-599">
-  <a href="#"><span className="menu-title-text">BODY CARE</span><span className="sf-sub-indicator"><i className="fa fa-angle-right icon-in-menu" aria-hidden="true"></i></span></a>
-      <ul className="sub-menu">
-          <li id="menu-item-534" className="text_right_txt text_left menu-item menu-item-type-post_type menu-item-object-page 
-          nectar-regular-menu-item menu-item-534"><Link to="/products/BODY-LOTION/body lotion" >
-            <span className="menu-title-text">BODY LOTION</span></Link></li>
-          <li id="menu-item-551" className="text_right_txt text_left menu-item menu-item-type-post_type menu-item-object-page nectar-regular-menu-item menu-item-551"><Link to="/products/BODY-CREAM/body cream" ><span className="menu-title-text">BODY CREAM</span></Link></li>
-          <li id="menu-item-550" className="text_right_txt text_left menu-item menu-item-type-post_type menu-item-object-page nectar-regular-menu-item menu-item-550"><Link to="/products/BODY-CREAM-BUTTER/body butter" ><span className="menu-title-text">BODY CREAM BUTTER</span></Link></li>
-          <li id="menu-item-549" className="text_right_txt text_left menu-item menu-item-type-post_type menu-item-object-page nectar-regular-menu-item menu-item-549"><Link to="/products/BODY-OIL/body oil"><span className="menu-title-text">BODY OIL</span></Link></li>
-          <li id="menu-item-548" className="text_right_txt text_left menu-item menu-item-type-post_type menu-item-object-page nectar-regular-menu-item menu-item-548"><Link to="/products/BODY-SCRUB/body scrub"><span className="menu-title-text">BODY SCRUB</span></Link></li>
-          <li id="menu-item-547" className="text_right_txt text_left menu-item menu-item-type-post_type menu-item-object-page nectar-regular-menu-item menu-item-547"><Link to="/products/BODY-BALM/body balm" ><span className="menu-title-text">BODY BALM</span></Link></li>
-          {/* <li id="menu-item-554" className="text_right_txt text_left menu-item menu-item-type-post_type menu-item-object-page nectar-regular-menu-item menu-item-554"><Link to="/products/WHIPPED-BODY-BUTTER/body whipped" ><span className="menu-title-text">WHIPPED BODY BUTTER</span></Link></li> */}
-      </ul>
-  </li>
-      <li id="menu-item-600" className="border_left menu-item menu-item-type-custom menu-item-object-custom nectar-regular-menu-item megamenu-column-width-60 megamenu-column-padding-default menu-item-600">
-        <Link to="/products/BODY-CARE/body care" >
-            <div className="nectar-ext-menu-item style-img-above-text">
-            <div className="image-layer-outer hover-default">
-            <div className="image-layer"></div>
-            <div className="color-overlay"></div>
-            </div>
-  <div className="inner-content"><span className="title inherit-default"><span className="menu-title-text">DISCOVER NOW</span></span></div>
-  </div></Link></li>
+    <Link to="/products/BODY-CARE/body care">
+        <span className="menu-title-text">BODY CARE</span>
+        <span className="sf-sub-indicator"><i className="fa fa-angle-down icon-in-menu" aria-hidden="true"></i></span>
+    </Link>
+    <ul className="sub-menu">
+        <li id="menu-item-599" className="text_center_txt menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children nectar-regular-menu-item hide-title megamenu-column-width-40 megamenu-column-padding-default menu-item-599">
+            <a href="#"><span className="menu-title-text">BODY CARE</span><span className="sf-sub-indicator"><i className="fa fa-angle-right icon-in-menu" aria-hidden="true"></i></span></a>
+            <ul className="sub-menu">
+                <li id="menu-item-534" className="text_right_txt text_left menu-item menu-item-type-post_type menu-item-object-page 
+                nectar-regular-menu-item menu-item-534"><Link to="/products/BODY-LOTION/body lotion" >
+                    <span className="menu-title-text">BODY LOTION</span></Link></li>
+                <li id="menu-item-551" className="text_right_txt text_left menu-item menu-item-type-post_type menu-item-object-page nectar-regular-menu-item menu-item-551"><Link to="/products/BODY-CREAM/body cream" ><span className="menu-title-text">BODY CREAM</span></Link></li>
+                <li id="menu-item-550" className="text_right_txt text_left menu-item menu-item-type-post_type menu-item-object-page nectar-regular-menu-item menu-item-550"><Link to="/products/BODY-CREAM-BUTTER/body butter" ><span className="menu-title-text">BODY CREAM BUTTER</span></Link></li>
+                <li id="menu-item-549" className="text_right_txt text_left menu-item menu-item-type-post_type menu-item-object-page nectar-regular-menu-item menu-item-549"><Link to="/products/BODY-OIL/body oil"><span className="menu-title-text">BODY OIL</span></Link></li>
+                <li id="menu-item-548" className="text_right_txt text_left menu-item menu-item-type-post_type menu-item-object-page nectar-regular-menu-item menu-item-548"><Link to="/products/BODY-SCRUB/body scrub"><span className="menu-title-text">BODY SCRUB</span></Link></li>
+                <li id="menu-item-547" className="text_right_txt text_left menu-item menu-item-type-post_type menu-item-object-page nectar-regular-menu-item menu-item-547"><Link to="/products/BODY-BALM/body balm" ><span className="menu-title-text">BODY BALM</span></Link></li>
+                {/* <li id="menu-item-554" className="text_right_txt text_left menu-item menu-item-type-post_type menu-item-object-page nectar-regular-menu-item menu-item-554"><Link to="/products/WHIPPED-BODY-BUTTER/body whipped" ><span className="menu-title-text">WHIPPED BODY BUTTER</span></Link></li> */}
+            </ul>
+        </li>
+        <li id="menu-item-600" className="border_left menu-item menu-item-type-custom menu-item-object-custom nectar-regular-menu-item megamenu-column-width-60 megamenu-column-padding-default menu-item-600">
+            <Link to="/products/BODY-CARE/body care" >
+                <div className="nectar-ext-menu-item style-img-above-text">
+                <div className="image-layer-outer hover-default">
+                <div className="image-layer"></div>
+                <div className="color-overlay"></div>
+                </div>
+                <div className="inner-content"><span className="title inherit-default"><span className="menu-title-text">DISCOVER NOW</span></span></div>
+                </div>
+            </Link>
+        </li>
   </ul>
   </li>
-  <li id="menu-item-572" className={`menu-item-custom menu-item menu-item-type-post_type menu-item-object-page
-   nectar-regular-menu-item menu-item-33 ${ currentRoutes.includes('facial care') ? 'current_page_ancestor' : ''
+    <li id="menu-item-572" className={`menu-item-custom menu-item menu-item-type-post_type menu-item-object-page
+        nectar-regular-menu-item menu-item-33 ${ currentRoutes.includes('facial care') ? 'current_page_ancestor' : ''
+            }`}>
+        <Link to="/products/FACIAL-CARE/facial care" >
+            <span className="menu-title-text">FACIAL CARE</span>
+        </Link>
+    </li>
+    <li id="menu-item-33" className={`menu-item-custom menu-item menu-item-type-post_type menu-item-object-page 
+        nectar-regular-menu-item menu-item-33 ${ currentRoutes.includes('hair') ? 'current_page_ancestor' : ''
+        } `}>
+        <Link to="/products/HAIR-CARE/hair"><span className="menu-title-text">HAIR CARE</span></Link>
+    </li>
+
+    <li id="menu-item-27" className={`menu-item-custom menu-item menu-item-type-post_type menu-item-object-page
+    nectar-regular-menu-item menu-item-27 ${ currentRoutes.includes('about') ? 'current_page_ancestor' : ''
     }`}>
-  <Link to="/products/FACIAL-CARE/facial care" >
-    <span className="menu-title-text">FACIAL CARE</span>
-  {/* <span className="sf-sub-indicator"><i className="fa fa-angle-down icon-in-menu" aria-hidden="true"></i></span> */}
-  </Link>
-  {/* <ul className="sub-menu">
-      <li id="menu-item-602" className="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children nectar-regular-menu-item hide-title megamenu-column-width-40 megamenu-column-padding-default menu-item-602">
-  <a href="#"><span className="menu-title-text">FACIAL CARE</span><span className="sf-sub-indicator"><i className="fa fa-angle-right icon-in-menu" aria-hidden="true"></i></span></a>
-      <ul className="sub-menu">
-          <li id="menu-item-843" className="text_right_txt text_left menu-item menu-item-type-post_type menu-item-object-page nectar-regular-menu-item menu-item-843">
-            <Link to="/products/FACIAL-CLEANSER/cleanser" ><span className="menu-title-text">
-            FACIAL CLEANSER</span></Link></li>
-          <li id="menu-item-568" className="text_right_txt text_left menu-item menu-item-type-post_type menu-item-object-page nectar-regular-menu-item menu-item-568">
-            <Link to="/products/FACIAL-CREAM/facial cream" ><span className="menu-title-text">
-                FACIAL CREAM</span></Link></li>
-          <li id="menu-item-569" className="text_right_txt text_left menu-item menu-item-type-post_type menu-item-object-page nectar-regular-menu-item menu-item-569">
-            <Link to="/products/FACIAL-MASK/facial mask"><span className="menu-title-text">
-                FACIAL MASK</span></Link></li>
-          <li id="menu-item-570" className="text_right_txt text_left menu-item menu-item-type-post_type menu-item-object-page nectar-regular-menu-item menu-item-570">
-            <Link to="/products/FACIAL-OIL/facial oil" ><span className="menu-title-text">FACIAL OIL</span></Link></li>
-          <li id="menu-item-571" className="text_right_txt text_left menu-item menu-item-type-post_type menu-item-object-page nectar-regular-menu-item menu-item-571">
-          <Link to="/products/FACIAL-TONER/facial toner" ><span className="menu-title-text">FACIAL TONER</span></Link></li>
-      </ul>
-  </li>
-      <li id="menu-item-603" className="border_left menu-item menu-item-type-custom menu-item-object-custom nectar-regular-menu-item megamenu-column-width-60 megamenu-column-padding-default menu-item-603">
-      <Link to="/products/FACIAL-CARE/facial care" ><div className="nectar-ext-menu-item style-img-above-text">
-  <div className="image-layer-outer hover-default">
-  <div className="image-layer"></div>
-  <div className="color-overlay"></div>
-  </div>
-  <div className="inner-content"><span className="title inherit-default"><span className="menu-title-text">DISCOVER NOW</span></span></div>
-  </div></Link></li>
-  </ul> */}
-  </li>
-  <li id="menu-item-33" className={`menu-item-custom menu-item menu-item-type-post_type menu-item-object-page 
-  nectar-regular-menu-item menu-item-33 ${ currentRoutes.includes('hair') ? 'current_page_ancestor' : ''
-  } `}>
-  <Link to="/products/HAIR-CARE/hair"><span className="menu-title-text">HAIR CARE</span></Link></li>
-  <li id="menu-item-27" className={`menu-item-custom menu-item menu-item-type-post_type menu-item-object-page
-   nectar-regular-menu-item menu-item-27 ${ currentRoutes.includes('about') ? 'current_page_ancestor' : ''
-   }`}>
-    <Link to="/about">
-        <span className="menu-title-text">ABOUT US</span>
-    </Link>
+        <Link to="/about">
+            <span className="menu-title-text">ABOUT US</span>
+        </Link>
     </li>
-  <li id="menu-item-30" className={`menu-item-custom menu-item menu-item-type-post_type menu-item-object-page
-   nectar-regular-menu-item menu-item-30 ${ currentRoutes.includes('contact') ? 'current_page_ancestor' : ''
-   }`}>
-    <Link to="/contact">
-        <span className="menu-title-text">CONTACT</span>
-    </Link>
+
+    <li id="menu-item-30" className={`menu-item-custom menu-item menu-item-type-post_type menu-item-object-page
+        nectar-regular-menu-item menu-item-30 ${ currentRoutes.includes('contact') ? 'current_page_ancestor' : ''
+        }`}>
+        <Link to="/contact">
+            <span className="menu-title-text">CONTACT</span>
+        </Link>
     </li>
-                              </ul>
+
+</ul>
                           
                       </nav>
   
@@ -937,18 +1095,17 @@ const Header: FC<{  }> = (  ) => {
       </header>		
       </div>
 
-      <div id="slide-out-widget-area" 
+
+{/* 
+
+<div id="slide-out-widget-area" 
       className="slide-out-from-right material-open" 
       data-dropdown-func="separate-dropdown-parent-link" 
       data-back-txt="Back" style={{ paddingTop: "60.8px", paddingBottom: "60.8px" }}>
 
-<div className="inner-wrap">
-<div className="inner" data-prepend-menu-mobile="false">
-
-    
-
-
-                        <div className="off-canvas-menu-container mobile-only">
+    <div className="inner-wrap">
+        <div className="inner" data-prepend-menu-mobile="false">
+            <div className="off-canvas-menu-container mobile-only">
             
                             
 
@@ -961,13 +1118,7 @@ const Header: FC<{  }> = (  ) => {
             </li>
             <li className="menu-item menu-item-type-post_type menu-item-object-page menu-item-485">
                 <Link to="/products/OUR-LILY-AND-LAVENDER-PRODUCTS/lavender">OUR LILY AND LAVENDER PRODUCTS</Link>
-            </li>
-            {/* <li className="menu-item menu-item-type-post_type menu-item-object-page menu-item-484">
-                <a href="https://www.lapotencielle.com/our-age-gracefully-products/">OUR AGE GRACEFULLY PRODUCTS</a></li>
-            <li className="menu-item menu-item-type-post_type menu-item-object-page menu-item-495">
-                <a href="https://www.lapotencielle.com/in-paris-body-creme-souffle-products/">IN PARIS BODY CRÉME SOUFFLÉ PRODUCTS</a></li>
-            <li className="menu-item menu-item-type-post_type menu-item-object-page menu-item-498">
-                <a href="https://www.lapotencielle.com/our-belle-comme-le-jour-products/">OUR BELLE COMME LE JOUR PRODUCTS</a></li> */}
+            </li> 
             <li className="menu-item menu-item-type-post_type menu-item-object-page menu-item-501">
                 <Link to="/products/ACCESSORIES-&-TOOLS/accessories">ACCESSORIES &#038; TOOLS</Link>
             </li>
@@ -1037,18 +1188,11 @@ const Header: FC<{  }> = (  ) => {
 <li className="text_right_txt text_left menu-item menu-item-type-post_type menu-item-object-page menu-item-548">
     <Link to="/products/BODY-SCRUB/body scrub">BODY SCRUB</Link></li>
 <li className="text_right_txt text_left menu-item menu-item-type-post_type menu-item-object-page menu-item-547">
-    <Link to="/products/BODY-BALM/body balm" >BODY BALM</Link></li>
-
-    {/* <li className="text_right_txt text_left menu-item menu-item-type-post_type menu-item-object-page menu-item-554">
-        <a href="https://www.lapotencielle.com/whipped-body-butter/">WHIPPED BODY BUTTER</a></li> */}
+    <Link to="/products/BODY-BALM/body balm" >BODY BALM</Link></li> 
 </ul>
 <span className="ocm-dropdown-arrow" style={{ top: "15px" }}><i className="fa fa-angle-down"></i></span></li>
 <li className="menu-item menu-item-type-post_type menu-item-object-page  menu-item-572">
-    <Link to="/products/FACIAL-CARE/facial care">FACIAL CARE</Link>
-{/* <ul className="sub-menu"> menu-item-has-children
-<li className="border_left menu-item menu-item-type-custom menu-item-object-custom menu-item-603"><a href="https://lapotencielle.com/facial-care-2/"><div className="nectar-ext-menu-item style-img-above-text"><div className="inner-content"><span className="title inherit-default"><span className="menu-title-text">DISCOVER NOW</span></span></div></div></a></li>
-<li className="text_right_txt text_left menu-item menu-item-type-post_type menu-item-object-page menu-item-843"><a href="https://www.lapotencielle.com/facial-cleanser/">FACIAL CLEANSER</a></li><li className="text_right_txt text_left menu-item menu-item-type-post_type menu-item-object-page menu-item-568"><a href="https://www.lapotencielle.com/facial-cream/">FACIAL CREAM</a></li><li className="text_right_txt text_left menu-item menu-item-type-post_type menu-item-object-page menu-item-569"><a href="https://www.lapotencielle.com/facial-mask/">FACIAL MASK</a></li><li className="text_right_txt text_left menu-item menu-item-type-post_type menu-item-object-page menu-item-570"><a href="https://www.lapotencielle.com/facial-oil/">FACIAL OIL</a></li><li className="text_right_txt text_left menu-item menu-item-type-post_type menu-item-object-page menu-item-571"><a href="https://www.lapotencielle.com/facial-toner/">FACIAL TONER</a></li>
-</ul> */}
+    <Link to="/products/FACIAL-CARE/facial care">FACIAL CARE</Link> 
 <span className="ocm-dropdown-arrow" style={{ top: "15px" }}><i className="fa fa-angle-down"></i></span></li>
 <li className="menu-item menu-item-type-post_type menu-item-object-page menu-item-33">
     <Link to="/products/HAIR-CARE/hair">HAIR CARE</Link></li>
@@ -1082,28 +1226,11 @@ const Header: FC<{  }> = (  ) => {
     <div className="bottom-meta-wrap"></div>
     </div> 
     
-    </div>
+</div> */}
 
 
-        {/* <Modal
-            isOpen={modalIsOpen}
-            onAfterOpen={afterOpenModal}
-            onRequestClose={closeModal}
-            style={customStyles}
-            contentLabel="Example Modal"
-        >
-            <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Hello</h2>
-            <button onClick={closeModal}>close</button>
-            <div>I am a modal</div>
-            <form>
-            <input />
-            <button>tab navigation</button>
-            <button>stays</button>
-            <button>inside</button>
-            <button>the modal</button>
-            </form>
-        </Modal> */}
-  
+        
+    
             </>
         )
 }       
