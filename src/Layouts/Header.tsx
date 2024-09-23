@@ -98,6 +98,9 @@ const Header: FC<{  }> = (  ) => {
 
     let [ searchStr, setSearchStr ] = useState('');
 
+    let prevRouteAny: Array<String> = [];
+    let [ previousRoute, setPreviousRoute ] = useState(prevRouteAny);
+
     const getStoreTotal = () => {
         let strTtl = 0;
         store.products.forEach(
@@ -112,6 +115,25 @@ const Header: FC<{  }> = (  ) => {
     useEffect(() => {
         getStoreTotal();
     }, [store.products])
+
+    useEffect(() => { 
+
+        
+        if (currentRoutes && previousRoute) {
+            if ( previousRoute[previousRoute.length - 1] !== currentRoutes[currentRoutes.length - 1] ) {
+                onCloseModal();
+                setPreviousRoute( (routes: any) =>  currentRoutes);
+            }
+        }
+
+        // if ( currentRoutes[currentRoutes.length - 1] !== "#" ) {
+
+        //     onCloseModal();
+
+        // }
+         
+
+    }, [ currentRoutes ])
 
     useEffect(() => {
         if (cartDrop !== null) {
@@ -275,6 +297,7 @@ const Header: FC<{  }> = (  ) => {
                 });
                 
             }
+            
 
         };
 
@@ -342,7 +365,7 @@ const Header: FC<{  }> = (  ) => {
                                 <Link className={`${ currentRoutes.includes('orange') || currentRoutes.includes('lavender') 
                 || currentRoutes.includes('accessories') 
                 || currentRoutes.includes('collection') ? 'active_sub_menu' : ''
-            }`} to="/products/OUR COLLECTION/collection">OUR COLLECTION </Link>
+            }`} to="#">OUR COLLECTION </Link>
 
                                 <ul style={{ listStyleType: 'none' }} className="sidenav_wrapper">
                                     <li className="sidenav_item">	
@@ -369,7 +392,7 @@ const Header: FC<{  }> = (  ) => {
                                 <Link className={`${ currentRoutes.includes('bath') || 
     currentRoutes.includes('body') 
     || currentRoutes.includes('duo') ? 'active_sub_menu' : ''
-}`} to="/products/BATH-AND-BODY/bath" > BATH AND BODY </Link>
+}`} to="#" > BATH AND BODY </Link>
 
                                 <ul style={{ listStyleType: 'none', display: "none"  }} className="sidenav_wrapper" >
                                     <li className="sidenav_item">	
@@ -386,7 +409,7 @@ const Header: FC<{  }> = (  ) => {
                                 
                                 <Link className={`${ 
                                     currentRoutes.includes('polish') || currentRoutes.includes('spa')  ? 'active_sub_menu' : ''
-                                }`} to="/products/HOME-SPA/spa" > HOME SPA </Link>
+                                }`} to="#" > HOME SPA </Link>
 
                                 <ul className="sidenav_wrapper" style={{ display: "none" }}>
                                     <li className="sidenav_item">
@@ -401,7 +424,7 @@ const Header: FC<{  }> = (  ) => {
                                 <Link className={`${ 
         currentRoutes.includes('gifts sets') || currentRoutes.includes('gifts') || currentRoutes.includes('sets') 
         ? 'active_sub_menu' : ''
-    }`} to="/kits/GIFTS-AND-SETS/gifts sets" >GIFTS &#038; SETS</Link>
+    }`} to="#" >GIFTS &#038; SETS</Link>
 
                                 <ul className="sidenav_wrapper" style={{ display: "none" }}>
                                     <li className="sidenav_item">
@@ -416,7 +439,7 @@ const Header: FC<{  }> = (  ) => {
                                 
                                 <Link className={`${ currentRoutes.includes('body care') || currentRoutes.includes('care') ||
          currentRoutes.includes('body') ? 'active_sub_menu' : ''
-    }`} to="/products/BODY-CARE/body care"> BODY CARE </Link>
+    }`} to="#"> BODY CARE </Link>
 
                                 <ul className="sidenav_wrapper" style={{ display: "none" }}>
                                     <li className="sidenav_item">
